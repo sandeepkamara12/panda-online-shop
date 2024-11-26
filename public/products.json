@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Brown paperbag waist pencil skirt",
+        "price": 12.99,
+        "category": "women",
+        "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque",
+        "image": "product-4.jpg",
+        "thumbnails":["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
+        "badge":"out-stoke",
+        "rating":2,
+        "review_count":2
+    },
+    {
+        "id": 2,
+        "name": "Dark yellow lace cut out swing dress",
+        "price": 84.12,
+        "category": "dresses",
+        "description": "Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi.",
+        "image": "product-5.jpg",
+        "thumbnails":["product-5-thumb.jpg", "product-5-2-thumb.jpg"],
+        "badge":"new",
+        "rating":1,
+        "review_count":1
+    },
+    {
+        "id": 2,
+        "name": "Khaki utility boiler jumpsuit",
+        "price": 120.12,
+        "category": "Jackets",
+        "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque",
+        "image": "product-5.jpg",
+        "thumbnails":["product-5-thumb.jpg", "product-5-2-thumb.jpg"],
+        "badge":"new",
+        "rating":1,
+        "review_count":1
+    }
+]
