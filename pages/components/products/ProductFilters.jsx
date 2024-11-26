@@ -30,15 +30,6 @@ const ProductFilters = ({setLayout, layout}) => {
             </svg>
           </a>
 
-          <a onClick={()=>setLayout('two')} className={`btn-layout ${layout === 'two' ? 'active': ''}`}>
-            <svg width="10" height="10">
-              <rect x="0" y="0" width="4" height="4" />
-              <rect x="6" y="0" width="4" height="4" />
-              <rect x="0" y="6" width="4" height="4" />
-              <rect x="6" y="6" width="4" height="4" />
-            </svg>
-          </a>
-
           <a onClick={()=>setLayout('three')} className={`btn-layout ${layout === 'three' ? 'active': ''}`}>
             <svg width="16" height="10">
               <rect x="0" y="0" width="4" height="4" />
@@ -47,19 +38,6 @@ const ProductFilters = ({setLayout, layout}) => {
               <rect x="0" y="6" width="4" height="4" />
               <rect x="6" y="6" width="4" height="4" />
               <rect x="12" y="6" width="4" height="4" />
-            </svg>
-          </a>
-
-          <a onClick={()=>setLayout('four')} className={`btn-layout ${layout === 'four' ? 'active': ''}`}>
-            <svg width="22" height="10">
-              <rect x="0" y="0" width="4" height="4" />
-              <rect x="6" y="0" width="4" height="4" />
-              <rect x="12" y="0" width="4" height="4" />
-              <rect x="18" y="0" width="4" height="4" />
-              <rect x="0" y="6" width="4" height="4" />
-              <rect x="6" y="6" width="4" height="4" />
-              <rect x="12" y="6" width="4" height="4" />
-              <rect x="18" y="6" width="4" height="4" />
             </svg>
           </a>
         </div>

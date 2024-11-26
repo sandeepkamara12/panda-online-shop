@@ -15,16 +15,16 @@ const Product = ({product, layout}) => {
   const dispatch = useDispatch();
   return (
     <>
-    <div className={`product product-list ${layout === 'two' ? 'col-6' : layout === 'three' ? 'col-4' : ''}`} key={product?.id}>
-      <div className={`row ${layout === 'two' || layout === 'three' ? 'flex-column align-items-center text-center' : ''}`}>
-      <div className={`${layout === 'two' || layout === 'three' ? 'col-12' : 'col-6 col-lg-3'}`}>
+    <div className={`product product-list ${layout === 'three' ? 'col-4' : ''}`} key={product?.id}>
+      <div className={`row ${layout === 'three' ? 'flex-column align-items-center text-center' : ''}`}>
+      <div className={`${layout === 'three' ? 'col-12' : 'col-6 col-lg-3'}`}>
         <ProductImage image={product?.image} badge={product?.badge} />
         </div>
-        <div className={`${layout === 'two' || layout === 'three' ? 'col-12 order-lg-last' : 'col-6 col-lg-3 order-lg-last'}`}>
-          <div className={`product-list-action ${layout === 'two' || layout === 'three' ? 'pt-1' : ''}`}>
-            <div className={`product-price ${layout === 'two' || layout === 'three' ? 'justify-content-center' : ''}`}>${product?.price}</div>
+        <div className={`${layout === 'three' ? 'col-12 order-lg-last' : 'col-6 col-lg-3 order-lg-last'}`}>
+          <div className={`product-list-action ${layout === 'three' ? 'pt-1' : ''}`}>
+            <div className={`product-price ${layout === 'three' ? 'justify-content-center' : ''}`}>${product?.price}</div>
             {/* <p>Count: {count}</p> */}
-            <div className={`ratings-container ${layout==='two' || layout === 'three' ? 'justify-content-center' : ''}`}>
+            <div className={`ratings-container ${layout === 'three' ? 'justify-content-center' : ''}`}>
               <ProductReview reviewCount={product?.review_count} rating={product?.rating} />
             </div>
             {/* <button onClick={() => dispatch(increment())}>Increment</button>
@@ -46,15 +46,15 @@ const Product = ({product, layout}) => {
           </div>
         </div>
 
-        <div className={`${layout === 'two' || layout === 'three' ? 'col-12' : 'col-lg-6'}`}>
+        <div className={`${layout === 'three' ? 'col-12' : 'col-lg-6'}`}>
           <div className="product-body product-action-inner">
             <ProductWishlist />
             <ProductCategory category={product?.category} />
             <ProductTitle title={product?.name} />
-            <div className={`product-content ${layout === 'two' || layout === 'three' ? 'd-none' : ''}`}>
+            <div className={`product-content ${layout === 'three' ? 'd-none' : ''}`}>
               <ProductDescription description={product?.description} />
             </div>
-            <div className={`product-nav product-nav-thumbs ${layout === 'two' || layout === 'three' ? 'd-none mt-2 justify-content-center' : ''}`}>
+            <div className={`product-nav product-nav-thumbs ${layout === 'three' ? 'd-none mt-2 justify-content-center' : ''}`}>
               <ProductThumbnails thumbnails={product?.thumbnails} />
             </div>
           </div>

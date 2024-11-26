@@ -25,8 +25,8 @@ const Footer = () => {
                             <h4 className="widget-title">Useful Links</h4>
 
                             <ul className="widget-list">
-                                <li><a href="about.html">About Molla</a></li>
-                                <li><a href="#">How to shop on Molla</a></li>
+                                <li><a href="about.html">About Panda</a></li>
+                                <li><a href="#">How to shop on Panda</a></li>
                                 <li><a href="#">FAQ</a></li>
                                 <li><a href="contact.html">Contact us</a></li>
                                 <li><a href="login.html">Log in</a></li>
@@ -68,7 +68,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
             <div className="container">
-                <p className="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                <p className="footer-copyright">Copyright © 2019 Panda Store. All Rights Reserved.</p>
                 <figure className="footer-payments">
                     <Image src="/payments.png" alt="Payment methods" width="272" height="20" />
                 </figure>

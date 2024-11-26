@@ -35,7 +35,7 @@ export default function Home() {
       .catch((error) => console.error("Error loading products:", error));
   }, []);
 
-const [layout, setLayout] = useState('two');
+const [layout, setLayout] = useState('one');
 
 // layout === 'two' ? 
   return (
@@ -60,7 +60,7 @@ const [layout, setLayout] = useState('two');
                   <div className="col-lg-9">
                     <ProductFilters setLayout={setLayout} layout={layout} />
 
-                    <div className={`products mb-3 layout-${layout} ${layout === 'two' || layout === 'three' ? 'row mx-0' : ''}`}>
+                    <div className={`products mb-3 layout-${layout} ${layout === 'three' ? 'row mx-0' : ''}`}>
                       {products.map((product, index) => (
                         <Product product={product} key={index} layout={layout} />
                       ))}
