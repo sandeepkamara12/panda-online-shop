@@ -16,8 +16,7 @@ const ShopSidebar = () => {
     fetch('./brand.json').then(response=>response.json()).then(data=>setBrands(data)).catch(error=>console.log(error, 'while getting all the brands'));
     fetch('./colors.json').then(response=>response.json()).then(data=>setColors(data)).catch(error=>console.log(error, 'while getting all the colors'));
   },[])
-  return (
-    <aside className="col-lg-3 order-lg-first">
+  return (    
       <div className="sidebar sidebar-shop">
         <div className="widget widget-clean">
           <label>Filters:</label>
@@ -31,7 +30,6 @@ const ShopSidebar = () => {
         <ProductBrand brands={brands} />
         <ProductPriceSlider />
       </div>
-    </aside>
   );
 };
 

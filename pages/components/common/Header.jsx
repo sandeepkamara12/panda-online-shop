@@ -54,10 +54,10 @@ const Header = () => {
                     </a>
                   </li>
                   <li>
-                    <a href="about.html">About Us</a>
+                    <a href="about.html">About</a>
                   </li>
                   <li>
-                    <a href="contact.html">Contact Us</a>
+                    <a href="contact.html">Contact</a>
                   </li>
                   <li>
                     <a href="#signin-modal" data-toggle="modal">
@@ -80,7 +80,7 @@ const Header = () => {
             </button>
 
             <a href="index.html" className="logo">
-              <Image src="/logo.png" alt="Molla Logo" width="105" height="25" />
+              <Image src="/logo.png" alt="Panda Logo" width="105" height="25" />
             </a>
 
             <nav className="main-nav">

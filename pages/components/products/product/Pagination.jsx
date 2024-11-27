@@ -1,6 +1,6 @@
 import React from "react";
 
-const Pagination = () => {
+const Pagination = ({start, end, pageSize, totalProducts}) => {
   return (
     <nav aria-label="Page navigation">
       <ul className="pagination">
@@ -33,7 +33,7 @@ const Pagination = () => {
             3
           </a>
         </li>
-        <li className="page-item-total">of 6</li>
+        <li className="page-item-total">of {Math.ceil(totalProducts/pageSize)}</li>
         <li className="page-item">
           <a className="page-link page-link-next" href="#" aria-label="Next">
             Next{" "}
