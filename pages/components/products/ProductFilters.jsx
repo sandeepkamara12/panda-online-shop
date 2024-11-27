@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from 'react-select';
 const options = [
   { value: 'all', label: 'All' },
@@ -12,7 +12,9 @@ const options = [
 const customStyles = {
   control: (base) => ({
     ...base,
-    width: '150px',
+    width: '150px', // Set a fixed width to prevent jerking
+    minWidth: '100%', // Optional, ensures the minimum width
+    maxWidth: '150px',
     fontSize: '1.3rem',
     borderColor: '#ebebeb',
     borderWidth: 1,
@@ -29,6 +31,11 @@ const customStyles = {
   }),
 };
 const ProductFilters = ({setLayout, layout, productVisibleCount, totalProducts}) => {
+  const [filters, setFilters] = useState({category:'', size:'', color:'', brand:'', sortBy:'', price:null});
+  const handleChange = (selectedOption) => {
+    setFilters(prev=>({...prev, sortBy:selectedOption?.label}));
+    console.log('Option selected:', selectedOption);
+  };
   return (
     <div className="toolbox">
       <div className="toolbox-left">
@@ -52,9 +59,11 @@ const ProductFilters = ({setLayout, layout, productVisibleCount, totalProducts})
               <option value="date">Price High to Low</option>
             </select>
             <Select options={options}
+            onChange={handleChange}
              placeholder="Select"
               styles={customStyles}
              />
+              <p>Selected option: {filters ? filters?.sortBy : 'None'}</p>
           </div>
         </div>
         <div className="toolbox-layout d-none d-md-block">
