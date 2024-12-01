@@ -1,6 +1,6 @@
-import React from "react";
+    import React from "react";
 
-const PageHeader = () => {
+const PageHeader = ({title, subtitle}) => {
   return (
     <div
       className="page-header text-center"
@@ -8,7 +8,7 @@ const PageHeader = () => {
     >
       <div className="container">
         <h1 className="page-title">
-          List<span>Shop</span>
+          {title}<span>{subtitle}</span>
         </h1>
       </div>
     </div>

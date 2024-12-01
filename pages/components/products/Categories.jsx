@@ -1,6 +1,18 @@
 import React from "react";
 
-const Categories = ({ categories }) => {
+const Categories = ({ categories, setFilters, filters }) => {
+  const handleCheckboxChange = (categoryId) => {
+    setFilters((prev) => {
+      const isAlreadySelected = prev.category.includes(categoryId);
+
+      return {
+        ...prev,
+        category: isAlreadySelected
+          ? prev.category.filter((id) => id !== categoryId) // Remove if already selected
+          : [...prev.category, categoryId], // Add if not selected
+      };
+    });
+  };
   return (
     <div className="widget widget-collapsible">
       <h3 className="widget-title">
@@ -27,8 +39,11 @@ const Categories = ({ categories }) => {
                       type="checkbox"
                       className="custom-control-input"
                       id={category?.id}
+                      name={'category'}
+                      onChange={() => handleCheckboxChange(category?.id)}
+                      checked={filters.category.includes(category?.id)} 
                     />
-                    <label className="custom-control-label" htmlFor={category?.name}>
+                    <label className="custom-control-label" htmlFor={category?.id}>
                       {category?.name}
                     </label>
                   </div>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Select from 'react-select';
+import React from "react";
+import Select, { components }  from 'react-select';
 const options = [
   { value: 'all', label: 'All' },
   { value: 'best-seller', label: 'Best Seller' },
@@ -9,12 +9,17 @@ const options = [
   { value: 'lth', label: 'Price Low to High' },
   { value: 'htl', label: 'Price High to Low' }
 ]
+const CustomDropdownIndicator = (props) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <i className="icon-angle-down" style={{ color: '#333333', fontSize: '12px' }} />
+    </components.DropdownIndicator>
+  );
+};
 const customStyles = {
   control: (base) => ({
     ...base,
-    width: '150px', // Set a fixed width to prevent jerking
-    minWidth: '100%', // Optional, ensures the minimum width
-    maxWidth: '150px',
+    width: '200px',
     fontSize: '1.3rem',
     borderColor: '#ebebeb',
     borderWidth: 1,
@@ -31,11 +36,6 @@ const customStyles = {
   }),
 };
 const ProductFilters = ({setLayout, layout, productVisibleCount, totalProducts}) => {
-  const [filters, setFilters] = useState({category:'', size:'', color:'', brand:'', sortBy:'', price:null});
-  const handleChange = (selectedOption) => {
-    setFilters(prev=>({...prev, sortBy:selectedOption?.label}));
-    console.log('Option selected:', selectedOption);
-  };
   return (
     <div className="toolbox">
       <div className="toolbox-left">
@@ -48,8 +48,8 @@ const ProductFilters = ({setLayout, layout, productVisibleCount, totalProducts})
         <div className="toolbox-sort">
           <label htmlFor="sortby">Sort by:</label>
           <div className="select-custom">
-            <select name="sortby" id="sortby" className="form-control">
-              {/* <option value="popularity" selected="selected">Most Popular</option> */}
+            {/* <select name="sortby" id="sortby" className="form-control">
+              <option value="popularity" selected="selected">Most Popular</option>
               <option value="popularity">All</option>
               <option value="popularity">Best Seller</option>
               <option value="rating">Newest</option>
@@ -57,13 +57,12 @@ const ProductFilters = ({setLayout, layout, productVisibleCount, totalProducts})
               <option value="date">Limited</option>
               <option value="date">Price Low to High</option>
               <option value="date">Price High to Low</option>
-            </select>
+            </select> */}
             <Select options={options}
-            onChange={handleChange}
              placeholder="Select"
               styles={customStyles}
+              components={{ DropdownIndicator: CustomDropdownIndicator }}
              />
-              <p>Selected option: {filters ? filters?.sortBy : 'None'}</p>
           </div>
         </div>
         <div className="toolbox-layout d-none d-md-block">

@@ -12,7 +12,8 @@ import ProductFilters from "./components/products/ProductFilters";
 import Product from "./components/products/product/Product";
 import Pagination from "./components/products/product/Pagination";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { filter } from "@/store/productSlice";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,12 +27,15 @@ const geistMono = localFont({
 });
 
 export default function Home() {
-  const products = useSelector((state) => state.products.products);
-  const totalProducts = products?.length;
+  const products = useSelector((state) => state.products.filteredProducts);
+  const dispatch = useDispatch();
+  let totalProducts = products?.length;
   const [layout, setLayout] = useState("three");
   const [visibleCount, setVisibleCount] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
+  const [filters, setFilters] = useState({category:[], size:[], color:'', brand:'', price:'', sort:''});
   const loaderRef = useRef(null);
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,7 +44,8 @@ export default function Home() {
         if (entry.isIntersecting && !isLoading) {
           setIsLoading(true);
           setTimeout(() => {
-            setVisibleCount((prev) => prev + 6);
+            const newCount = Math.min(visibleCount + 3, totalProducts);
+            setVisibleCount(newCount);
             setIsLoading(false);
           }, 1000);
         }
@@ -52,7 +57,18 @@ export default function Home() {
     return () => {
       if (loaderRef.current) observer.unobserve(loaderRef.current);
     };
-  }, [isLoading]);
+  }, [totalProducts, visibleCount, isLoading]);
+  useEffect(() => {
+    if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.color === '') {
+      setVisibleCount(1);
+    }
+    dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color}));
+  }, [filters?.category, filters?.size, filters?.color, dispatch]);
+  useEffect(() => {
+    if (visibleCount > totalProducts) {
+      setVisibleCount(totalProducts);
+    }
+  }, [products, totalProducts, visibleCount]);
   return (
     <>
       {/* <Provider store={store}> */}
@@ -113,7 +129,7 @@ export default function Home() {
                   {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
                 </div>
                 <aside className="col-xl-3 order-xl-first">
-                  <ShopSidebar />
+                  <ShopSidebar setFilters={setFilters} filters={filters} />
                 </aside>
               </div>
             </div>

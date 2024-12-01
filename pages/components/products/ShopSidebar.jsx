@@ -4,17 +4,15 @@ import ProductSize from "./ProductSize";
 import ProductColor from "./ProductColor";
 import ProductBrand from "./ProductBrand";
 import ProductPriceSlider from "./ProductPriceSlider";
+import { useSelector } from "react-redux";
 
-const ShopSidebar = () => {
-  const [categories, setCategories] = useState([]);
-  const [sizes, setSizes] = useState([]);
+const ShopSidebar = ({setFilters, filters}) => {
+  const categories = useSelector((state) => state.categories.categories);
+  const sizes = useSelector((state) => state.sizes.sizes);
+  const colors = useSelector((state) => state.colors.colors);
   const [brands, setBrands] = useState([]);
-  const [colors, setColors] = useState([]);
   useEffect(()=>{
-    fetch('./category.json').then(response=>response.json()).then(data=>setCategories(data)).catch(error=>console.log(error, 'while getting all the categories'));
-    fetch('./sizes.json').then(response=>response.json()).then(data=>setSizes(data)).catch(error=>console.log(error, 'while getting all the sizes'));
     fetch('./brand.json').then(response=>response.json()).then(data=>setBrands(data)).catch(error=>console.log(error, 'while getting all the brands'));
-    fetch('./colors.json').then(response=>response.json()).then(data=>setColors(data)).catch(error=>console.log(error, 'while getting all the colors'));
   },[])
   return (    
       <div className="sidebar sidebar-shop">
@@ -24,9 +22,9 @@ const ShopSidebar = () => {
             Clean All
           </a>
         </div>
-        <Categories categories={categories} />
-        <ProductSize sizes={sizes} />
-        <ProductColor colors={colors} />
+        <Categories categories={categories} setFilters={setFilters} filters={filters} />
+        <ProductSize sizes={sizes} setFilters={setFilters} filters={filters} />
+        <ProductColor colors={colors} setFilters={setFilters} filters={filters} />
         <ProductBrand brands={brands} />
         <ProductPriceSlider />
       </div>

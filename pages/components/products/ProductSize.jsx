@@ -1,6 +1,18 @@
 import React from "react";
 
-const ProductSize = ({ sizes }) => {
+const ProductSize = ({ sizes, setFilters, filters }) => {
+  const handleCheckboxChange = (productSize) => {
+    setFilters((prev) => {
+      const isAlreadySelected = prev.size.includes(productSize.toLowerCase());
+
+      return {
+        ...prev,
+        size: isAlreadySelected
+          ? prev.size.filter((size) => size !== productSize) // Remove if already selected
+          : [...prev.size, productSize], // Add if not selected
+      };
+    });
+  };
   return (
     <div className="widget widget-collapsible">
       <h3 className="widget-title">
@@ -27,9 +39,12 @@ const ProductSize = ({ sizes }) => {
                       type="checkbox"
                       className="custom-control-input"
                       id={size?.name}
+                      name={'size'}
+                      onChange={() => handleCheckboxChange(size?.name)}
+                      checked={filters.size.includes(size?.name)} 
                     />
                     <label className="custom-control-label" htmlFor={size?.name}>
-                      {size?.name}
+                      {size?.name.toUpperCase()}
                     </label>
                   </div>
                 </div>

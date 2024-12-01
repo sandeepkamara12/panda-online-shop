@@ -43,7 +43,7 @@ export default function Checkout() {
         <Header />
 
         <main className="main">
-          <PageHeader />
+        <PageHeader title="Checkout" subtitle="Check the things" />
           <Breadcrumbs />
 
           <div className="page-content">

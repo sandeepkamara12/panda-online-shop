@@ -41,7 +41,7 @@ export default function Cart() {
         <Header />
 
         <main className="main">
-          <PageHeader />
+          <PageHeader title="Shopping Cart" subtitle="Check the items" />
           <Breadcrumbs />
 
           <div className="page-content">
@@ -89,7 +89,7 @@ export default function Cart() {
                                             <div class="product">
                                                 <figure class="product-media">
                                                     <a href="#">
-                                                        <img src="assets/images/products/table/product-2.jpg" alt="Product image" />
+                                                        <Image width="100" height="100" src="/product-2.jpg" alt="Product image" />
                                                     </a>
                                                 </figure>
 

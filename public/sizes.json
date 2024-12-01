@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "XS",
+        "name": "xs",
         "description": "Extra Small size, perfect for petite builds.",
         "chest": "32-34 inches",
         "waist": "24-26 inches",
@@ -9,7 +9,7 @@
     },
     {
         "id": 2,
-        "name": "S",
+        "name": "sm",
         "description": "Small size, ideal for slim fits.",
         "chest": "35-37 inches",
         "waist": "27-29 inches",
@@ -17,7 +17,7 @@
     },
     {
         "id": 3,
-        "name": "M",
+        "name": "md",
         "description": "Medium size, fits most average builds.",
         "chest": "38-40 inches",
         "waist": "30-32 inches",
@@ -25,7 +25,7 @@
     },
     {
         "id": 4,
-        "name": "L",
+        "name": "lg",
         "description": "Large size, great for broader shoulders.",
         "chest": "41-43 inches",
         "waist": "33-35 inches",
@@ -33,7 +33,7 @@
     },
     {
         "id": 5,
-        "name": "XL",
+        "name": "xl",
         "description": "Extra Large size, comfortable for big builds.",
         "chest": "44-46 inches",
         "waist": "36-38 inches",
@@ -41,7 +41,7 @@
     },
     {
         "id": 6,
-        "name": "XXL",
+        "name": "xxl",
         "description": "Double Extra Large, designed for tall or big sizes.",
         "chest": "47-49 inches",
         "waist": "39-41 inches",

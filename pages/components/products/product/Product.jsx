@@ -52,6 +52,8 @@ const Product = ({product, layout}) => {
               <div className="product-body product-action-inner">
                 {/* <ProductWishlist /> */}
                 <ProductCategory category={product?.category} />
+                {product?.size && product?.size.length>0 && product?.size.map(size=>size + ' ')}
+                <div>{product?.color ? product?.color : 'no-color'}</div>
                 <ProductTitle title={product?.name} />
                 <div className={`product-content ${layout === 'three' ? 'd-none' : ''}`}>
                   <ProductDescription description={product?.description} />

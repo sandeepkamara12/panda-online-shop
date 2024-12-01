@@ -1,6 +1,15 @@
 import React from "react";
 
-const ProductColor = ({ colors }) => {
+const ProductColor = ({ colors, setFilters, filters }) => {
+  const handleCheckboxChange = (productColor) => {
+    setFilters(() => {
+      // const isAlreadySelected = prev.color.includes(productColor.toLowerCase());
+
+      return {
+        color: productColor
+      };
+    });
+  };
   return (
     <div className="widget widget-collapsible">
       <h3 className="widget-title">
@@ -21,9 +30,26 @@ const ProductColor = ({ colors }) => {
             {colors &&
               colors?.length > 0 &&
               colors?.map((color) => (
-                <a href="#" style={{ background: color?.hex }} key={color?.name}>
-                  <span className="sr-only">{color?.name}</span>
-                </a>
+                <>
+                <div className="filter-item" key={color?.hex}>
+                  <div className="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id={color?.hex}
+                      name={'color'}
+                      onChange={() => handleCheckboxChange(color?.hex)}
+                      checked={filters.color.includes(color?.hex)} 
+                    />
+                    <label className="custom-control-label" style={{ background: `#${color?.hex}` }} htmlFor={color?.hex}>
+                      <span className="">{color?.name}</span>
+                    </label>
+                  </div>
+                </div>
+                {/* // <a href="#" style={{ background: color?.hex }} key={color?.name}>
+                //   <span className="sr-only">{color?.name}</span>
+                // </a> */}
+                </>
               ))}
           </div>
         </div>
