@@ -12,8 +12,8 @@ import ProductFilters from "./components/products/ProductFilters";
 import Product from "./components/products/product/Product";
 import Pagination from "./components/products/product/Pagination";
 import { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { filter } from "@/store/productSlice";
+import { useSelector } from "react-redux";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -25,52 +25,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export default function Home() {
-  const products = useSelector((state) => state.products.filteredProducts);
-  const dispatch = useDispatch();
-
-  let totalProducts = products?.length;
-  const [layout, setLayout] = useState("three");
-  const [visibleCount, setVisibleCount] = useState(3);
-  const [isLoading, setIsLoading] = useState(false);
-  const [filters, setFilters] = useState({category:[], size:[], color:'', brand:'', price:'', sort:''});
-  const loaderRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting && !isLoading) {
-          setIsLoading(true);
-          setTimeout(() => {
-            const newCount = Math.min(visibleCount + 3, totalProducts); 
-            setVisibleCount(newCount);
-            setIsLoading(false);
-          }, 1000);
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    if (loaderRef.current) observer.observe(loaderRef.current);
-    return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
-    };
-  }, [totalProducts, visibleCount, isLoading]);
-
-useEffect(() => {
-  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.color === '') {
-    setVisibleCount(1);
-  }
-  dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color}));
-}, [filters?.category, filters?.size, filters?.color, dispatch]);
-
-useEffect(() => {
-  if (visibleCount > totalProducts) {
-    setVisibleCount(totalProducts);
-  }
-}, [products, totalProducts, visibleCount]);
-
+export default function Cart() {
+  const products = useSelector((state) => state.products.products);
+  const totalProducts = products?.length;
+  
   return (
     <>
       <Head>
@@ -83,54 +41,154 @@ useEffect(() => {
         <Header />
 
         <main className="main">
-          <PageHeader />
+          <PageHeader title="Shopping Cart" subtitle="Check the items" />
           <Breadcrumbs />
-          <div className="page-content">
-            <div className="container">
-              <div className="row">
-                <div className="col-xl-9">
-                  <ProductFilters
-                    setLayout={setLayout}
-                    layout={layout}
-                    productVisibleCount={visibleCount}
-                    totalProducts={totalProducts}
-                  />
-                  <div
-                    className={`products mb-3 layout-${layout} ${
-                      layout === "three"
-                        ? !totalProducts
-                          ? "mx-0 row"
-                          : "row"
-                        : ""
-                    }`}
-                  >
-                    {products?.length > 0 ? (
-                      products
-                        ?.slice(0, visibleCount)
-                        .map((product, index) => (
-                          <Product
-                            product={product}
-                            key={index}
-                            layout={layout}
-                          />
-                        ))
-                    ) : (
-                      <p>No record found.</p>
-                    )}
-                  </div>
 
-                  {visibleCount < products.length && (
-                    <i
-                      ref={loaderRef}
-                      className="icon-spinner d-block text-center text-lg rotate-icon"
-                    ></i>
-                  )}
-                  {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
+          <div className="page-content">
+            <div class="cart">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <table class="table table-cart table-mobile">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td class="product-col">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="#">
+                                                        <Image src="/product-1.jpg" width="100" height="100" alt="Product image" />
+                                                    </a>
+                                                </figure>
+
+                                                <h3 class="product-title">
+                                                    <a href="#">Beige knitted elastic runner shoes</a>
+                                                </h3>
+                                            </div>
+                                        </td>
+                                        <td class="price-col">$84.00</td>
+                                        <td class="quantity-col">
+                                            <div class="cart-product-quantity">
+                                                <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required />
+                                            </div>
+                                        </td>
+                                        <td class="total-col">$84.00</td>
+                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-col">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="#">
+                                                        <Image width="100" height="100" src="/product-2.jpg" alt="Product image" />
+                                                    </a>
+                                                </figure>
+
+                                                <h3 class="product-title">
+                                                    <a href="#">Blue utility pinafore denim dress</a>
+                                                </h3>
+                                            </div>
+                                        </td>
+                                        <td class="price-col">$76.00</td>
+                                        <td class="quantity-col">
+                                            <div class="cart-product-quantity">
+                                                <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required />
+                                            </div>
+                                        </td>
+                                        <td class="total-col">$76.00</td>
+                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="cart-bottom">
+                                <div class="cart-discount">
+                                    <form action="#">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" required placeholder="coupon code" />
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
+                            </div>
+                        </div>
+                        <aside class="col-lg-3">
+                            <div class="summary summary-cart">
+                                <h3 class="summary-title">Cart Total</h3>
+
+                                <table class="table table-summary">
+                                    <tbody>
+                                        <tr class="summary-subtotal">
+                                            <td>Subtotal:</td>
+                                            <td>$160.00</td>
+                                        </tr>
+                                        <tr class="summary-shipping">
+                                            <td>Shipping:</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+
+                                        <tr class="summary-shipping-row">
+                                            <td>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="free-shipping" name="shipping" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                                                </div>
+                                            </td>
+                                            <td>$0.00</td>
+                                        </tr>
+
+                                        <tr class="summary-shipping-row">
+                                            <td>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="standart-shipping">Standart:</label>
+                                                </div>
+                                            </td>
+                                            <td>$10.00</td>
+                                        </tr>
+
+                                        <tr class="summary-shipping-row">
+                                            <td>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="express-shipping" name="shipping" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="express-shipping">Express:</label>
+                                                </div>
+                                            </td>
+                                            <td>$20.00</td>
+                                        </tr>
+
+                                        <tr class="summary-shipping-estimate">
+                                            <td>Estimate for Your Country<br /> <a href="dashboard.html">Change address</a></td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+
+                                        <tr class="summary-total">
+                                            <td>Total:</td>
+                                            <td>$160.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                            </div>
+
+                            <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+                        </aside>
+                    </div>
                 </div>
-                <aside className="col-xl-3 order-xl-first">
-                  <ShopSidebar setFilters={setFilters} filters={filters} />
-                </aside>
-              </div>
             </div>
           </div>
         </main>
@@ -742,6 +800,7 @@ useEffect(() => {
           </div>
         </div>
       </div> */}
+      {/* </Provider> */}
       <Script src="./scripts/jquery.min.js"></Script>
       <Script src="./scripts/bootstrap.bundle.min.js"></Script>
       <Script src="./scripts/jquery.hoverIntent.min.js"></Script>

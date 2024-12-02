@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Nike",
+        "description": "A global leader in athletic footwear, apparel, and accessories.",
+        "logo": "/images/brands/nike-logo.jpg",
+        "website": "https://www.nike.com"
+    },
+    {
+        "id": 2,
+        "name": "Adidas",
+        "description": "Innovative sportswear and equipment brand.",
+        "logo": "/images/brands/adidas-logo.jpg",
+        "website": "https://www.adidas.com"
+    },
+    {
+        "id": 3,
+        "name": "Puma",
+        "description": "Style and performance-focused sports brand.",
+        "logo": "/images/brands/puma-logo.jpg",
+        "website": "https://www.puma.com"
+    },
+    {
+        "id": 4,
+        "name": "Under Armour",
+        "description": "Performance-driven athletic wear and accessories.",
+        "logo": "/images/brands/under-armour-logo.jpg",
+        "website": "https://www.underarmour.com"
+    },
+    {
+        "id": 5,
+        "name": "Reebok",
+        "description": "Iconic sportswear and lifestyle brand.",
+        "logo": "/images/brands/reebok-logo.jpg",
+        "website": "https://www.reebok.com"
+    },
+    {
+        "id": 6,
+        "name": "Asics",
+        "description": "High-quality running shoes and sportswear.",
+        "logo": "/images/brands/asics-logo.jpg",
+        "website": "https://www.asics.com"
+    }
+]

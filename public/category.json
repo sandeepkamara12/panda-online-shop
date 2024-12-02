@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "Dresses",
+        "description": "A variety of premium coffee products.",
+        "image": "/images/categories/coffee.jpg",
+        "total_products":1
+    },
+    {
+        "id": 2,
+        "name": "T-shirts",
+        "description": "Stylish and functional mugs for your beverages.",
+        "image": "/images/categories/mugs.jpg",
+        "total_products":2
+    },
+    {
+        "id": 3,
+        "name": "Bags",
+        "description": "High-performance coffee machines and accessories.",
+        "image": "/images/categories/machines.jpg",
+        "total_products":3
+    },
+    {
+        "id": 4,
+        "name": "Jackets",
+        "description": "A variety of premium coffee products.",
+        "image": "/images/categories/coffee.jpg",
+        "total_products":4
+    },
+    {
+        "id": 5,
+        "name": "Jumpers",
+        "description": "Stylish and functional mugs for your beverages.",
+        "image": "/images/categories/mugs.jpg",
+        "total_products":5
+    },
+    {
+        "id": 6,
+        "name": "Jeans",
+        "description": "High-performance coffee machines and accessories.",
+        "image": "/images/categories/machines.jpg",
+        "total_products":6
+    },
+    {
+        "id": 7,
+        "name": "Sportwear",
+        "description": "High-performance coffee machines and accessories.",
+        "image": "/images/categories/machines.jpg",
+        "total_products":7
+    }
+]

@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Brown",
+        "hex": "b87145",
+        "description": "Bright and bold red, perfect for standout styles.",
+        "image": "/images/colors/red-tshirt.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Yellow",
+        "hex": "f0c04a",
+        "description": "Bright and bold red, perfect for standout styles.",
+        "image": "/images/colors/red-tshirt.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Black",
+        "hex": "333333",
+        "description": "Cool and calming blue, great for casual wear.",
+        "image": "/images/colors/blue-tshirt.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Red",
+        "hex": "cc3333",
+        "description": "Classic black, versatile for all occasions.",
+        "image": "/images/colors/black-tshirt.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Blue",
+        "hex": "3399cc",
+        "description": "Clean and crisp white, ideal for any outfit.",
+        "image": "/images/colors/white-tshirt.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Green",
+        "hex": "669933",
+        "description": "Fresh and vibrant green, perfect for nature lovers.",
+        "image": "/images/colors/green-tshirt.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Pink",
+        "hex": "f2719c",
+        "description": "Bright and cheerful yellow for sunny vibes.",
+        "image": "/images/colors/yellow-tshirt.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Grey",
+        "hex": "ebebeb",
+        "description": "Bright and cheerful yellow for sunny vibes.",
+        "image": "/images/colors/yellow-tshirt.jpg"
+    }
+]
