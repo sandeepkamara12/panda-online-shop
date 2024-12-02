@@ -83,7 +83,7 @@ useEffect(() => {
         <Header />
 
         <main className="main">
-          <PageHeader />
+          <PageHeader title="List" subtitle="Shop" />
           <Breadcrumbs />
           <div className="page-content">
             <div className="container">
