@@ -14,6 +14,7 @@ import Pagination from "./components/products/product/Pagination";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filter } from "@/store/productSlice";
+import NoContent from "./components/common/NoContent";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -115,7 +116,7 @@ useEffect(() => {
                           />
                         ))
                     ) : (
-                      <p>No record found.</p>
+                      <NoContent />
                     )}
                   </div>
 

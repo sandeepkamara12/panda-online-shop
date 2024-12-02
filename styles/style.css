@@ -10926,7 +10926,8 @@ button:focus {
     display: inline-block;
     font-weight: 400;
     font-size: 1.2rem;
-    margin-left: auto; }
+    margin-left: auto; cursor:pointer;}
+    .widget-clean a.sidebar-filter-clear:hover {color:#cc9966;}
 
 .widget-collapsible .widget-title a {
   position: relative;
