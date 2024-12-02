@@ -59,11 +59,11 @@ export default function Home() {
   }, [totalProducts, visibleCount, isLoading]);
 
 useEffect(() => {
-  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.color === '') {
+  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand === '' && filters?.color === '') {
     setVisibleCount(1);
   }
-  dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color}));
-}, [filters?.category, filters?.size, filters?.color, dispatch]);
+  dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color, brand:filters?.brand}));
+}, [filters?.category, filters?.size, filters?.color, filters?.brand, dispatch]);
 
 useEffect(() => {
   if (visibleCount > totalProducts) {

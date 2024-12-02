@@ -10,10 +10,8 @@ const ShopSidebar = ({setFilters, filters}) => {
   const categories = useSelector((state) => state.categories.categories);
   const sizes = useSelector((state) => state.sizes.sizes);
   const colors = useSelector((state) => state.colors.colors);
-  const [brands, setBrands] = useState([]);
-  useEffect(()=>{
-    fetch('./brand.json').then(response=>response.json()).then(data=>setBrands(data)).catch(error=>console.log(error, 'while getting all the brands'));
-  },[])
+  const brands = useSelector((state) => state.brands.brands);
+
   return (    
       <div className="sidebar sidebar-shop">
         <div className="widget widget-clean">
@@ -25,7 +23,7 @@ const ShopSidebar = ({setFilters, filters}) => {
         <Categories categories={categories} setFilters={setFilters} filters={filters} />
         <ProductSize sizes={sizes} setFilters={setFilters} filters={filters} />
         <ProductColor colors={colors} setFilters={setFilters} filters={filters} />
-        <ProductBrand brands={brands} />
+        <ProductBrand brands={brands} setFilters={setFilters} filters={filters} />
         <ProductPriceSlider />
       </div>
   );

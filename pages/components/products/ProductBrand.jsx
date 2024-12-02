@@ -1,6 +1,14 @@
 import React from "react";
 
-const ProductBrand = ({ brands }) => {
+const ProductBrand = ({ brands, setFilters, filters }) => {
+  const handleCheckboxChange = (productBrand) => {
+    setFilters((prev) => {
+      return {
+        ...prev,
+        brand: `brand_${productBrand}`,
+      };
+    });
+  };
   return (
     <div className="widget widget-collapsible">
       <h3 className="widget-title">
@@ -18,18 +26,21 @@ const ProductBrand = ({ brands }) => {
       <div className="collapse show" id="widget-4">
         <div className="widget-body">
           <div className="filter-items">
-            {brands &&
+          {brands &&
               brands?.length > 0 &&
-              brands.map((brand) => (
-                <div className="filter-item" key={brand?.name}>
+              brands?.map((brand) => (
+                <div className="filter-item" key={brand?.id}>
                   <div className="custom-control custom-checkbox">
                     <input
                       type="checkbox"
                       className="custom-control-input"
-                      id={brand?.name}
+                      id={`brand_${brand?.id}`}
+                      name={'brand'}
+                      onChange={() => handleCheckboxChange(brand?.id)}
+                      checked={filters?.brand?.includes(brand?.id)} 
                     />
-                    <label className="custom-control-label" htmlFor={brand?.name}>
-                      {brand?.name}
+                    <label className="custom-control-label" htmlFor={`brand_${brand?.id}`}>
+                      {brand?.name.toUpperCase()}
                     </label>
                   </div>
                 </div>

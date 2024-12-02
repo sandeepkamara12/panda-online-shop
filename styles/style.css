@@ -7758,10 +7758,10 @@ a:focus {
 .product-cat {
   color: #777;
   font-weight: 300;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   line-height: 1.2;
   letter-spacing: -.01em;
-  margin-bottom: .3rem; }
+  margin-bottom: .5rem; }
 
 .product-cat a {
   color: inherit; }
@@ -9511,6 +9511,9 @@ small.form-text {
   border: 1px solid #dadada;
   box-shadow: none !important; }
 
+.filter-colors .custom-control-label::after,
+.filter-colors .custom-control-label::before {right: 0; top: 0.2rem; margin: auto; opacity: 0!important;}
+
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
   border-color: #dadada; }
 
@@ -10998,14 +11001,18 @@ button:focus {
   flex-wrap: wrap;
   padding-top: .7rem;
   padding-bottom: .5rem; }
+  .layout-one .filter-colors a,
+  .layout-three .filter-colors a {width: 1.3rem; height: 1.3rem;}
+  .layout-one .filter-colors a:hover,
+  .layout-three .filter-colors a:hover {box-shadow: none;}
   .filter-colors a {
     position: relative;
     display: block;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.0rem;
+    height: 2.0rem;
     border-radius: 50%;
     border: .2rem solid #fff;
-    margin: 0 .3rem .3rem;
+    margin: 0 .1rem .0rem;
     transition: box-shadow .35s ease; }
     .filter-colors a:after {
       color: #fff;

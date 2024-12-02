@@ -2,10 +2,11 @@ import React from "react";
 
 const ProductColor = ({ colors, setFilters, filters }) => {
   const handleCheckboxChange = (productColor) => {
-    setFilters(() => {
+    setFilters((prev) => {
       // const isAlreadySelected = prev.color.includes(productColor.toLowerCase());
 
       return {
+        ...prev,
         color: productColor
       };
     });
@@ -41,14 +42,11 @@ const ProductColor = ({ colors, setFilters, filters }) => {
                       onChange={() => handleCheckboxChange(color?.hex)}
                       checked={filters.color.includes(color?.hex)} 
                     />
-                    <label className="custom-control-label" style={{ background: `#${color?.hex}` }} htmlFor={color?.hex}>
-                      <span className="">{color?.name}</span>
+                    <label className="custom-control-label pl-0"  htmlFor={color?.hex}>
+                      <a className={`${filters.color.includes(color?.hex)?'selected':''}`} style={{ background: `#${color?.hex}` }}></a>
                     </label>
                   </div>
                 </div>
-                {/* // <a href="#" style={{ background: color?.hex }} key={color?.name}>
-                //   <span className="sr-only">{color?.name}</span>
-                // </a> */}
                 </>
               ))}
           </div>

@@ -9,6 +9,7 @@ import ProductWishlist from "./ProductWishlist";
 import ProductReview from "./ProductReview";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "@/store/productSlice";
+import ProductBrand from "./ProductBrand";
 
 const Product = ({product, layout}) => {
   const count = useSelector((state) => state.products.value);
@@ -25,12 +26,9 @@ const Product = ({product, layout}) => {
             <div className={`${layout === 'three' ? 'col-12 order-last' : 'col-12 col-md-5 col-lg-4 order-last'}`}>
               <div className={`product-list-action ${layout === 'three' ? 'pt-2' : 'pt-2 pt-md-3'}`}>
                 <div className={`product-price ${layout === 'three' ? 'justify-content-center' : ''}`}>${product?.price}</div>
-                {/* <p>Count: {count}</p> */}
                 <div className={`ratings-container ${layout === 'three' ? 'justify-content-center' : ''}`}>
                   <ProductReview reviewCount={product?.review_count} rating={product?.rating} />
                 </div>
-                {/* <button onClick={() => dispatch(increment())}>Increment</button>
-                <button onClick={() => dispatch(decrement())}>Decrement</button> */}
                 <div className="product-action">
                   <a
                     href="popup/quickView.html"
@@ -51,16 +49,37 @@ const Product = ({product, layout}) => {
             <div className={`${layout === 'three' ? 'col-12' : 'col-md-7 col-lg-8'}`}>
               <div className="product-body product-action-inner">
                 {/* <ProductWishlist /> */}
-                <ProductCategory category={product?.category} />
-                {product?.size && product?.size.length>0 && product?.size.map(size=>size + ' ')}
-                <div>{product?.color ? product?.color : 'no-color'}</div>
                 <ProductTitle title={product?.name} />
                 <div className={`product-content ${layout === 'three' ? 'd-none' : ''}`}>
                   <ProductDescription description={product?.description} />
                 </div>
-                <div className={`product-nav product-nav-thumbs ${layout === 'three' ? 'mt-2 justify-content-center' : ''}`}>
-                  <ProductThumbnails thumbnails={product?.thumbnails} />
+                <div className={`product-cat text-capitalize ${layout === 'three' ? 'mt-1' : ''}`}>
+                  <ProductCategory category={product?.category} />
                 </div>
+                <div className={`product-cat text-capitalize ${layout === 'three' ? '' : ''}`}>
+                  <ProductBrand brand={product?.brand} />
+                </div>
+                  <div className="product-cat sizes mb-1">
+                  {
+                    product?.size && product?.size.length>0 && product?.size.map(size=>
+                      <span className="mr-2 text-uppercase">
+                        {size}
+                      </span>
+                    )
+                  }
+                  </div>
+                <div className={`d-flex colors py-0 filter-colors ${layout === 'three' ? 'justify-content-center' : 'align-items-start'}`}>
+                {
+                  product?.color && product?.color.length>0 && product?.color?.map(color=> {
+                    return (                      
+                      color ? <a className="mb-0" style={{ background: `#${color}` }}></a> : ''
+                    )
+                  })
+                }
+                </div>
+                {/* <div className={`product-nav product-nav-thumbs ${layout === 'three' ? 'mt-2 justify-content-center' : ''}`}>
+                  <ProductThumbnails thumbnails={product?.thumbnails} />
+                </div> */}
               </div>
             </div>
           </div>

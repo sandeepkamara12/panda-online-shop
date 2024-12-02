@@ -9,7 +9,8 @@ const productSlice = createSlice({
   },
   reducers: {
     filter: (state, action) => {
-      const {category, size, color} = action.payload;
+      const {category, size, color, brand} = action.payload;
+      console.log(brand, 'brands');
         state.filteredProducts = state.products.filter((product) => {
           
           const matchesCategory =
@@ -24,10 +25,13 @@ const productSlice = createSlice({
 
             const matchesColor =
             color !==''
-              ? product.color.includes(cl)
+              ? product.color.includes(color)
               : true;
-              console.log(matchesColor);
-              return matchesCategory && matchesSize && matchesColor;
+            const matchesBrand = brand != ""
+                ? product?.brand == brand.replace("brand_", "")
+                : true;
+
+              return matchesCategory && matchesSize && matchesColor && matchesBrand;
         });
     }
   },
