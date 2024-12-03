@@ -1,5 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+Hi everyone!
 
+This is an ecommerce wesbite developed in Next JS and designed in the bootstrap 4.3.0
+
+![Alt text](public/screenshot.png)
 ## Getting Started
 
 First, run the development server:

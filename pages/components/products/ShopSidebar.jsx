@@ -11,12 +11,14 @@ const ShopSidebar = ({setFilters, filters}) => {
   const sizes = useSelector((state) => state.sizes.sizes);
   const colors = useSelector((state) => state.colors.colors);
   const brands = useSelector((state) => state.brands.brands);
-
+const clearAllFilter = () => {
+  setFilters({category:[], size:[], color:'', brand:'', price:'', sort:''})
+}
   return (    
       <div className="sidebar sidebar-shop">
         <div className="widget widget-clean">
           <label>Filters:</label>
-          <a href="#" className="sidebar-filter-clear">
+          <a onClick={clearAllFilter} className="sidebar-filter-clear">
             Clean All
           </a>
         </div>

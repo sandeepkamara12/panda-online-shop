@@ -3,9 +3,10 @@ import React from "react";
 const ProductBrand = ({ brands, setFilters, filters }) => {
   const handleCheckboxChange = (productBrand) => {
     setFilters((prev) => {
+      let brand = prev.brand.includes(`brand_${productBrand}`)
       return {
         ...prev,
-        brand: `brand_${productBrand}`,
+        brand: brand ? '' : `brand_${productBrand}`,
       };
     });
   };
