@@ -48,20 +48,11 @@ const ProductFilters = ({setLayout, layout, productVisibleCount, totalProducts})
         <div className="toolbox-sort">
           <label htmlFor="sortby">Sort by:</label>
           <div className="select-custom">
-            {/* <select name="sortby" id="sortby" className="form-control">
-              <option value="popularity" selected="selected">Most Popular</option>
-              <option value="popularity">All</option>
-              <option value="popularity">Best Seller</option>
-              <option value="rating">Newest</option>
-              <option value="date">Sale</option>
-              <option value="date">Limited</option>
-              <option value="date">Price Low to High</option>
-              <option value="date">Price High to Low</option>
-            </select> */}
             <Select options={options}
-             placeholder="Select"
+              placeholder="Select"
               styles={customStyles}
               components={{ DropdownIndicator: CustomDropdownIndicator }}
+              instanceId="shop-sorting-filter"
              />
           </div>
         </div>

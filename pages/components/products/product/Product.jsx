@@ -62,7 +62,7 @@ const Product = ({product, layout}) => {
                   <div className="product-cat sizes mb-1">
                   {
                     product?.size && product?.size.length>0 && product?.size.map(size=>
-                      <span className="mr-2 text-uppercase">
+                      <span className="mr-2 text-uppercase" key={size}>
                         {size}
                       </span>
                     )
@@ -72,7 +72,7 @@ const Product = ({product, layout}) => {
                 {
                   product?.color && product?.color.length>0 && product?.color?.map(color=> {
                     return (                      
-                      color ? <a className="mb-0" style={{ background: `#${color}` }}></a> : ''
+                      color ? <a className="mb-0" style={{ background: `#${color}` }} key={color}></a> : ''
                     )
                   })
                 }

@@ -3,8 +3,6 @@ import React from "react";
 const ProductColor = ({ colors, setFilters, filters }) => {
   const handleCheckboxChange = (productColor) => {
     setFilters((prev) => {
-      // const isAlreadySelected = prev.color.includes(productColor.toLowerCase());
-
       return {
         ...prev,
         color: productColor
@@ -31,7 +29,6 @@ const ProductColor = ({ colors, setFilters, filters }) => {
             {colors &&
               colors?.length > 0 &&
               colors?.map((color) => (
-                <>
                 <div className="filter-item" key={color?.hex}>
                   <div className="custom-control custom-checkbox">
                     <input
@@ -47,7 +44,6 @@ const ProductColor = ({ colors, setFilters, filters }) => {
                     </label>
                   </div>
                 </div>
-                </>
               ))}
           </div>
         </div>
