@@ -41,7 +41,7 @@ const ProductSize = ({ sizes, setFilters, filters }) => {
                       id={size?.name}
                       name={'size'}
                       onChange={() => handleCheckboxChange(size?.name)}
-                      checked={filters.size.includes(size?.name)} 
+                      checked={filters?.size?.includes(size?.name)} 
                     />
                     <label className="custom-control-label" htmlFor={size?.name}>
                       {size?.name.toUpperCase()}

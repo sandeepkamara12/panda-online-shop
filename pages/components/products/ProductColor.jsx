@@ -37,10 +37,10 @@ const ProductColor = ({ colors, setFilters, filters }) => {
                       id={color?.hex}
                       name={'color'}
                       onChange={() => handleCheckboxChange(color?.hex)}
-                      checked={filters.color.includes(color?.hex)} 
+                      checked={filters?.color?.includes(color?.hex)} 
                     />
                     <label className="custom-control-label pl-0"  htmlFor={color?.hex}>
-                      <a className={`${filters.color.includes(color?.hex)?'selected':''}`} style={{ background: `#${color?.hex}` }}></a>
+                      <a className={`${filters?.color?.includes(color?.hex)?'selected':''}`} style={{ background: `#${color?.hex}` }}></a>
                     </label>
                   </div>
                 </div>

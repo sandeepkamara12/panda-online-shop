@@ -11,9 +11,9 @@ const ShopSidebar = ({setFilters, filters}) => {
   const sizes = useSelector((state) => state.sizes.sizes);
   const colors = useSelector((state) => state.colors.colors);
   const brands = useSelector((state) => state.brands.brands);
-const clearAllFilter = () => {
-  setFilters({category:[], size:[], color:'', brand:'', price:'', sort:''})
-}
+  const clearAllFilter = () => {
+    setFilters({category:[], size:[], color:'', brand:'', price:{min:0, max:100}, sort:''})
+  }
   return (    
       <div className="sidebar sidebar-shop">
         <div className="widget widget-clean">
@@ -26,7 +26,7 @@ const clearAllFilter = () => {
         <ProductSize sizes={sizes} setFilters={setFilters} filters={filters} />
         <ProductColor colors={colors} setFilters={setFilters} filters={filters} />
         <ProductBrand brands={brands} setFilters={setFilters} filters={filters} />
-        <ProductPriceSlider />
+        <ProductPriceSlider setFilters={setFilters} filters={filters} />
       </div>
   );
 };

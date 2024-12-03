@@ -34,7 +34,7 @@ export default function Home() {
   const [layout, setLayout] = useState("three");
   const [visibleCount, setVisibleCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
-  const [filters, setFilters] = useState({category:[], size:[], color:'', brand:'', price:'', sort:''});
+  const [filters, setFilters] = useState({category:[], size:[], color:'', brand:'', price:{min:0, max:100}, sort:''});
   const loaderRef = useRef(null);
 
   useEffect(() => {
@@ -60,11 +60,11 @@ export default function Home() {
   }, [totalProducts, visibleCount, isLoading]);
 
 useEffect(() => {
-  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand === '' && filters?.color === '') {
+  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand === '' && filters?.color === '' && filters?.sort === '') {
     setVisibleCount(1);
   }
-  dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color, brand:filters?.brand}));
-}, [filters?.category, filters?.size, filters?.color, filters?.brand, dispatch]);
+  dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color, brand:filters?.brand, price:filters?.price, sort:filters?.sort}));
+}, [filters?.category, filters?.size, filters?.color, filters?.brand, filters?.price, filters?.sort, dispatch]);
 
 useEffect(() => {
   if (visibleCount > totalProducts) {
@@ -95,6 +95,8 @@ useEffect(() => {
                     layout={layout}
                     productVisibleCount={visibleCount}
                     totalProducts={totalProducts}
+                    setFilters={setFilters}
+                    filters={filters}
                   />
                   <div
                     className={`products mb-3 layout-${layout} ${
@@ -477,10 +479,10 @@ useEffect(() => {
       <Script src="./scripts/jquery.waypoints.min.js"></Script>
       <Script src="./scripts/superfish.min.js"></Script>
       <Script src="./scripts/owl.carousel.min.js"></Script>
-      <Script src="./scripts/wNumb.js"></Script>
+      {/* <Script src="./scripts/wNumb.js"></Script> */}
       <Script src="./scripts/bootstrap-input-spinner.js"></Script>
       <Script src="./scripts/jquery.magnific-popup.min.js"></Script>
-      <Script src="./scripts/nouislider.min.js"></Script>
+      {/* <Script src="./scripts/nouislider.min.js"></Script> */}
       <Script src="./scripts/main.js"></Script>
     </>
   );

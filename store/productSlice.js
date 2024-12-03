@@ -9,30 +9,49 @@ const productSlice = createSlice({
   },
   reducers: {
     filter: (state, action) => {
-      const {category, size, color, brand} = action.payload;
-      console.log(brand, 'brands');
-        state.filteredProducts = state.products.filter((product) => {
+      const {category, size, color, brand, price, sort} = action.payload;
+        let filtered = state.products.filter((product) => {
           
+          /* Update the products by changing the product category */
           const matchesCategory =
-            category.length > 0
-            ? category.some((id) => product.category.includes(id))
+            category?.length > 0
+            ? category?.some((id) => product.category.includes(id))
             : true;
 
+            /* Update the products by changing the product price */
             const matchesSize =
-            size.length > 0
+            size?.length > 0
               ? size.some((sz) => product.size.includes(sz))
               : true;
 
+            /* Update the products by changing the product color */
             const matchesColor =
             color !==''
               ? product.color.includes(color)
               : true;
+            
+            /* Update the products by changing the product brand */
             const matchesBrand = brand != ""
-                ? product?.brand == brand.replace("brand_", "")
+                ? product?.brand == brand?.replace("brand_", "")
                 : true;
 
-              return matchesCategory && matchesSize && matchesColor && matchesBrand;
+            /* Update the products by changing the price value */
+            const matchesPrice = 
+              product?.price >= price?.min  && product?.price <= price?.max 
+
+            /* Update the products by changing the sort value */
+          
+            const matchesSort = sort !== "" && sort !== "lth" && sort !== "htl" ? product?.badge == sort : true;
+            return matchesCategory && matchesSize && matchesColor && matchesBrand && matchesPrice && matchesSort;
         });
+        if (sort === "lth") {
+          filtered = filtered.sort((a, b) => a.price - b.price); // Low to High
+        } else if (sort === "htl") {
+          filtered = filtered.sort((a, b) => b.price - a.price); // High to Low
+        }
+    
+        // Update the state with filtered and sorted products
+        state.filteredProducts = filtered;
     }
   },
 });

@@ -3,7 +3,7 @@ import React from "react";
 const Categories = ({ categories, setFilters, filters }) => {
   const handleCheckboxChange = (categoryId) => {
     setFilters((prev) => {
-      const isAlreadySelected = prev.category.includes(categoryId);
+      const isAlreadySelected = prev.category?.includes(categoryId);
 
       return {
         ...prev,
@@ -41,7 +41,7 @@ const Categories = ({ categories, setFilters, filters }) => {
                       id={category?.id}
                       name={'category'}
                       onChange={() => handleCheckboxChange(category?.id)}
-                      checked={filters.category.includes(category?.id)} 
+                      checked={filters?.category?.includes(category?.id)} 
                     />
                     <label className="custom-control-label" htmlFor={category?.id}>
                       {category?.name}
