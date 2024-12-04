@@ -76,7 +76,7 @@ const Product = ({ product, layout }) => {
                       rating={product?.rating}
                     />
                   </div>
-                  <div className="product-action">
+                  <div className={`${layout === 'three' ? 'd-none': 'd-none'} product-action`}>
                     <a
                       href="popup/quickView.html"
                       className="btn-product btn-quickview"
@@ -111,6 +111,11 @@ const Product = ({ product, layout }) => {
               >
                 <div className="product-body product-action-inner">
                   {/* <ProductWishlist /> */}
+                  <div
+                    className={`product-cat text-capitalize`}
+                  >
+                    <ProductCategory category={product?.category} />
+                  </div>
                   <ProductTitle title={product?.name} />
                   <div
                     className={`product-content ${
@@ -119,31 +124,24 @@ const Product = ({ product, layout }) => {
                   >
                     <ProductDescription description={product?.description} />
                   </div>
-                  <div
-                    className={`product-cat text-capitalize ${
-                      layout === "three" ? "mt-1" : ""
-                    }`}
-                  >
-                    <ProductCategory category={product?.category} />
-                  </div>
-                  <div
+                  {/* <div
                     className={`product-cat text-capitalize ${
                       layout === "three" ? "" : ""
                     }`}
                   >
                     <ProductBrand brand={product?.brand} />
-                  </div>
-                  <div className={`product-size mb-1 ${layout === 'three' ? 'justify-content-center': ''}`}>
+                  </div> */}
+                  <div className={`product-size ${layout === 'three' ? 'justify-content-center': ''}`}>
                   {
                       sizeChart && sizeChart?.map(size=>{                        
-                        return (<a title="" className={`text-uppercase ${product?.size?.includes(size) ? 'active' :''}`} key={size}>
+                        return (<a title="" className={`text-uppercase ${product?.size?.includes(size) ? 'active' :'disabled'}`} key={size}>
                         {size}
                       </a>)
                       })
                     }
                   </div>
                   <div
-                    className={`d-flex colors py-0 filter-colors ${
+                  className={`filter-colors m-0 ${
                       layout === "three"
                         ? "justify-content-center"
                         : "align-items-start"

@@ -4527,7 +4527,9 @@ a:focus {
 
 .product-countdown.countdown-primary .countdown-amount {
   color: #c96; }
-
+  .product-body .product-title {
+    margin-bottom: 1.6rem;
+  }
 .product-title a:hover, .product-title a:focus {
   color: #c96; }
 
@@ -8658,7 +8660,7 @@ a:focus {
     font-weight: 300;
     font-size: 1.4rem;
     line-height: 1.43;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
     margin-bottom: 1.4rem; }
     .product.product-list .product-content p {
       margin-bottom: 0; }
@@ -11000,10 +11002,13 @@ button:focus {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding-top: .7rem;
-  padding-bottom: .5rem; }
+  top: 16px;
+  right: 10px;
+  /* padding-top: .7rem;
+  padding-bottom: .5rem;  */
+}
   .layout-one .filter-colors a,
-  .layout-three .filter-colors a {width: 1.3rem; height: 1.3rem;}
+  .layout-three .filter-colors a {width: 1.3rem; height: 1.3rem; border-radius: 4px;}
   .layout-one .filter-colors a:hover,
   .layout-three .filter-colors a:hover {box-shadow: none;}
   .filter-colors a {
