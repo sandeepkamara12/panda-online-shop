@@ -3,10 +3,14 @@ import React from "react";
 const ProductBrand = ({ brands, setFilters, filters }) => {
   const handleCheckboxChange = (productBrand) => {
     setFilters((prev) => {
-      let brand = prev.brand.includes(`brand_${productBrand}`)
+      console.log(prev, 'hi')
+      let isAlreadySelected = prev.brand.includes(productBrand)
       return {
         ...prev,
-        brand: brand ? '' : `brand_${productBrand}`,
+        brand: isAlreadySelected
+          ? prev.brand.filter((br) => br !== productBrand) 
+          : [...prev.brand, productBrand]
+        // brand: isAlreadySelected ? '' : `brand_${productBrand}`,
       };
     });
   };

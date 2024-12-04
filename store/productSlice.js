@@ -9,7 +9,6 @@ const productSlice = createSlice({
   },
   reducers: {
     filter: (state, action) => {
-      console.log('reducer');
       const {category, size, color, brand, price, sort} = action.payload;
         let filtered = state.products.filter((product) => {
           
@@ -32,9 +31,11 @@ const productSlice = createSlice({
               : true;
             
             /* Update the products by changing the product brand */
-            const matchesBrand = brand != ""
-                ? product?.brand == brand?.replace("brand_", "")
-                : true;
+
+            const matchesBrand =
+            brand?.length > 0
+              ? brand.some((br) => product.brand == br)
+              : true;
 
             /* Update the products by changing the price value */
             const matchesPrice =

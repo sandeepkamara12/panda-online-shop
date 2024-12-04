@@ -12,8 +12,8 @@ const ShopSidebar = ({clearFilter, setClearFilter, setFilters, filters}) => {
   const colors = useSelector((state) => state.colors.colors);
   const brands = useSelector((state) => state.brands.brands);
   const clearAllFilter = () => {
-    if(filters?.category?.length >0 || filters?.size?.length >0 || filters?.color !== "" || filters?.brand !== "" || filters?.price?.min >0 || filters?.price?.max < 100 || filters?.sort !== "") {
-      setFilters({category:[], size:[], color:'', brand:'', price:{min:0, max:100}, sort:''})
+    if(filters?.category?.length >0 || filters?.size?.length >0 || filters?.color !== "" || filters?.brand?.length >0 || filters?.price?.min >0 || filters?.price?.max < 100 || filters?.sort !== "") {
+      setFilters({category:[], size:[], color:'', brand:[], price:{min:0, max:100}, sort:''})
       setClearFilter(false);
       console.log('clear')
     }
