@@ -36,18 +36,24 @@ const productSlice = createSlice({
                 : true;
 
             /* Update the products by changing the price value */
-            const matchesPrice = 
-              product?.price >= price?.min  && product?.price <= price?.max 
+            const matchesPrice =
+              (product?.price >= price?.min && product?.price <= price?.max) ||
+              (product?.salePrice && product?.salePrice >= price?.min && product?.salePrice <= price?.max);
 
             /* Update the products by changing the sort value */
           
-            const matchesSort = sort !== "" && sort !== "lth" && sort !== "htl" ? product?.badge == sort : true;
+            const matchesSort = sort !== "" && sort !== "lth" && sort !== "htl" && sort !== "sale" ? product?.badge == sort : true;
             return matchesCategory && matchesSize && matchesColor && matchesBrand && matchesPrice && matchesSort;
         });
         if (sort === "lth") {
           filtered = filtered.sort((a, b) => a.price - b.price); // Low to High
-        } else if (sort === "htl") {
+        }
+        else if (sort === "htl") {
           filtered = filtered.sort((a, b) => b.price - a.price); // High to Low
+        }
+        else if (sort === "sale") {
+          /* Sort Sales Products */
+          filtered = filtered.filter(product => product?.salePrice); 
         }
     
         // Update the state with filtered and sorted products
