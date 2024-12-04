@@ -20,6 +20,7 @@ const ShopSidebar = ({clearFilter, setClearFilter, setFilters, filters}) => {
   }
   return (    
       <div className="sidebar sidebar-shop">
+      <div className="">
         <div className="widget widget-clean">
           <label>Filters:</label>
           <a onClick={clearAllFilter} className={`sidebar-filter-clear ${!clearFilter ? 'disabled' : ''}`}>
@@ -32,6 +33,7 @@ const ShopSidebar = ({clearFilter, setClearFilter, setFilters, filters}) => {
         <ProductColor colors={colors} setFilters={setFilters} filters={filters} />
         <ProductBrand brands={brands} setFilters={setFilters} filters={filters} />
         <ProductPriceSlider setFilters={setFilters} filters={filters} />
+      </div>
       </div>
   );
 };

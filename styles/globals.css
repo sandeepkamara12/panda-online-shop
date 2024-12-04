@@ -45,3 +45,26 @@ a {
 .header-right {
   padding: 10px 0;
 }
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  transition: all 0.3s;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -250px;
+  }
+  #sidebar.active {
+      margin-left: 0; 
+  }
+  #sidebarCollapse span {
+      display: none;
+  }
+}

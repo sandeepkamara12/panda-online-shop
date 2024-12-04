@@ -47,7 +47,7 @@ const Product = ({ product, layout }) => {
               >
                 <div
                   className={`product-list-action ${
-                    layout === "three" ? "pt-2" : "pt-2 pt-md-3"
+                    layout === "three" ? "pt-0" : "pt-2 pt-md-3"
                   }`}
                 >
                   <div
@@ -76,7 +76,7 @@ const Product = ({ product, layout }) => {
                       rating={product?.rating}
                     />
                   </div>
-                  <div className={`${layout === 'three' ? 'd-none': 'd-none'} product-action`}>
+                  <div className={`product-action`}>
                     <a
                       href="popup/quickView.html"
                       className="btn-product btn-quickview"
@@ -140,7 +140,7 @@ const Product = ({ product, layout }) => {
                       })
                     }
                   </div>
-                  <div
+                  {/* <div
                   className={`filter-colors m-0 ${
                       layout === "three"
                         ? "justify-content-center"
@@ -160,10 +160,7 @@ const Product = ({ product, layout }) => {
                           ""
                         );
                       })}
-                  </div>
-                  {/* <div className={`product-nav product-nav-thumbs ${layout === 'three' ? 'mt-2 justify-content-center' : ''}`}>
-                  <ProductThumbnails thumbnails={product?.thumbnails} />
-                </div> */}
+                  </div> */}
                 </div>
               </div>
             </div>

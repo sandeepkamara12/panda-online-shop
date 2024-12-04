@@ -45,20 +45,20 @@ const Header = () => {
                 <ul>
                   <li>
                     <a href="tel:#">
-                      <i className="icon-phone"></i>Call: +917986 680 517
+                      <i className="icon-phone"></i>+917986 680 517
                     </a>
                   </li>
                   <li>
-                    <a href="wishlist.html">
-                      <i className="icon-heart-o"></i>Wishlist <span>(3)</span>
+                    <a href="#">
+                      <i className="icon-heart-o"></i><label className="mb-0 d-none d-xl-inline-block">Wishlist</label> <span className="wishlist-count text-white">3</span>
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href="about.html">About</a>
                   </li>
                   <li>
                     <a href="contact.html">Contact</a>
-                  </li>
+                  </li> */}
                   <li>
                     <a href="#signin-modal" data-toggle="modal">
                       <i className="icon-user"></i>Login
@@ -87,6 +87,12 @@ const Header = () => {
               <ul className="menu">
                 <li>
                   <a href="category.html">Shop</a>
+                </li>
+                <li>
+                  <a href="category.html">About</a>
+                </li>
+                <li>
+                  <a href="category.html">Contact</a>
                 </li>
               </ul>
             </nav>
