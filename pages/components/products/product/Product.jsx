@@ -4,11 +4,11 @@ import ProductImage from "./ProductImage";
 import ProductCategory from "./ProductCategory";
 import ProductTitle from "./ProductTitle";
 import ProductDescription from "./ProductDescription";
-import ProductThumbnails from "./ProductThumbnails";
-import ProductWishlist from "./ProductWishlist";
+// import ProductThumbnails from "./ProductThumbnails";
+// import ProductWishlist from "./ProductWishlist";
 import ProductReview from "./ProductReview";
 import { useSelector, useDispatch } from "react-redux";
-import ProductBrand from "./ProductBrand";
+// import ProductBrand from "./ProductBrand";
 
 const Product = ({ product, layout }) => {
   const count = useSelector((state) => state.products.value);

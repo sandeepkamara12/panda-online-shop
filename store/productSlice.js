@@ -26,8 +26,8 @@ const productSlice = createSlice({
 
             /* Update the products by changing the product color */
             const matchesColor =
-            color !==''
-              ? product.color.includes(color)
+            color?.length > 0
+              ? color.some((cl) => product.color.includes(cl))
               : true;
             
             /* Update the products by changing the product brand */

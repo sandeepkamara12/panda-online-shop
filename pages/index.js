@@ -35,7 +35,7 @@ export default function Home() {
   const [visibleCount, setVisibleCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [clearFilter, setClearFilter] = useState(false);
-  const [filters, setFilters] = useState({category:[], size:[], color:'', brand:[], price:{min:0, max:100}, sort:''});
+  const [filters, setFilters] = useState({category:[], size:[], color:[], brand:[], price:{min:0, max:100}, sort:''});
   const loaderRef = useRef(null);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function Home() {
   }, [totalProducts, visibleCount, isLoading]);
 
 useEffect(() => {
-  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand?.length === 0 && filters?.color === '' && filters?.sort === '' && (filters?.price?.min == 0 && filters?.price?.max == 100)) {
+  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand?.length === 0 && filters?.color?.length === 0 && filters?.sort === '' && (filters?.price?.min == 0 && filters?.price?.max == 100)) {
     setVisibleCount(1);
     setClearFilter(false);
   }

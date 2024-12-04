@@ -3,9 +3,12 @@ import React from "react";
 const ProductColor = ({ colors, setFilters, filters }) => {
   const handleCheckboxChange = (productColor) => {
     setFilters((prev) => {
+      const isAlreadySelected = prev.color.includes(productColor);
       return {
         ...prev,
-        color: productColor
+        color: isAlreadySelected
+          ? prev.color.filter((cl) => cl !== productColor) // Remove if already selected
+          : [...prev.color, productColor],
       };
     });
   };
