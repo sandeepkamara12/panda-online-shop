@@ -34,6 +34,7 @@ export default function Home() {
   const [layout, setLayout] = useState("three");
   const [visibleCount, setVisibleCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
+  const [clearFilter, setClearFilter] = useState(false);
   const [filters, setFilters] = useState({category:[], size:[], color:'', brand:'', price:{min:0, max:100}, sort:''});
   const loaderRef = useRef(null);
 
@@ -60,8 +61,14 @@ export default function Home() {
   }, [totalProducts, visibleCount, isLoading]);
 
 useEffect(() => {
-  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand === '' && filters?.color === '' && filters?.sort === '') {
+  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand === '' && filters?.color === '' && filters?.sort === '' && (filters?.price?.min == 0 && filters?.price?.max == 100)) {
     setVisibleCount(1);
+    console.log('in');
+    setClearFilter(false);
+  }
+  else {
+    console.log('out');
+    setClearFilter(true);
   }
   dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color, brand:filters?.brand, price:filters?.price, sort:filters?.sort}));
 }, [filters?.category, filters?.size, filters?.color, filters?.brand, filters?.price, filters?.sort, dispatch]);
@@ -131,7 +138,7 @@ useEffect(() => {
                   {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
                 </div>
                 <aside className="col-xl-3 order-xl-first">
-                  <ShopSidebar setFilters={setFilters} filters={filters} />
+                  <ShopSidebar setClearFilter={setClearFilter} clearFilter={clearFilter} setFilters={setFilters} filters={filters} />
                 </aside>
               </div>
             </div>

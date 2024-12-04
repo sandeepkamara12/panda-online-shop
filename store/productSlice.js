@@ -9,6 +9,7 @@ const productSlice = createSlice({
   },
   reducers: {
     filter: (state, action) => {
+      console.log('reducer');
       const {category, size, color, brand, price, sort} = action.payload;
         let filtered = state.products.filter((product) => {
           
@@ -40,8 +41,7 @@ const productSlice = createSlice({
               (product?.price >= price?.min && product?.price <= price?.max) ||
               (product?.salePrice && product?.salePrice >= price?.min && product?.salePrice <= price?.max);
 
-            /* Update the products by changing the sort value */
-          
+            /* Update the products by changing the sort value */          
             const matchesSort = sort !== "" && sort !== "lth" && sort !== "htl" && sort !== "sale" ? product?.badge == sort : true;
             return matchesCategory && matchesSize && matchesColor && matchesBrand && matchesPrice && matchesSort;
         });
