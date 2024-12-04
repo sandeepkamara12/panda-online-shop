@@ -13,6 +13,7 @@ import ProductBrand from "./ProductBrand";
 const Product = ({ product, layout }) => {
   const count = useSelector((state) => state.products.value);
   const dispatch = useDispatch();
+  let sizeChart = ['s', 'm', 'l', 'xl'];
   return (
     <>
       <div
@@ -132,14 +133,14 @@ const Product = ({ product, layout }) => {
                   >
                     <ProductBrand brand={product?.brand} />
                   </div>
-                  <div className="product-cat sizes mb-1">
-                    {product?.size &&
-                      product?.size.length > 0 &&
-                      product?.size.map((size) => (
-                        <span className="mr-2 text-uppercase" key={size}>
-                          {size}
-                        </span>
-                      ))}
+                  <div className={`product-size mb-1 ${layout === 'three' ? 'justify-content-center': ''}`}>
+                  {
+                      sizeChart && sizeChart?.map(size=>{                        
+                        return (<a title="" className={`text-uppercase ${product?.size?.includes(size) ? 'active' :''}`} key={size}>
+                        {size}
+                      </a>)
+                      })
+                    }
                   </div>
                   <div
                     className={`d-flex colors py-0 filter-colors ${

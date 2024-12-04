@@ -10925,7 +10925,7 @@ button:focus {
   .widget-clean a {
     display: inline-block;
     font-weight: 400;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-left: auto; cursor:pointer;}
     .widget-clean a.sidebar-filter-clear:hover {color:#cc9966;}
 
@@ -13331,7 +13331,8 @@ button:focus {
 .sidebar-filter-clear {
   text-transform: capitalize;
   margin-left: auto; }
-
+  
+  .sidebar-filter-clear.disabled {color:#cccccc!important; cursor: default;}
 @media screen and (max-width: 380px) {
   .sidebar-filter {
     left: -300px;

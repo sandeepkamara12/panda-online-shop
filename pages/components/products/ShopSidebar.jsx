@@ -23,7 +23,8 @@ const ShopSidebar = ({clearFilter, setClearFilter, setFilters, filters}) => {
         <div className="widget widget-clean">
           <label>Filters:</label>
           <a onClick={clearAllFilter} className={`sidebar-filter-clear ${!clearFilter ? 'disabled' : ''}`}>
-            Clean All
+            <i className="icon icon-refresh mr-1"></i>
+            Clear All
           </a>
         </div>
         <Categories categories={categories} setFilters={setFilters} filters={filters} />

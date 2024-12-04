@@ -10,7 +10,6 @@ const ProductBrand = ({ brands, setFilters, filters }) => {
         brand: isAlreadySelected
           ? prev.brand.filter((br) => br !== productBrand) 
           : [...prev.brand, productBrand]
-        // brand: isAlreadySelected ? '' : `brand_${productBrand}`,
       };
     });
   };
