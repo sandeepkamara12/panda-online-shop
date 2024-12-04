@@ -8,12 +8,14 @@ import ProductDescription from "./ProductDescription";
 // import ProductWishlist from "./ProductWishlist";
 import ProductReview from "./ProductReview";
 import { useSelector, useDispatch } from "react-redux";
+import ProductColor from "./ProductColor";
+import ProductSize from "./ProductSize";
+import ProductBrand from "./ProductBrand";
 // import ProductBrand from "./ProductBrand";
 
 const Product = ({ product, layout }) => {
   const count = useSelector((state) => state.products.value);
   const dispatch = useDispatch();
-  let sizeChart = ['s', 'm', 'l', 'xl'];
   return (
     <>
       <div
@@ -60,9 +62,7 @@ const Product = ({ product, layout }) => {
                     ) : (
                       <>
                         <span className="new-price">${product?.salePrice}</span>
-                        <span className="old-price">
-                          ${product?.price}
-                        </span>
+                        <span className="old-price">${product?.price}</span>
                       </>
                     )}
                   </div>
@@ -111,9 +111,7 @@ const Product = ({ product, layout }) => {
               >
                 <div className="product-body product-action-inner">
                   {/* <ProductWishlist /> */}
-                  <div
-                    className={`product-cat text-capitalize`}
-                  >
+                  <div className={`product-cat text-capitalize`}>
                     <ProductCategory category={product?.category} />
                   </div>
                   <ProductTitle title={product?.name} />
@@ -124,43 +122,9 @@ const Product = ({ product, layout }) => {
                   >
                     <ProductDescription description={product?.description} />
                   </div>
-                  {/* <div
-                    className={`product-cat text-capitalize ${
-                      layout === "three" ? "" : ""
-                    }`}
-                  >
-                    <ProductBrand brand={product?.brand} />
-                  </div> */}
-                  <div className={`product-size ${layout === 'three' ? 'justify-content-center': ''}`}>
-                  {
-                      sizeChart && sizeChart?.map(size=>{                        
-                        return (<a title="" className={`text-uppercase ${product?.size?.includes(size) ? 'active' :'disabled'}`} key={size}>
-                        {size}
-                      </a>)
-                      })
-                    }
-                  </div>
-                  {/* <div
-                  className={`filter-colors m-0 ${
-                      layout === "three"
-                        ? "justify-content-center"
-                        : "align-items-start"
-                    }`}
-                  >
-                    {product?.color &&
-                      product?.color.length > 0 &&
-                      product?.color?.map((color) => {
-                        return color ? (
-                          <a
-                            className="mb-0"
-                            style={{ background: `#${color}` }}
-                            key={color}
-                          ></a>
-                        ) : (
-                          ""
-                        );
-                      })}
-                  </div> */}
+                  {/* <ProductBrand brand={product?.brand} layout={layout} /> */}
+                  {/* <ProductSize layout={layout} productSize={product?.size} /> */}
+                  {/* <ProductColor productColors={product?.color} layout={layout} /> */}
                 </div>
               </div>
             </div>

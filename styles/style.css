@@ -68,7 +68,8 @@ body {
   background-color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden; }
+  /* overflow-x: hidden;  */
+}
 
 ::-moz-selection {
   color: #fff;
@@ -10784,7 +10785,15 @@ button:focus {
     margin-right: 0; } }
 /*--------------------- 5.2.Category -------------------- */
 /* Category */
+.toolbox-wrap {
+  position: sticky;
+  top: 61px;
+  z-index: 99;
+  background: #fff;
+  padding: 15px 0;
+}
 .toolbox {
+  
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -10928,7 +10937,7 @@ button:focus {
 .widget-clean {
   display: flex;
   align-items: center;
-  padding-top: .6rem;
+  padding-top: 1rem;
   padding-bottom: 2.1rem; }
   .widget-clean label {
     color: inherit;

@@ -22,13 +22,6 @@
     },
     {
         "id": 4,
-        "name": "Jackets",
-        "description": "A variety of premium coffee products.",
-        "image": "/images/categories/coffee.jpg",
-        "total_products":4
-    },
-    {
-        "id": 5,
         "name": "Jumpers",
         "description": "Stylish and functional mugs for your beverages.",
         "image": "/images/categories/mugs.jpg",
@@ -36,13 +29,6 @@
     },
     {
         "id": 6,
-        "name": "Jeans",
-        "description": "High-performance coffee machines and accessories.",
-        "image": "/images/categories/machines.jpg",
-        "total_products":6
-    },
-    {
-        "id": 7,
         "name": "Sportwear",
         "description": "High-performance coffee machines and accessories.",
         "image": "/images/categories/machines.jpg",

@@ -45,7 +45,15 @@ const ProductFilters = ({
   totalProducts,
   filters,
   setFilters,
+  clearFilter,
+  setClearFilter
 }) => {
+  const clearAllFilter = () => {
+    if(filters?.category?.length >0 || filters?.size?.length >0 || filters?.color?.length >0 || filters?.brand?.length >0 || filters?.price?.min >0 || filters?.price?.max < 100 || filters?.sort !== "") {
+      setFilters({category:[], size:[], color:[], brand:[], price:{min:0, max:100}, sort:''})
+      setClearFilter(false);
+    }
+  }
   const selectSortToFilterProducts = (option) => {
     setFilters(prev=>{
       return {
@@ -55,6 +63,9 @@ const ProductFilters = ({
     });
   };
   return (
+    
+    <div className="toolbox-wrap">
+    <div className="container">
     <div className="toolbox">
       <div className="toolbox-left">
         <div className="toolbox-info">
@@ -67,6 +78,13 @@ const ProductFilters = ({
       </div>
 
       <div className="toolbox-right">
+      <div className="widget widget-clean p-0 m-0">
+          {/* <label>Filters:</label> */}
+          <a onClick={clearAllFilter} className={`sidebar-filter-clear ${!clearFilter ? 'disabled' : ''}`}>
+            <i className="icon icon-refresh mr-1"></i>
+            {/* Clear All */}
+          </a>
+        </div>
         <a className={`btn-layout ${layout === "one" ? "active" : ""}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -128,6 +146,8 @@ const ProductFilters = ({
           </a>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

@@ -33,12 +33,5 @@
         "description": "Iconic sportswear and lifestyle brand.",
         "logo": "/images/brands/reebok-logo.jpg",
         "website": "https://www.reebok.com"
-    },
-    {
-        "id": 6,
-        "name": "Asics",
-        "description": "High-quality running shoes and sportswear.",
-        "logo": "/images/brands/asics-logo.jpg",
-        "website": "https://www.asics.com"
     }
 ]

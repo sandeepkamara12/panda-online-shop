@@ -91,18 +91,23 @@ useEffect(() => {
         <main className="main">
           <PageHeader title="List" subtitle="Shop" />
           <Breadcrumbs />
-          <div className="page-content">
-            <div className="container">
-              <div className="row">
-                <div className="col-xl-9">
-                  <ProductFilters
+    
+                <ProductFilters
                     setLayout={setLayout}
                     layout={layout}
                     productVisibleCount={visibleCount}
                     totalProducts={totalProducts}
                     setFilters={setFilters}
                     filters={filters}
+                    setClearFilter={setClearFilter}
+                    clearFilter={clearFilter}
                   />
+          <div className="page-content">
+            
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-9">
+                  
                   <div
                     className={`products mb-3 layout-${layout} ${
                       layout === "three"
@@ -136,7 +141,7 @@ useEffect(() => {
                   {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
                 </div>
                 <aside className="col-xl-3 order-xl-first">
-                  <ShopSidebar setClearFilter={setClearFilter} clearFilter={clearFilter} setFilters={setFilters} filters={filters} />
+                  <ShopSidebar setFilters={setFilters} filters={filters} />
                 </aside>
               </div>
             </div>
