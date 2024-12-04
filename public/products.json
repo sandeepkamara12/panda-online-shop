@@ -116,7 +116,7 @@
         "size":["xs"],
         "name": "Patterned maxi dress",
         "price": 59.95,
-        "salePrice":40,
+        "salePrice":20,
         "category":[5,2,3],
         "brand":5,
         "color":["669933", "cc3333"],

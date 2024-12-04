@@ -31,7 +31,6 @@ const productSlice = createSlice({
               : true;
             
             /* Update the products by changing the product brand */
-
             const matchesBrand =
             brand?.length > 0
               ? brand.some((br) => product.brand == br)
@@ -47,10 +46,17 @@ const productSlice = createSlice({
             return matchesCategory && matchesSize && matchesColor && matchesBrand && matchesPrice && matchesSort;
         });
         if (sort === "lth") {
-          filtered = filtered.sort((a, b) => a.price - b.price); // Low to High
-        }
-        else if (sort === "htl") {
-          filtered = filtered.sort((a, b) => b.price - a.price); // High to Low
+          filtered = filtered.sort((a, b) => {
+            const priceA = a.salePrice && a.salePrice !== "" ? a.salePrice : a.price; // Use salePrice if valid, else price
+            const priceB = b.salePrice && b.salePrice !== "" ? b.salePrice : b.price;
+            return priceA - priceB; // Low to High
+          });
+        } else if (sort === "htl") {
+          filtered = filtered.sort((a, b) => {
+            const priceA = a.salePrice && a.salePrice !== "" ? a.salePrice : a.price; // Use salePrice if valid, else price
+            const priceB = b.salePrice && b.salePrice !== "" ? b.salePrice : b.price;
+            return priceB - priceA; // High to Low
+          });
         }
         else if (sort === "sale") {
           /* Sort Sales Products */
