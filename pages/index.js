@@ -15,6 +15,8 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filter } from "@/store/productSlice";
 import NoContent from "./components/common/NoContent";
+
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -35,7 +37,14 @@ export default function Home() {
   const [visibleCount, setVisibleCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [clearFilter, setClearFilter] = useState(false);
-  const [filters, setFilters] = useState({category:[], size:[], color:[], brand:[], price:{min:0, max:100}, sort:''});
+  const [filters, setFilters] = useState({
+    category: [],
+    size: [],
+    color: [],
+    brand: [],
+    price: { min: 0, max: 100 },
+    sort: "",
+  });
   const loaderRef = useRef(null);
 
   useEffect(() => {
@@ -45,7 +54,7 @@ export default function Home() {
         if (entry.isIntersecting && !isLoading) {
           setIsLoading(true);
           setTimeout(() => {
-            const newCount = Math.min(visibleCount + 3, totalProducts); 
+            const newCount = Math.min(visibleCount + 3, totalProducts);
             setVisibleCount(newCount);
             setIsLoading(false);
           }, 1000);
@@ -60,23 +69,47 @@ export default function Home() {
     };
   }, [totalProducts, visibleCount, isLoading]);
 
-useEffect(() => {
-  if (filters?.category?.length === 0 && filters?.size?.length === 0 && filters?.brand?.length === 0 && filters?.color?.length === 0 && filters?.sort === '' && (filters?.price?.min == 0 && filters?.price?.max == 100)) {
-    setVisibleCount(1);
-    setClearFilter(false);
-  }
-  else {
-    setClearFilter(true);
-  }
-  dispatch(filter({category:filters?.category, size:filters?.size, color:filters?.color, brand:filters?.brand, price:filters?.price, sort:filters?.sort}));
-}, [filters?.category, filters?.size, filters?.color, filters?.brand, filters?.price, filters?.sort, dispatch]);
+  useEffect(() => {
+    if (
+      filters?.category?.length === 0 &&
+      filters?.size?.length === 0 &&
+      filters?.brand?.length === 0 &&
+      filters?.color?.length === 0 &&
+      filters?.sort === "" &&
+      filters?.price?.min == 0 &&
+      filters?.price?.max == 100
+    ) {
+      setVisibleCount(1);
+      setClearFilter(false);
+    } else {
+      setClearFilter(true);
+    }
+    dispatch(
+      filter({
+        category: filters?.category,
+        size: filters?.size,
+        color: filters?.color,
+        brand: filters?.brand,
+        price: filters?.price,
+        sort: filters?.sort,
+      })
+    );
+  }, [
+    filters?.category,
+    filters?.size,
+    filters?.color,
+    filters?.brand,
+    filters?.price,
+    filters?.sort,
+    dispatch,
+  ]);
 
-useEffect(() => {
-  if (visibleCount > totalProducts) {
-    setVisibleCount(totalProducts);
-  }
-}, [products, totalProducts, visibleCount]);
-
+  useEffect(() => {
+    if (visibleCount > totalProducts) {
+      setVisibleCount(totalProducts);
+    }
+  }, [products, totalProducts, visibleCount]);
+  
   return (
     <>
       <Head>
@@ -91,25 +124,23 @@ useEffect(() => {
         <main className="main">
           <PageHeader title="List" subtitle="Shop" />
           <Breadcrumbs />
-    
-                <ProductFilters
-                    setLayout={setLayout}
-                    layout={layout}
-                    productVisibleCount={visibleCount}
-                    totalProducts={totalProducts}
-                    setFilters={setFilters}
-                    filters={filters}
-                    setClearFilter={setClearFilter}
-                    clearFilter={clearFilter}
-                  />
+
+          <ProductFilters
+            setLayout={setLayout}
+            layout={layout}
+            productVisibleCount={visibleCount}
+            totalProducts={totalProducts}
+            setFilters={setFilters}
+            filters={filters}
+            setClearFilter={setClearFilter}
+            clearFilter={clearFilter}
+          />
           <div className="page-content">
-            
-            <div className="container">
+            <div className="container-fluid">
               <div className="row">
-                <div className="col-xl-9">
-                  
+                <div className="col-xl-9 offset-3">
                   <div
-                    className={`products mb-3 layout-${layout} ${
+                    className={`products py-4 layout-${layout} ${
                       layout === "three"
                         ? !totalProducts
                           ? "mx-0 row"
@@ -139,10 +170,8 @@ useEffect(() => {
                     ></i>
                   )}
                   {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
-                </div>
-                <aside className="col-xl-3 order-xl-first">
+                </div>              
                   <ShopSidebar setFilters={setFilters} filters={filters} />
-                </aside>
               </div>
             </div>
           </div>

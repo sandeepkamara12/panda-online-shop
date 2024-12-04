@@ -29,11 +29,11 @@ const ProductSize = ({ sizes, setFilters, filters }) => {
 
       <div className="collapse show" id="widget-2">
         <div className="widget-body">
-          <div className="filter-items">
+          <div className="filter-items d-flex flex-row">
             {sizes &&
               sizes?.length > 0 &&
               sizes?.map((size) => (
-                <div className="filter-item" key={size?.name}>
+                <div className="filter-item mb-0 mr-4" key={size?.name}>
                   <div className="custom-control custom-checkbox">
                     <input
                       type="checkbox"

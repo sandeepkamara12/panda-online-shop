@@ -56,6 +56,14 @@ a {
   margin-left: -250px;
 }
 
+.sidebar-wrapper.fixed {
+  top: 130px;
+  position: fixed;
+  background:white;
+  /* left: 70px; */
+  width: 100%;
+  z-index: 999;
+}
 
 @media (max-width: 768px) {
   #sidebar {

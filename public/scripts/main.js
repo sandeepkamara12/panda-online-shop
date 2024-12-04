@@ -38,7 +38,7 @@ $(document).ready(function () {
 		var sticky = new Waypoint.Sticky({
 			element: $('.sticky-header')[0],
 			stuckClass: 'fixed',
-			offset: -300,
+			offset: -100,
             handler: function ( direction ) {
                 // Show category dropdown
                 if ( catInitVal &&  direction == 'up') {
@@ -55,6 +55,14 @@ $(document).ready(function () {
             }
 		});
 	}
+
+    // if ( $('.sidebar-wrapper').length && $(window).width() >= 992 ) {
+	// 	var sticky = new Waypoint.Sticky({
+	// 		element: $('.sidebar-wrapper')[0],
+	// 		stuckClass: 'fixed',
+	// 		offset: 300           
+	// 	});
+	// }
 
     // Menu init with superfish plugin
     if ( $.fn.superfish ) {

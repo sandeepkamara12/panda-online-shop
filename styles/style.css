@@ -518,6 +518,7 @@ blockquote {
     height: auto; }
 
 .header-top {
+  border-bottom: 0.1rem solid #f4f4f4;
   font-weight: 300;
   font-size: 1.3rem;
   line-height: 1.5;
@@ -531,7 +532,7 @@ blockquote {
   .header-top .container,
   .header-top .container-fluid {
     position: relative; }
-    .header-top .container:after,
+    /* .header-top .container:after,
     .header-top .container-fluid:after {
       content: '';
       display: block;
@@ -540,7 +541,7 @@ blockquote {
       bottom: -1px;
       left: 10px;
       right: 10px;
-      background-color: #ebebeb; }
+      background-color: #ebebeb; } */
   .header-top .top-menu li + li {
     margin-left: 2.6rem; }
   @media screen and (min-width: 1200px) {
@@ -1969,8 +1970,9 @@ blockquote {
     z-index: 1040;
     animation-name: fixedHeader;
     animation-duration: .4s;
+    /* box-shadow: 0 3px 6px rgba(51, 51, 51, 0.05);  */
     background-color: #fff;
-    box-shadow: 0 3px 6px rgba(51, 51, 51, 0.05); }
+  }
     .sticky-header.fixed .logo {
       margin-top: 0;
       margin-bottom: 0; }
@@ -9514,7 +9516,7 @@ small.form-text {
   margin-bottom: 0;
   margin-top: .1rem;
   font-size: 1.4rem;
-  padding-left: 2.6rem;
+  padding-left: 2.2rem;
   margin-left: -2.6rem; }
 
 .custom-control-label::before {
@@ -10791,9 +10793,9 @@ button:focus {
   z-index: 99;
   background: #fff;
   padding: 15px 0;
+  border-bottom: 0.1rem solid #f4f4f4;
 }
-.toolbox {
-  
+.toolbox {  
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -10802,7 +10804,8 @@ button:focus {
   font-size: 1.4rem;
   line-height: 1.5;
   margin-top: 0;
-  margin-bottom: 2rem; }
+  /* margin-bottom: 2rem;  */
+}
   .toolbox::after {
     display: block;
     clear: both;
@@ -12094,8 +12097,8 @@ button:focus {
 .widget {
   margin-bottom: 4.5rem; }
 
-.sidebar {
-  margin-top: 3rem; }
+/* .sidebar {
+  margin-top: 3rem; } */
   .sidebar .widget:last-child {
     margin-bottom: 1.5rem; }
 
@@ -12257,8 +12260,8 @@ button:focus {
       flex: 0 0 55%;
       max-width: 55%; } }
 @media screen and (min-width: 992px) {
-  .sidebar {
-    margin-top: -.3rem; }
+  /* .sidebar {
+    margin-top: -.3rem; } */
 
   .entry {
     margin-bottom: 6rem; }
