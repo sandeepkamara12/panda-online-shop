@@ -34,7 +34,7 @@ export default function Home() {
 
   let totalProducts = products?.length;
   const [layout, setLayout] = useState("three");
-  const [visibleCount, setVisibleCount] = useState(3);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
   const [clearFilter, setClearFilter] = useState(false);
   const [filters, setFilters] = useState({
@@ -54,7 +54,7 @@ export default function Home() {
         if (entry.isIntersecting && !isLoading) {
           setIsLoading(true);
           setTimeout(() => {
-            const newCount = Math.min(visibleCount + 3, totalProducts);
+            const newCount = Math.min(visibleCount + 6, totalProducts);
             setVisibleCount(newCount);
             setIsLoading(false);
           }, 1000);
@@ -79,7 +79,7 @@ export default function Home() {
       filters?.price?.min == 0 &&
       filters?.price?.max == 100
     ) {
-      setVisibleCount(1);
+      setVisibleCount(6);
       setClearFilter(false);
     } else {
       setClearFilter(true);
@@ -136,9 +136,9 @@ export default function Home() {
             clearFilter={clearFilter}
           />
           <div className="page-content">
-            <div className="container-fluid">
+            <div className="container">
               <div className="row">
-                <div className="col-xl-9 offset-3">
+                <div className="col-xl-9">
                   <div
                     className={`products py-4 layout-${layout} ${
                       layout === "three"

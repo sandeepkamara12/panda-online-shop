@@ -57,12 +57,13 @@ a {
 }
 
 .sidebar-wrapper.fixed {
-  top: 130px;
   position: fixed;
-  background:white;
-  /* left: 70px; */
-  width: 100%;
-  z-index: 999;
+  top: 130px;
+  z-index: 1000;
+}
+.sidebar-wrapper.fixed.fixed-bottom {
+  bottom: 430px;
+  top: initial;
 }
 
 @media (max-width: 768px) {

@@ -38,7 +38,7 @@ $(document).ready(function () {
 		var sticky = new Waypoint.Sticky({
 			element: $('.sticky-header')[0],
 			stuckClass: 'fixed',
-			offset: -100,
+			offset: -300,
             handler: function ( direction ) {
                 // Show category dropdown
                 if ( catInitVal &&  direction == 'up') {
@@ -55,6 +55,28 @@ $(document).ready(function () {
             }
 		});
 	}
+
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const sidebar = document.querySelector('.sidebar-wrapper');
+    //     const container = document.querySelector('.container');
+    //     const offset = 100; // Change to your desired offset value
+      
+    //     window.addEventListener('scroll', () => {
+    //       const sidebarRect = sidebar.getBoundingClientRect();
+    //       const containerRect = container.getBoundingClientRect();
+          
+    //       if (window.scrollY > offset) {
+    //         sidebar.classList.add('fixed');
+    //         sidebar.style.left = `${containerRect.left}px`; // Keep the same left offset as the container
+    //         sidebar.style.width = `${sidebarRect.width}px`; // Keep the same width
+    //       } else {
+    //         sidebar.classList.remove('fixed');
+    //         sidebar.style.left = '';
+    //         sidebar.style.width = '';
+    //       }
+    //     });
+    //   });
 
     // if ( $('.sidebar-wrapper').length && $(window).width() >= 992 ) {
 	// 	var sticky = new Waypoint.Sticky({
