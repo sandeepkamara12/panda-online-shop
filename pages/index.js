@@ -125,20 +125,20 @@ export default function Home() {
           <PageHeader title="List" subtitle="Shop" />
           <Breadcrumbs />
 
-          <ProductFilters
-            setLayout={setLayout}
-            layout={layout}
-            productVisibleCount={visibleCount}
-            totalProducts={totalProducts}
-            setFilters={setFilters}
-            filters={filters}
-            setClearFilter={setClearFilter}
-            clearFilter={clearFilter}
-          />
           <div className="page-content">
             <div className="container">
               <div className="row">
                 <div className="col-xl-9">
+                  <ProductFilters
+                    setLayout={setLayout}
+                    layout={layout}
+                    productVisibleCount={visibleCount}
+                    totalProducts={totalProducts}
+                    setFilters={setFilters}
+                    filters={filters}
+                    setClearFilter={setClearFilter}
+                    clearFilter={clearFilter}
+                  />
                   <div
                     className={`products py-4 layout-${layout} ${
                       layout === "three"
@@ -171,7 +171,7 @@ export default function Home() {
                   )}
                   {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
                 </div>              
-                  <ShopSidebar setFilters={setFilters} filters={filters} />
+                  <ShopSidebar clearFilter={clearFilter} setClearFilter={setClearFilter} setFilters={setFilters} filters={filters} />
               </div>
             </div>
           </div>

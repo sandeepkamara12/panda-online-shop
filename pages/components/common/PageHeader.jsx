@@ -6,7 +6,7 @@ const PageHeader = ({title, subtitle}) => {
       className="page-header text-center"
       style={{ backgroundImage: "url('./page-header-bg.jpg')" }}
     >
-      <div className="container-fluid">
+      <div className="container">
         <h1 className="page-title">
           {title}<span>{subtitle}</span>
         </h1>

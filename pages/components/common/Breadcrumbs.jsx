@@ -2,8 +2,8 @@ import React from "react";
 
 const Breadcrumbs = () => {
   return (
-    <nav aria-label="breadcrumb" className="breadcrumb-nav mb-0">
-      <div className="container-fluid">
+    <nav aria-label="breadcrumb" className="breadcrumb-nav mb-2">
+      <div className="container">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
             <a href="index.html">Home</a>

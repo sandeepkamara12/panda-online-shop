@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-top">
-        <div className="container-fluid">
+        <div className="container">
           {/* <div className="header-left">
             <div className="header-dropdown">
               <a href="#">Usd</a>
@@ -72,7 +72,7 @@ const Header = () => {
       </div>
 
       <div className="header-middle sticky-header">
-        <div className="container-fluid">
+        <div className="container">
           <div className="header-left">
             <button className="mobile-menu-toggler">
               <span className="sr-only">Toggle mobile menu</span>

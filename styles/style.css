@@ -10787,14 +10787,6 @@ button:focus {
     margin-right: 0; } }
 /*--------------------- 5.2.Category -------------------- */
 /* Category */
-.toolbox-wrap {
-  position: sticky;
-  top: 61px;
-  z-index: 99;
-  background: #fff;
-  padding: 15px 0;
-  border-bottom: 0.1rem solid #f4f4f4;
-}
 .toolbox {  
   display: flex;
   align-items: center;
@@ -10917,6 +10909,7 @@ button:focus {
 .sidebar-shop .widget {
   color: #333333;
   margin: 0 0 2rem;
+  padding-top: 6px;
   border-bottom: .1rem solid #ebebeb; }
   .sidebar-shop .widget:last-child {
     border-bottom: none; }
