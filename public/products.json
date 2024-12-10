@@ -12,6 +12,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "out-stock",
+        "quantity":"0",
         "createdAt":"2024-12-01T08:30:00Z",
         "rating": 2,
         "review_count": 2
@@ -29,6 +30,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-02T10:15:00Z",
         "rating": 4,
         "review_count": 18
@@ -46,6 +48,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-03T14:45:00Z",
         "rating": 5,
         "review_count": 35
@@ -62,7 +65,8 @@
         "description": "Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula.",
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
-        "badge": "limited",
+        "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-04T18:20:00Z",
         "rating": 3,
         "review_count": 10
@@ -80,6 +84,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "",
+        "quantity":"10",
         "createdAt":"2024-12-05T11:00:00Z",
         "rating": 4,
         "review_count": 25
@@ -97,6 +102,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "sale",
+        "quantity":"10",
         "createdAt":"2024-12-06T09:40:00Z",
         "rating": 3,
         "review_count": 15
@@ -114,6 +120,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "",
+        "quantity":"10",
         "createdAt":"2024-12-07T16:25:00Z",
         "rating": 5,
         "review_count": 42
@@ -130,7 +137,8 @@
         "description": "Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget.",
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
-        "badge": "limited",
+        "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-08T13:10:00Z",
         "rating": 4,
         "review_count": 30
@@ -148,6 +156,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-09T20:30:00Z",
         "rating": 4,
         "review_count": 12
@@ -165,6 +174,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-10T06:50:00Z",
         "rating": 5,
         "review_count": 48
@@ -181,7 +191,8 @@
         "description": "Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget.",
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
-        "badge": "limited",
+        "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-11T19:15:00Z",
         "rating": 4,
         "review_count": 30
@@ -199,6 +210,7 @@
         "image": "product-4.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
         "badge": "new-arrival",
+        "quantity":"10",
         "createdAt":"2024-12-12T07:30:00Z",
         "rating": 4,
         "review_count": 12

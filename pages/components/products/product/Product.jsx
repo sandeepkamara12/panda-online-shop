@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import ProductImage from "./ProductImage";
 import ProductCategory from "./ProductCategory";
 import ProductTitle from "./ProductTitle";
@@ -11,11 +11,51 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductColor from "./ProductColor";
 import ProductSize from "./ProductSize";
 import ProductBrand from "./ProductBrand";
+import QuickView from "./QuickView";
 // import ProductBrand from "./ProductBrand";
 
 const Product = ({ product, layout }) => {
+  useEffect(() => {
+    // Initialize Magnific Popup with Vanilla JavaScript
+    const quickViewButton = document.querySelector('.btn-quickview');
+    const modalContent = document.getElementById('quick-view-modal');
+
+    if (quickViewButton) {
+      quickViewButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalContent.style.display = 'block';
+        // Open Magnific Popup
+        openQuickViewModal(modalContent);
+      });
+    }
+  }, []);
+  const openQuickViewModal = (modalContent) => {
+    // Dynamically show the modal
+    const magnificPopup = window.$.magnificPopup;
+    magnificPopup.open({
+      items: {
+        src: modalContent,
+        type: 'inline',
+      },
+      mainClass: 'mfp-ajax-product',
+      preloader: false,
+      removalDelay: 350,
+      callbacks: {
+        open: function () {
+          document.body.style.overflowX = 'visible';
+        },
+        close: function () {
+          document.body.style.overflowX = 'hidden';
+        },
+      },
+    });
+  };
+
   return (
     <>
+     <div id="quick-view-modal" style={{ display: 'none' }}>
+        <QuickView />
+    </div>
       <div
         className={`product product-list ${
           layout === "three" ? "col-12 col-sm-6 col-md-4" : ""
@@ -32,7 +72,7 @@ const Product = ({ product, layout }) => {
           <div
             className={`${layout === "three" ? "col-12" : "col-5 col-md-3"}`}
           >
-            <ProductImage createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
+            <ProductImage quantity={product?.quantity} createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
           </div>
           <div
             className={`${layout === "three" ? "col-12" : "col-7 col-md-9"}`}
@@ -76,7 +116,7 @@ const Product = ({ product, layout }) => {
                   </div>
                   <div className={`product-action`}>
                     <a
-                      href="popup/quickView.html"
+                      href="#quick-view-modal"
                       className="btn-product btn-quickview"
                       title="Quick view"
                     >

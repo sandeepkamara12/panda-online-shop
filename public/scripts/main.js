@@ -682,110 +682,110 @@ $(document).ready(function () {
     });
 
     // Product quickView popup
-    $('.btn-quickview').on('click', function (e) {
-        var ajaxUrl = $(this).attr('href');
-        if ( $.fn.magnificPopup ) {
-            setTimeout(function () {
-                $.magnificPopup.open({
-                    type: 'ajax',
-                    mainClass: "mfp-ajax-product",
-                    tLoading: '',
-                    preloader: false,
-                    removalDelay: 350,
-                    items: {
-                      src: ajaxUrl
-                    },
-                    callbacks: {
-                        ajaxContentAdded: function () {
-                            owlCarousels($('.quickView-content'), {
-                                onTranslate: function(e) {
-                                    var $this = $(e.target),
-                                        currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
-                                    $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
-                                }
-                            });
-                            quantityInputs();
-                        },
-                        open: function() {
-                            $('body').css('overflow-x', 'visible');
-                            $('.sticky-header.fixed').css('padding-right', '1.7rem');
-                        },
-                        close: function() {
-                            $('body').css('overflow-x', 'hidden');
-                            $('.sticky-header.fixed').css('padding-right', '0');
-                        }
-                    },
+    // $('.btn-quickview').on('click', function (e) {
+    //     var ajaxUrl = $(this).attr('href');
+    //     if ( $.fn.magnificPopup ) {
+    //         setTimeout(function () {
+    //             $.magnificPopup.open({
+    //                 type: 'ajax',
+    //                 mainClass: "mfp-ajax-product",
+    //                 tLoading: '',
+    //                 preloader: false,
+    //                 removalDelay: 350,
+    //                 items: {
+    //                   src: ajaxUrl
+    //                 },
+    //                 callbacks: {
+    //                     ajaxContentAdded: function () {
+    //                         owlCarousels($('.quickView-content'), {
+    //                             onTranslate: function(e) {
+    //                                 var $this = $(e.target),
+    //                                     currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+    //                                 $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
+    //                             }
+    //                         });
+    //                         quantityInputs();
+    //                     },
+    //                     open: function() {
+    //                         $('body').css('overflow-x', 'visible');
+    //                         $('.sticky-header.fixed').css('padding-right', '1.7rem');
+    //                     },
+    //                     close: function() {
+    //                         $('body').css('overflow-x', 'hidden');
+    //                         $('.sticky-header.fixed').css('padding-right', '0');
+    //                     }
+    //                 },
 
-                    ajax: {
-                        tError: '',
-                    }
-                }, 0);
-            }, 500);
+    //                 ajax: {
+    //                     tError: '',
+    //                 }
+    //             }, 0);
+    //         }, 500);
 
-            e.preventDefault();
-        }
-    });
-    $('body').on('click', '.carousel-dot', function () {
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-    });
+    //         e.preventDefault();
+    //     }
+    // });
+    // $('body').on('click', '.carousel-dot', function () {
+    //     $(this).siblings().removeClass('active');
+    //     $(this).addClass('active');
+    // });
 
-    $('body').on('click', '.btn-fullscreen', function(e) {
-        var galleryArr = [];
-        $(this).parents('.owl-stage-outer').find('.owl-item:not(.cloned)').each(function() {
-            var $this = $(this).find('img'),
-                imgSrc = $this.attr('src'),
-                imgTitle= $this.attr('alt'),
-                obj = {'src': imgSrc, 'title': imgTitle };
-            galleryArr.push(obj);
-        });
+    // $('body').on('click', '.btn-fullscreen', function(e) {
+    //     var galleryArr = [];
+    //     $(this).parents('.owl-stage-outer').find('.owl-item:not(.cloned)').each(function() {
+    //         var $this = $(this).find('img'),
+    //             imgSrc = $this.attr('src'),
+    //             imgTitle= $this.attr('alt'),
+    //             obj = {'src': imgSrc, 'title': imgTitle };
+    //         galleryArr.push(obj);
+    //     });
 
-        var ajaxUrl = $(this).attr('href');
+    //     var ajaxUrl = $(this).attr('href');
 
-        var mpInstance = $.magnificPopup.instance;
-        if (mpInstance.isOpen)
-            mpInstance.close();
+    //     var mpInstance = $.magnificPopup.instance;
+    //     if (mpInstance.isOpen)
+    //         mpInstance.close();
 
-        setTimeout(function () {
-            $.magnificPopup.open({
-                type: 'ajax',
-                mainClass: "mfp-ajax-product",
-                tLoading: '',
-                preloader: false,
-                removalDelay: 350,
-                items: {
-                  src: ajaxUrl
-                },
-                callbacks: {
-                    ajaxContentAdded: function () {
-                        owlCarousels($('.quickView-content'), {
-                            onTranslate: function(e) {
-                                var $this = $(e.target),
-                                    currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
-                                $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
-                                $('.curidx').html(currentIndex + 1);
-                            }
-                        });
-                        quantityInputs();
-                    },
-                    open: function() {
-                        $('body').css('overflow-x', 'visible');
-                        $('.sticky-header.fixed').css('padding-right', '1.7rem');
-                    },
-                    close: function() {
-                        $('body').css('overflow-x', 'hidden');
-                        $('.sticky-header.fixed').css('padding-right', '0');
-                    }
-                },
+    //     setTimeout(function () {
+    //         $.magnificPopup.open({
+    //             type: 'ajax',
+    //             mainClass: "mfp-ajax-product",
+    //             tLoading: '',
+    //             preloader: false,
+    //             removalDelay: 350,
+    //             items: {
+    //               src: ajaxUrl
+    //             },
+    //             callbacks: {
+    //                 ajaxContentAdded: function () {
+    //                     owlCarousels($('.quickView-content'), {
+    //                         onTranslate: function(e) {
+    //                             var $this = $(e.target),
+    //                                 currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+    //                             $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
+    //                             $('.curidx').html(currentIndex + 1);
+    //                         }
+    //                     });
+    //                     quantityInputs();
+    //                 },
+    //                 open: function() {
+    //                     $('body').css('overflow-x', 'visible');
+    //                     $('.sticky-header.fixed').css('padding-right', '1.7rem');
+    //                 },
+    //                 close: function() {
+    //                     $('body').css('overflow-x', 'hidden');
+    //                     $('.sticky-header.fixed').css('padding-right', '0');
+    //                 }
+    //             },
 
-                ajax: {
-                    tError: '',
-                }
-            }, 0);
-        }, 500);
+    //             ajax: {
+    //                 tError: '',
+    //             }
+    //         }, 0);
+    //     }, 500);
         
-        e.preventDefault();
-    });
+    //     e.preventDefault();
+    // });
 
     if(document.getElementById('newsletter-popup-form')) {
         setTimeout(function() {

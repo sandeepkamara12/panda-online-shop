@@ -65,7 +65,14 @@ a {
   bottom: 430px;
   top: initial;
 }
-
+#widget-5 {
+  width: 90%;
+}
+/* .footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 99;
+} */
 @media (max-width: 768px) {
   #sidebar {
       margin-left: -250px;

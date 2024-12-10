@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
+    "magnific-popup": "^1.2.0",
     "next": "^14.2.18",
     "nouislider": "^15.8.1",
     "react": "^18.3.1",

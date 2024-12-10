@@ -4,12 +4,12 @@ import ProductBadage from "./ProductBadage";
 import ProductWishlist from "./ProductWishlist";
 import Countdown from "../../common/Countdown";
 
-const ProductImage = ({ image, badge, createdAt }) => {
+const ProductImage = ({ image, badge, createdAt, quantity }) => {
   return (
     <figure className="product-media">
-      <ProductBadage badge={badge} />
-      <Countdown />
-      <div>{new Date(createdAt).toDateString()}</div>
+      <ProductBadage badge={badge} quantity={quantity} />
+      {/* <Countdown /> */}
+      {/* <div>{new Date(createdAt).toDateString()}</div> */}
       <a href="product.html">
         <Image
           src={`/${image}`}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProductBadage = ({badge}) => {
+const ProductBadage = ({badge, quantity}) => {
   let badgeClass = '';
   let badgeLabel = '';
   if(badge === 'out-stock') {
@@ -15,10 +15,6 @@ const ProductBadage = ({badge}) => {
     badgeClass = 'label-new';
     badgeLabel = 'New';
   }
-  else if(badge === 'limited') {
-    badgeClass = 'label-limited';
-    badgeLabel = 'Limited';
-  }
   else if(badge === 'sale') {
     badgeClass = 'label-sale';
     badgeLabel = 'Sale';
@@ -32,7 +28,7 @@ const ProductBadage = ({badge}) => {
     {
       badgeClass ?
         <span className={`product-label ${badgeClass}`}>
-          {badgeLabel}
+          {badgeLabel} {quantity >0 ? quantity : ''}
         </span>
       :''
     }
