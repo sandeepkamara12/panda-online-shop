@@ -5,7 +5,6 @@ const options = [
   { value: "best-seller", label: "Best Seller" },
   { value: "new-arrival", label: "Newest" },
   { value: "sale", label: "Sale" },
-  { value: "limited", label: "Limited" },
   { value: "lth", label: "Price Low to High" },
   { value: "htl", label: "Price High to Low" },
 ];

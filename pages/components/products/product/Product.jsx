@@ -14,8 +14,6 @@ import ProductBrand from "./ProductBrand";
 // import ProductBrand from "./ProductBrand";
 
 const Product = ({ product, layout }) => {
-  const count = useSelector((state) => state.products.value);
-  const dispatch = useDispatch();
   return (
     <>
       <div
@@ -34,7 +32,7 @@ const Product = ({ product, layout }) => {
           <div
             className={`${layout === "three" ? "col-12" : "col-5 col-md-3"}`}
           >
-            <ProductImage image={product?.image} badge={product?.badge} />
+            <ProductImage createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
           </div>
           <div
             className={`${layout === "three" ? "col-12" : "col-7 col-md-9"}`}

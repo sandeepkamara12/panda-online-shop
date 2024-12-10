@@ -42,8 +42,8 @@ const productSlice = createSlice({
               (product?.salePrice && product?.salePrice >= price?.min && product?.salePrice <= price?.max);
 
             /* Update the products by changing the sort value */          
-            const matchesSort = sort !== "" && sort !== "lth" && sort !== "htl" && sort !== "sale" ? product?.badge == sort : true;
-            return matchesCategory && matchesSize && matchesColor && matchesBrand && matchesPrice && matchesSort;
+            // const matchesSort = sort !== "" && sort !== "lth" && sort !== "htl" && sort !== "sale" && sort !== "best-seller" ? product?.badge == sort : true;
+            return matchesCategory && matchesSize && matchesColor && matchesBrand && matchesPrice;
         });
         if (sort === "lth") {
           filtered = filtered.sort((a, b) => {
@@ -61,6 +61,14 @@ const productSlice = createSlice({
         else if (sort === "sale") {
           /* Sort Sales Products */
           filtered = filtered.filter(product => product?.salePrice); 
+        }
+        else if (sort === "best-seller") {
+          /* Sort Highest Rating Products (Best Sellers) */
+          filtered = filtered.filter(product => product?.rating > 4); 
+        }
+        else if (sort === "new-arrival") {
+          /* Sort Newest Products by date in descending order (Newest) */
+          filtered = filtered.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)); 
         }
     
         // Update the state with filtered and sorted products
