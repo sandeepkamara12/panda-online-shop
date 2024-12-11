@@ -1,6 +1,53 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+const Header = ({openModalFn}) => {
+  const wishlistProducts = useSelector(state=>state.wishlist.wishlist);
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [userId, setUserId] = useState(null);
+  
 
-const Header = () => {
+  const updateUserAndWishlist = () => {
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("data");
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        setUserId(parsedData.userId);
+
+        const totalWishlistProducts = wishlistProducts.filter(
+          (product) => product?.userId === parsedData.userId
+        );
+        setWishlistCount(totalWishlistProducts.length);
+      } else {
+        setUserId(null);
+        setWishlistCount(0);
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateUserAndWishlist();
+  }, []);
+
+  useEffect(()=>{
+    let totalWishlistProducts = wishlistProducts?.filter(product=>product?.userId === userId);
+    setWishlistCount(totalWishlistProducts?.length);
+  },[wishlistProducts, userId])
+
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let userData = localStorage.getItem("data");
+      if(userData) {
+        setUserId(JSON.parse(userData).userId)
+      }
+    }
+  }, []);
+  const logout = () => {
+    updateUserAndWishlist();
+    localStorage.removeItem('data');
+  }
+
   return (
     <header className="header">
       <div className="header-top">
@@ -50,7 +97,7 @@ const Header = () => {
                   </li>
                   <li>
                     <a href="#">
-                      <i className="icon-heart-o"></i><label className="mb-0 d-none d-xl-inline-block">Wishlist</label> <span className="wishlist-count text-white">3</span>
+                      <i className="icon-heart-o"></i><label className="mb-0 d-none d-xl-inline-block">Wishlist</label> <span className="wishlist-count text-white">{wishlistCount}</span>
                     </a>
                   </li>
                   {/* <li>
@@ -60,9 +107,16 @@ const Header = () => {
                     <a href="contact.html">Contact</a>
                   </li> */}
                   <li>
-                    <a href="#signin-modal" data-toggle="modal">
+                    {
+                      userId == null ?
+                      <a href="#" onClick={openModalFn}>
                       <i className="icon-user"></i>Login
                     </a>
+                    :
+                    <a href="#" onClick={logout}>
+                      <i className="icon-user"></i>Logout
+                    </a>
+                    }
                   </li>
                 </ul>
               </li>

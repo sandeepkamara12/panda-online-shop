@@ -15,7 +15,10 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filter } from "@/store/productSlice";
 import NoContent from "./components/common/NoContent";
-
+import ScrollToTop from "./components/common/ScrollToTop";
+import Login from "./components/common/Login";
+import Register from "./components/common/Register";
+import Modal from "./components/common/Modal";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,6 +40,7 @@ export default function Home() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
   const [clearFilter, setClearFilter] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [filters, setFilters] = useState({
     category: [],
     size: [],
@@ -109,7 +113,17 @@ export default function Home() {
       setVisibleCount(totalProducts);
     }
   }, [products, totalProducts, visibleCount]);
-  
+
+  const closeModalFn = () => {
+    document.body.classList.remove('modal-open');
+    document.body.classList.remove('adjust-padding');
+    setOpenModal(false);
+  };
+  const openModalFn = () => {
+    document.body.classList.add('modal-open');
+    document.body.classList.add('adjust-padding');
+    setOpenModal(true);
+  };
   return (
     <>
       <Head>
@@ -119,7 +133,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="page-wrapper">
-        <Header />
+        <Header openModalFn={openModalFn} />
 
         <main className="main">
           <PageHeader title="List" subtitle="Shop" />
@@ -170,16 +184,19 @@ export default function Home() {
                     ></i>
                   )}
                   {/* <Pagination start={startIndex} end={endIndex} totalProducts={totalProducts} pageSize={pageSize} /> */}
-                </div>              
-                  <ShopSidebar clearFilter={clearFilter} setClearFilter={setClearFilter} setFilters={setFilters} filters={filters} />
+                </div>
+                <ShopSidebar
+                  clearFilter={clearFilter}
+                  setClearFilter={setClearFilter}
+                  setFilters={setFilters}
+                  filters={filters}
+                />
               </div>
             </div>
           </div>
         </main>
       </div>
-      <button id="scroll-top" title="Back to Top">
-        <i className="icon-arrow-up"></i>
-      </button>
+      <ScrollToTop />
 
       <div className="mobile-menu-overlay"></div>
 
@@ -240,18 +257,6 @@ export default function Home() {
                     </ul>
                   </li>
                   <li>
-                    <a href="contact.html">Contact</a>
-
-                    <ul>
-                      <li>
-                        <a href="contact.html">Contact 01</a>
-                      </li>
-                      <li>
-                        <a href="contact-2.html">Contact 02</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
                     <a href="login.html">Login</a>
                   </li>
                   <li>
@@ -264,12 +269,6 @@ export default function Home() {
                     <a href="coming-soon.html">Coming Soon</a>
                   </li>
                 </ul>
-              </li>
-              <li>
-                <a href="blog.html">Blog</a>
-              </li>
-              <li>
-                <a href="elements-list.html">Elements</a>
               </li>
             </ul>
           </nav>
@@ -302,216 +301,58 @@ export default function Home() {
       </div>
 
       <Footer />
-      {/* <div
-        className="modal fade"
-        id="signin-modal"
-        tabIndex="-1"
-        role="dialog"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
+      <Modal openModal={openModal} closeModalFn={closeModalFn}>
+        <div className="form-box">
+          <div className="form-tab">
+            <ul className="nav nav-pills nav-fill" role="tablist">
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  id="signin-tab"
+                  data-toggle="tab"
+                  href="#signin"
+                  role="tab"
+                  aria-controls="signin"
+                  aria-selected="true"
+                >
+                  Sign In
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  id="register-tab"
+                  data-toggle="tab"
+                  href="#register"
+                  role="tab"
+                  aria-controls="register"
+                  aria-selected="false"
+                >
+                  Register
+                </a>
+              </li>
+            </ul>
+            <div className="tab-content" id="tab-content-5">
+              <div
+                className="tab-pane fade show active"
+                id="signin"
+                role="tabpanel"
+                aria-labelledby="signin-tab"
               >
-                <span aria-hidden="true">
-                  <i className="icon-close"></i>
-                </span>
-              </button>
-
-              <div className="form-box">
-                <div className="form-tab">
-                  <ul className="nav nav-pills nav-fill" role="tablist">
-                    <li className="nav-item">
-                      <a
-                        className="nav-link active"
-                        id="signin-tab"
-                        data-toggle="tab"
-                        href="#signin"
-                        role="tab"
-                        aria-controls="signin"
-                        aria-selected="true"
-                      >
-                        Sign In
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        className="nav-link"
-                        id="register-tab"
-                        data-toggle="tab"
-                        href="#register"
-                        role="tab"
-                        aria-controls="register"
-                        aria-selected="false"
-                      >
-                        Register
-                      </a>
-                    </li>
-                  </ul>
-                  <div className="tab-content" id="tab-content-5">
-                    <div
-                      className="tab-pane fade show active"
-                      id="signin"
-                      role="tabpanel"
-                      aria-labelledby="signin-tab"
-                    >
-                      <form action="#">
-                        <div className="form-group">
-                          <label htmlFor="singin-email">
-                            Username or email address *
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="singin-email"
-                            name="singin-email"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="singin-password">Password *</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="singin-password"
-                            name="singin-password"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-footer">
-                          <button
-                            type="submit"
-                            className="btn btn-outline-primary-2"
-                          >
-                            <span>LOG IN</span>
-                            <i className="icon-long-arrow-right"></i>
-                          </button>
-
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="signin-remember"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="signin-remember"
-                            >
-                              Remember Me
-                            </label>
-                          </div>
-
-                          <a href="#" className="forgot-link">
-                            Forgot Your Password?
-                          </a>
-                        </div>
-                      </form>
-                      <div className="form-choice">
-                        <p className="text-center">or sign in with</p>
-                        <div className="row">
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login btn-g">
-                              <i className="icon-google"></i>
-                              Login With Google
-                            </a>
-                          </div>
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login btn-f">
-                              <i className="icon-facebook-f"></i>
-                              Login With Facebook
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="tab-pane fade"
-                      id="register"
-                      role="tabpanel"
-                      aria-labelledby="register-tab"
-                    >
-                      <form action="#">
-                        <div className="form-group">
-                          <label htmlFor="register-email">
-                            Your email address *
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="register-email"
-                            name="register-email"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="register-password">Password *</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="register-password"
-                            name="register-password"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-footer">
-                          <button
-                            type="submit"
-                            className="btn btn-outline-primary-2"
-                          >
-                            <span>SIGN UP</span>
-                            <i className="icon-long-arrow-right"></i>
-                          </button>
-
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="register-policy"
-                              required
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="register-policy"
-                            >
-                              I agree to the <a href="#">privacy policy</a> *
-                            </label>
-                          </div>
-                        </div>
-                      </form>
-                      <div className="form-choice">
-                        <p className="text-center">or sign in with</p>
-                        <div className="row">
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login btn-g">
-                              <i className="icon-google"></i>
-                              Login With Google
-                            </a>
-                          </div>
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login  btn-f">
-                              <i className="icon-facebook-f"></i>
-                              Login With Facebook
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Login closeModalFn={closeModalFn} />
+              </div>
+              <div
+                className="tab-pane fade"
+                id="register"
+                role="tabpanel"
+                aria-labelledby="register-tab"
+              >
+                <Register />
               </div>
             </div>
           </div>
         </div>
-      </div> */}
+      </Modal>
       <Script src="./scripts/jquery.min.js"></Script>
       <Script src="./scripts/bootstrap.bundle.min.js"></Script>
       <Script src="./scripts/jquery.hoverIntent.min.js"></Script>

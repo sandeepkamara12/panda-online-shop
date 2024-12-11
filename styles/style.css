@@ -8007,6 +8007,7 @@ a:focus {
   transform: translateX(0); } */
 
 .btn-product-icon {
+  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
@@ -11068,17 +11069,21 @@ button:focus {
 #filter-price-range {
   color: #c96; }
 
+@media screen and (min-width: 480px) {
+  .toolbox {
+    flex-direction: row; }
+}
 @media screen and (min-width: 576px) {
   .toolbox-right {
-    flex-direction: row; }
+    justify-content: flex-end;
+    flex-direction: row; 
+  }
 
   .toolbox-layout {
     margin-top: 0;
     margin-right: -.5rem;
     margin-left: 1rem; } }
 @media screen and (min-width: 768px) {
-  .toolbox {
-    flex-direction: row; }
 
   .toolbox-center {
     margin-top: 0; }

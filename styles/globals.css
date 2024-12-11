@@ -68,11 +68,27 @@ a {
 #widget-5 {
   width: 90%;
 }
-/* .footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 99;
-} */
+ .modal-backdrop.fade {
+  z-index: -1;
+  /* transition: opacity 0.3s ease, z-index 0.3s ease; */
+ }
+ .modal-backdrop.fade.show {
+  z-index: 2;
+ }
+ body.adjust-padding{ 
+  padding-right: 17px;
+ }
+ .modal.fade {
+   z-index: -1;
+   transition: opacity 0.3s ease, z-index 0.3s ease;
+  }
+
+  .modal-open .modal.fade.show {
+    z-index:2;
+  }
+ main {
+  background-color: #ffffff;
+ }
 @media (max-width: 768px) {
   #sidebar {
       margin-left: -250px;

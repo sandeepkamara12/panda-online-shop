@@ -4,12 +4,14 @@ import categoryReducer from './categorySlice';
 import sizeReducer from './sizeSlice';
 import colorReducer from './colorSlice';
 import brandReducer from './brandSlice';
+import wishlistReducer from './wishlistSlice';
 export const store = configureStore({
     reducer:{ 
         products: productReducer,
         categories: categoryReducer,
         sizes: sizeReducer,
         colors: colorReducer,
-        brands: brandReducer,
+        brands: brandReducer, 
+        wishlist: wishlistReducer, 
     },
 })

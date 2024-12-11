@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
+    "formik": "^2.4.6",
     "magnific-popup": "^1.2.0",
     "next": "^14.2.18",
     "nouislider": "^15.8.1",
@@ -17,7 +18,8 @@
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
     "react-select": "^5.8.3",
-    "wnumb": "^1.2.0"
+    "wnumb": "^1.2.0",
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "eslint": "^8",

@@ -72,7 +72,7 @@ const Product = ({ product, layout }) => {
           <div
             className={`${layout === "three" ? "col-12" : "col-5 col-md-3"}`}
           >
-            <ProductImage quantity={product?.quantity} createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
+            <ProductImage productId={product?.id} quantity={product?.quantity} createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
           </div>
           <div
             className={`${layout === "three" ? "col-12" : "col-7 col-md-9"}`}

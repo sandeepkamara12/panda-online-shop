@@ -21,7 +21,7 @@ const CustomDropdownIndicator = (props) => {
 const customStyles = {
   control: (base) => ({
     ...base,
-    width: "200px",
+    width: "160px",
     fontSize: "1.3rem",
     borderColor: "#ebebeb",
     borderWidth: 1,
@@ -72,7 +72,7 @@ const ProductFilters = ({
               </div>
               {/* <div className="toolbox-right col-9"> */}
               <div className="toolbox-right">
-                <a className={`btn-layout ${layout === "one" ? "active" : ""}`}>
+                {/* <a className={`btn-layout ${layout === "one" ? "active" : ""}`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="30"
@@ -91,9 +91,9 @@ const ProductFilters = ({
                       d="M69.3552 172.371C64.8283 168.424 64.3585 161.555 68.3054 157.029L142.123 72.3541C145.103 68.9363 149.89 67.726 154.137 69.3169C158.382 70.9079 161.195 74.9663 161.195 79.5004V282.5C161.195 288.506 156.326 293.375 150.32 293.375C144.314 293.375 139.445 288.506 139.445 282.5V108.524L84.6991 171.321C80.7522 175.848 73.8836 176.318 69.3552 172.371Z"
                     />
                   </svg>
-                </a>
+                </a> */}
                 <div className="toolbox-sort">
-                  <label htmlFor="sortby">Sort by:</label>
+                  <label>Sort by:</label>
                   <div className="select-custom">
                     <Select
                       options={options}
@@ -103,7 +103,7 @@ const ProductFilters = ({
                       components={{
                         DropdownIndicator: CustomDropdownIndicator,
                       }}
-                      instanceId="shop-sorting-filter"
+                      instanceId="sortby"
                     />
                   </div>
                 </div>
