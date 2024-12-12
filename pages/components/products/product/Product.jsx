@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductImage from "./ProductImage";
 import ProductCategory from "./ProductCategory";
 import ProductTitle from "./ProductTitle";
@@ -13,9 +13,24 @@ import ProductSize from "./ProductSize";
 import ProductBrand from "./ProductBrand";
 import QuickView from "./QuickView";
 // import ProductBrand from "./ProductBrand";
-
+import { addItemToCart, removeItemToCart } from "@/store/cartSlice";
 const Product = ({ product, layout }) => {
+  const dispatch = useDispatch();
+
+  const [userId, setUserId] = useState(null);
+  // const getAllCarts = useSelector(state=>state.cart.carts.carts)
+
   useEffect(() => {
+
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("data");
+      if (userData) {
+        /* Get User Information */
+        const parsedData = JSON.parse(userData);
+        setUserId(parsedData.userId);
+      }
+    }
+
     // Initialize Magnific Popup with Vanilla JavaScript
     const quickViewButton = document.querySelector('.btn-quickview');
     const modalContent = document.getElementById('quick-view-modal');
@@ -29,6 +44,7 @@ const Product = ({ product, layout }) => {
       });
     }
   }, []);
+
   const openQuickViewModal = (modalContent) => {
     // Dynamically show the modal
     const magnificPopup = window.$.magnificPopup;
@@ -50,6 +66,13 @@ const Product = ({ product, layout }) => {
       },
     });
   };
+
+  const addItemToUserCart = (userCartData) => {
+    if (!userId) return;
+    if(userCartData) {
+      dispatch(addItemToCart(userCartData))
+    }
+  }
 
   return (
     <>
@@ -133,6 +156,7 @@ const Product = ({ product, layout }) => {
 
                   <a
                     href="#"
+                    onClick={()=>addItemToUserCart({userId:userId, products:product})}
                     className={`btn-product btn-cart ${
                       product?.badge === "out-stoke" ? "disabled" : ""
                     }`}

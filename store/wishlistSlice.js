@@ -8,14 +8,12 @@ const wishlistSlice = createSlice({
   },
   reducers: {
     addItemToWishlists: (state, action) => {
-      console.log(action.payload, 'wishlist dear');
       return {
         ...state,
         wishlist:[...state.wishlist, action?.payload]
       }
     },
     removeItemToWishlists: (state, action) => {
-      console.log(action.payload, 'wishlist dear');
       return {
         ...state,
         wishlist: state.wishlist.filter(

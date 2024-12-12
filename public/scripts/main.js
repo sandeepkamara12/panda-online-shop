@@ -33,10 +33,9 @@ $(document).ready(function () {
 	// Sticky header 
     var catDropdown = $('.category-dropdown'),
         catInitVal = catDropdown.data('visible');
-        
-	if ( $('.sticky-header').length && $(window).width() >= 992 ) {
+	if ( $('.header').length && $(window).width() >= 992 ) {
 		var sticky = new Waypoint.Sticky({
-			element: $('.sticky-header')[0],
+			element: $('.header')[0],
 			stuckClass: 'fixed',
 			offset: -300,
             handler: function ( direction ) {

@@ -1,0 +1,52 @@
+{
+    "userId": "user123",
+    "cart": [
+        {
+            "id": 2,
+            "productId": 2,
+            "size":["xs", "s", "m"],
+            "name": "Casual cotton blend shirt",
+            "price": 24.49,
+            "salePrice":20,
+            "quantity":10,
+            "totalPrice": 200.00,
+            "category":[1,4,3],
+            "brand":5,
+            "color":["669933", "ebebeb"],
+            "description": "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.",
+            "image": "product-10.jpg",
+            "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
+            "badge": "new-arrival",
+            "createdAt":"2024-12-02T10:15:00Z",
+            "rating": 4,
+            "review_count": 18
+        },
+        {
+            "id": 3,
+            "productId": 4,
+            "size":["xs", "xxl", "m"],
+            "name": "Elegant chiffon blouse",
+            "price": 30,
+            "salePrice":"",
+            "quantity":1,
+            "totalPrice": 30,
+            "category":[1],
+            "brand":5,
+            "color":["669933", "333333"],
+            "description": "Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula.",
+            "image": "product-11.jpg",
+            "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
+            "badge": "new-arrival",
+            "createdAt":"2024-12-04T18:20:00Z",
+            "rating": 3,
+            "review_count": 10
+        }
+    ],
+    "cartSummary": {
+        "totalItems": 2,
+        "subtotal": 230.00,
+        "shipping": 10.00,
+        "tax": 10.00,
+        "grandTotal": 250.00
+    }
+}

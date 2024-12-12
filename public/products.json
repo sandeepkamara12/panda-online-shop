@@ -57,7 +57,7 @@
         "id": 4,
         "size":["xs", "xxl", "m"],
         "name": "Elegant chiffon blouse",
-        "price": 34.99,
+        "price": 30,
         "salePrice":"",
         "category":[1],
         "brand":5,

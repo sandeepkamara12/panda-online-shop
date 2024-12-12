@@ -1,90 +1,71 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-const Header = ({openModalFn}) => {
-  const wishlistProducts = useSelector(state=>state.wishlist.wishlist);
+const Header = ({ openModalFn }) => {
+  const wishlistProducts = useSelector((state) => state.wishlist.wishlist);
+  const cartProductsInfo = useSelector((state) => state.cart.carts);
+  const [userCartProducts, setUserCartProducts] = useState([]);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const [userId, setUserId] = useState(null);
-  
 
-  const updateUserAndWishlist = () => {
+  const updateUserAndWishlistAndCart = () => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("data");
       if (userData) {
+        /* Get User Information */
         const parsedData = JSON.parse(userData);
         setUserId(parsedData.userId);
 
+        /* Get Wishlist Information */
         const totalWishlistProducts = wishlistProducts.filter(
           (product) => product?.userId === parsedData.userId
         );
         setWishlistCount(totalWishlistProducts.length);
+
+        /* Get Cart Information */
+        // const cartProducts = cartProductsInfo?.userId == parsedData?.userId;
+        setUserCartProducts(cartProductsInfo?.cart);
+        setCartCount(cartProductsInfo?.cartSummary?.totalItems);
       } else {
         setUserId(null);
         setWishlistCount(0);
+        setCartCount(0);
       }
     }
   };
 
   useEffect(() => {
-    updateUserAndWishlist();
+    updateUserAndWishlistAndCart();
   }, []);
 
-  useEffect(()=>{
-    let totalWishlistProducts = wishlistProducts?.filter(product=>product?.userId === userId);
+  useEffect(() => {
+    let totalWishlistProducts = wishlistProducts?.filter(
+      (product) => product?.userId === userId
+    );
     setWishlistCount(totalWishlistProducts?.length);
-  },[wishlistProducts, userId])
-
+    setCartCount(cartProductsInfo?.cartSummary?.totalItems);
+    setUserCartProducts(cartProductsInfo?.cart);
+  }, [wishlistProducts, userId, cartProductsInfo?.cart]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       let userData = localStorage.getItem("data");
-      if(userData) {
-        setUserId(JSON.parse(userData).userId)
+      if (userData) {
+        setUserId(JSON.parse(userData).userId);
       }
     }
   }, []);
+
   const logout = () => {
-    updateUserAndWishlist();
-    localStorage.removeItem('data');
-  }
+    updateUserAndWishlistAndCart();
+    localStorage.removeItem("data");
+  };
 
   return (
     <header className="header">
       <div className="header-top">
         <div className="container">
-          {/* <div className="header-left">
-            <div className="header-dropdown">
-              <a href="#">Usd</a>
-              <div className="header-menu">
-                <ul>
-                  <li>
-                    <a href="#">Eur</a>
-                  </li>
-                  <li>
-                    <a href="#">Usd</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="header-dropdown">
-              <a href="#">Eng</a>
-              <div className="header-menu">
-                <ul>
-                  <li>
-                    <a href="#">English</a>
-                  </li>
-                  <li>
-                    <a href="#">French</a>
-                  </li>
-                  <li>
-                    <a href="#">Spanish</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> */}
-
           <div className="header-right">
             <ul className="top-menu">
               <li>
@@ -96,27 +77,37 @@ const Header = ({openModalFn}) => {
                     </a>
                   </li>
                   <li>
-                    <a href="#">
-                      <i className="icon-heart-o"></i><label className="mb-0 d-none d-xl-inline-block">Wishlist</label> <span className="wishlist-count text-white">{wishlistCount}</span>
+                    <a href="#" className="custom-icon">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        stroke="#333333"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        fill="none"
+                        width="20"
+                        height="20"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                        />
+                      </svg>
+                      <span className="wishlist-count text-white">
+                        {wishlistCount}
+                      </span>
                     </a>
                   </li>
-                  {/* <li>
-                    <a href="about.html">About</a>
-                  </li>
                   <li>
-                    <a href="contact.html">Contact</a>
-                  </li> */}
-                  <li>
-                    {
-                      userId == null ?
+                    {userId == null ? (
                       <a href="#" onClick={openModalFn}>
-                      <i className="icon-user"></i>Login
-                    </a>
-                    :
-                    <a href="#" onClick={logout}>
-                      <i className="icon-user"></i>Logout
-                    </a>
-                    }
+                        <i className="icon-user"></i>Login
+                      </a>
+                    ) : (
+                      <a href="#" onClick={logout}>
+                        <i className="icon-user"></i>Logout
+                      </a>
+                    )}
                   </li>
                 </ul>
               </li>
@@ -225,7 +216,7 @@ const Header = ({openModalFn}) => {
               </div>
             </div>
 
-            <div className="dropdown cart-dropdown">
+            <div className="dropdown cart-dropdown custom-icon">
               <a
                 href="#"
                 className="dropdown-toggle"
@@ -235,67 +226,66 @@ const Header = ({openModalFn}) => {
                 aria-expanded="false"
                 data-display="static"
               >
-                <i className="icon-shopping-cart"></i>
-                <span className="cart-count">2</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="#333333"
+                  strokeWidth={2}
+                  width="20"
+                  height="20"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                  />
+                </svg>
+
+                {/* <i className="icon-shopping-cart"></i> */}
+                <span className="cart-count">{cartCount ? cartCount : 0}</span>
               </a>
 
               <div className="dropdown-menu dropdown-menu-right">
                 <div className="dropdown-cart-products">
-                  <div className="product">
-                    <div className="product-cart-details">
-                      <h4 className="product-title">
-                        <a href="product.html">
-                          Beige knitted elastic runner shoes
-                        </a>
-                      </h4>
+                  {userCartProducts?.length > 0 &&
+                    userCartProducts.map((cart) => {
+                      return (
+                        <div className="product" key={cart?.id}>
+                          <div className="product-cart-details">
+                            <h4 className="product-title">
+                              <a href="product.html">{cart?.name}</a>
+                            </h4>
 
-                      <span className="cart-product-info">
-                        <span className="cart-product-qty">1</span>x $84.00
-                      </span>
-                    </div>
+                            <span className="cart-product-info">
+                              <span className="cart-product-qty">
+                                {cart?.quantity}
+                              </span>
+                              x $
+                              {cart?.salePrice ? cart?.salePrice : cart?.price}
+                            </span>
+                          </div>
 
-                    <figure className="product-image-container">
-                      <a href="product.html" className="product-image">
-                        <Image
-                          src="/product-1.jpg"
-                          width="100"
-                          height="100"
-                          alt="product"
-                        />
-                      </a>
-                    </figure>
-                    <a href="#" className="btn-remove" title="Remove Product">
-                      <i className="icon-close"></i>
-                    </a>
-                  </div>
-
-                  <div className="product">
-                    <div className="product-cart-details">
-                      <h4 className="product-title">
-                        <a href="product.html">
-                          Blue utility pinafore denim dress
-                        </a>
-                      </h4>
-
-                      <span className="cart-product-info">
-                        <span className="cart-product-qty">1</span>x $76.00
-                      </span>
-                    </div>
-
-                    <figure className="product-image-container">
-                      <a href="product.html" className="product-image">
-                        <Image
-                          src="/product-2.jpg"
-                          width="100"
-                          height="100"
-                          alt="product"
-                        />
-                      </a>
-                    </figure>
-                    <a href="#" className="btn-remove" title="Remove Product">
-                      <i className="icon-close"></i>
-                    </a>
-                  </div>
+                          <figure className="product-image-container">
+                            <a href="product.html" className="product-image">
+                              <Image
+                                src={`/${cart?.image}`}
+                                width="100"
+                                height="100"
+                                alt="product"
+                              />
+                            </a>
+                          </figure>
+                          <a
+                            href="#"
+                            className="btn-remove"
+                            title="Remove Product"
+                          >
+                            <i className="icon-close"></i>
+                          </a>
+                        </div>
+                      );
+                    })}
                 </div>
 
                 <div className="dropdown-cart-total">
