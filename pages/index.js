@@ -136,7 +136,7 @@ export default function Home() {
         <Header openModalFn={openModalFn} />
 
         <main className="main">
-          <PageHeader title="List" subtitle="Shop" />
+          {/* <PageHeader title="List" subtitle="Shop" /> */}
           <Breadcrumbs />
 
           <div className="page-content">

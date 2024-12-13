@@ -7,30 +7,39 @@ import {
 import { useSelector } from "react-redux";
 
 const ProductWishlist = ({ productId }) => {
-  const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const wishlist = useSelector((state) => state.wishlist.wishlist.wishlist);
   let dispatch = useDispatch();
 
   const [userId, setUserId] = useState(null);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       let userData = localStorage.getItem("data");
       if (userData) {
         setUserId(JSON.parse(userData).userId);
+        checkWishlistProduct();
       }
     }
   }, []);
 
-  const isProductInWishlist = wishlist.some(
-    (item) => item.productId == productId && item.userId === userId
-  );
+  useEffect(()=>{
+    checkWishlistProduct();
+  },[wishlist])
 
+  const checkWishlistProduct = () => {
+    const isProductInWishlists = wishlist.some(
+      (item) => item.productId == productId
+    );
+    setIsProductInWishlist(isProductInWishlists);
+  }
+  
   const addItemToWishlist = (e, productId) => {
     if (!userId) return;
     e.target.checked
-      ? dispatch(addItemToWishlists({ productId: productId, userId: userId }))
+      ? dispatch(addItemToWishlists({ productId: productId}))
       : dispatch(
-          removeItemToWishlists({ productId: productId, userId: userId })
+          removeItemToWishlists({ productId: productId})
         );
   };
   return (

@@ -2,13 +2,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 const Header = ({ openModalFn }) => {
-  const wishlistProducts = useSelector((state) => state.wishlist.wishlist);
+  const wishlistProducts = useSelector((state) => state.wishlist.wishlist.wishlist);
   const cartProductsInfo = useSelector((state) => state.cart.carts);
   const [userCartProducts, setUserCartProducts] = useState([]);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [userId, setUserId] = useState(null);
-
   const updateUserAndWishlistAndCart = () => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("data");
@@ -17,14 +16,9 @@ const Header = ({ openModalFn }) => {
         const parsedData = JSON.parse(userData);
         setUserId(parsedData.userId);
 
-        /* Get Wishlist Information */
-        const totalWishlistProducts = wishlistProducts.filter(
-          (product) => product?.userId === parsedData.userId
-        );
-        setWishlistCount(totalWishlistProducts.length);
+        setWishlistCount(wishlistProducts?.length);
 
         /* Get Cart Information */
-        // const cartProducts = cartProductsInfo?.userId == parsedData?.userId;
         setUserCartProducts(cartProductsInfo?.cart);
         setCartCount(cartProductsInfo?.cartSummary?.totalItems);
       } else {
@@ -40,22 +34,17 @@ const Header = ({ openModalFn }) => {
   }, []);
 
   useEffect(() => {
-    let totalWishlistProducts = wishlistProducts?.filter(
-      (product) => product?.userId === userId
-    );
-    setWishlistCount(totalWishlistProducts?.length);
-    setCartCount(cartProductsInfo?.cartSummary?.totalItems);
-    setUserCartProducts(cartProductsInfo?.cart);
+    updateUserAndWishlistAndCart();
   }, [wishlistProducts, userId, cartProductsInfo?.cart]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      let userData = localStorage.getItem("data");
-      if (userData) {
-        setUserId(JSON.parse(userData).userId);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     let userData = localStorage.getItem("data");
+  //     if (userData) {
+  //       setUserId(JSON.parse(userData).userId);
+  //     }
+  //   }
+  // }, []);
 
   const logout = () => {
     updateUserAndWishlistAndCart();

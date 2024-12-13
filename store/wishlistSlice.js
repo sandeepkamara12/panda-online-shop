@@ -8,17 +8,22 @@ const wishlistSlice = createSlice({
   },
   reducers: {
     addItemToWishlists: (state, action) => {
+      console.log(JSON.stringify(state.wishlist.wishlist), 'hi')
       return {
         ...state,
-        wishlist:[...state.wishlist, action?.payload]
+        wishlist:{
+          ...state.wishlist,
+          wishlist:[...state.wishlist.wishlist, action?.payload]
+        }
       }
     },
     removeItemToWishlists: (state, action) => {
       return {
         ...state,
-        wishlist: state.wishlist.filter(
-          (item) => item.productId != action.payload.productId || item.userId != action.payload.userId
-        ),
+        wishlist:{
+          ...state.wishlist,
+          wishlist: state.wishlist.wishlist.filter(item=>item.productId != action.payload.productId)
+        }
       }
     }
   },
