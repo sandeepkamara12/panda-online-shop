@@ -9,8 +9,8 @@ const ProductImage = ({ image, badge, createdAt, quantity, productId }) => {
   return (
     <figure className="product-media">
       <ProductBadage badge={badge} quantity={quantity} />
-      {/* <Countdown /> */}
-      {/* <div>{new Date(createdAt).toDateString()}</div> */}
+      <Countdown />
+      <div>{new Date(createdAt).toDateString()}</div>
       <a href="product.html">
         <Image
           src={`/${image}`}

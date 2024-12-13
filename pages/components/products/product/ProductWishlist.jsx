@@ -24,6 +24,7 @@ const ProductWishlist = ({ productId }) => {
   }, []);
 
   useEffect(()=>{
+    if(!userId) return;
     checkWishlistProduct();
   },[wishlist])
 

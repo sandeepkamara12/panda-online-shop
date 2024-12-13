@@ -1,13 +1,20 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import { removeItemFromCart } from "@/store/cartSlice";
+
 const Header = ({ openModalFn }) => {
   const wishlistProducts = useSelector((state) => state.wishlist.wishlist.wishlist);
   const cartProductsInfo = useSelector((state) => state.cart.carts);
+  
+  const dispatch = useDispatch();
+
   const [userCartProducts, setUserCartProducts] = useState([]);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [userId, setUserId] = useState(null);
+
   const updateUserAndWishlistAndCart = () => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("data");
@@ -37,19 +44,15 @@ const Header = ({ openModalFn }) => {
     updateUserAndWishlistAndCart();
   }, [wishlistProducts, userId, cartProductsInfo?.cart]);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     let userData = localStorage.getItem("data");
-  //     if (userData) {
-  //       setUserId(JSON.parse(userData).userId);
-  //     }
-  //   }
-  // }, []);
 
   const logout = () => {
     updateUserAndWishlistAndCart();
     localStorage.removeItem("data");
   };
+
+const removeItemFromCarts = (cartId) => {
+  dispatch(removeItemFromCart({cartId:cartId}));
+}
 
   return (
     <header className="header">
@@ -66,7 +69,7 @@ const Header = ({ openModalFn }) => {
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="custom-icon">
+                    <Link href="/wishlist" className="custom-icon">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         stroke="#333333"
@@ -85,7 +88,7 @@ const Header = ({ openModalFn }) => {
                       <span className="wishlist-count text-white">
                         {wishlistCount}
                       </span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     {userId == null ? (
@@ -120,7 +123,7 @@ const Header = ({ openModalFn }) => {
             <nav className="main-nav">
               <ul className="menu">
                 <li>
-                  <a href="category.html">Shop</a>
+                  <Link href="/">Shop</Link>
                 </li>
                 <li>
                   <a href="category.html">About</a>
@@ -234,7 +237,8 @@ const Header = ({ openModalFn }) => {
                 {/* <i className="icon-shopping-cart"></i> */}
                 <span className="cart-count">{cartCount ? cartCount : 0}</span>
               </a>
-
+            {
+            userCartProducts?.length > 0 &&
               <div className="dropdown-menu dropdown-menu-right">
                 <div className="dropdown-cart-products">
                   {userCartProducts?.length > 0 &&
@@ -266,7 +270,7 @@ const Header = ({ openModalFn }) => {
                             </a>
                           </figure>
                           <a
-                            href="#"
+                            onClick={()=>removeItemFromCarts(cart?.id)}
                             className="btn-remove"
                             title="Remove Product"
                           >
@@ -293,6 +297,7 @@ const Header = ({ openModalFn }) => {
                   </a>
                 </div>
               </div>
+            }
             </div>
           </div>
         </div>

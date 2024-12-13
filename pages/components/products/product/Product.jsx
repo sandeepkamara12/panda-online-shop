@@ -156,7 +156,8 @@ const Product = ({ product, layout }) => {
 
                   <a
                     href="#"
-                    onClick={()=>addItemToUserCart({userId:userId, products:product})}
+                    // onClick={()=>addItemToUserCart({userId:userId, products:product})}
+                    onClick={()=>addItemToUserCart({products:product})}
                     className={`btn-product btn-cart ${
                       product?.badge === "out-stoke" ? "disabled" : ""
                     }`}
@@ -185,7 +186,7 @@ const Product = ({ product, layout }) => {
                     <ProductDescription description={product?.description} />
                   </div>
                   {/* <ProductBrand brand={product?.brand} layout={layout} /> */}
-                  {/* <ProductSize layout={layout} productSize={product?.size} /> */}
+                  <ProductSize layout={layout} productSize={product?.size} />
                   {/* <ProductColor productColors={product?.color} layout={layout} /> */}
                 </div>
               </div>

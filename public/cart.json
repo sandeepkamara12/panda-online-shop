@@ -2,7 +2,7 @@
     "userId": "user123",
     "cart": [
         {
-            "id": 2,
+            "id": 1,
             "productId": 2,
             "size":["xs", "s", "m"],
             "name": "Casual cotton blend shirt",
@@ -22,7 +22,7 @@
             "review_count": 18
         },
         {
-            "id": 3,
+            "id": 2,
             "productId": 4,
             "size":["xs", "xxl", "m"],
             "name": "Elegant chiffon blouse",

@@ -1,16 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
 import localFont from "next/font/local";
-import styles from "@/styles/Home.module.css";
 import Script from "next/script";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import PageHeader from "./components/common/PageHeader";
 import Breadcrumbs from "./components/common/Breadcrumbs";
 import ShopSidebar from "./components/products/ShopSidebar";
 import ProductFilters from "./components/products/ProductFilters";
 import Product from "./components/products/product/Product";
-import Pagination from "./components/products/product/Pagination";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filter } from "@/store/productSlice";
@@ -19,17 +15,6 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import Login from "./components/common/Login";
 import Register from "./components/common/Register";
 import Modal from "./components/common/Modal";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export default function Home() {
   const products = useSelector((state) => state.products.filteredProducts);
@@ -119,11 +104,13 @@ export default function Home() {
     document.body.classList.remove('adjust-padding');
     setOpenModal(false);
   };
+
   const openModalFn = () => {
     document.body.classList.add('modal-open');
     document.body.classList.add('adjust-padding');
     setOpenModal(true);
   };
+
   return (
     <>
       <Head>
@@ -136,7 +123,6 @@ export default function Home() {
         <Header openModalFn={openModalFn} />
 
         <main className="main">
-          {/* <PageHeader title="List" subtitle="Shop" /> */}
           <Breadcrumbs />
 
           <div className="page-content">

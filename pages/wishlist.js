@@ -1,25 +1,44 @@
 import Head from "next/head";
 import Image from "next/image";
-import localFont from "next/font/local";
-import styles from "@/styles/Home.module.css";
 import Script from "next/script";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Breadcrumbs from "./components/common/Breadcrumbs";
-import Product from "./components/products/product/Product";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import NoContent from "./components/common/NoContent";
+import { removeItemToWishlists } from "@/store/wishlistSlice";
 
 export default function Wishlist() {
-  const wishlist = useSelector((state) => state.wishlist.wishlist);
-  const [userId, setUserId] = useState(null);
+  const wishlist = useSelector((state) => state.wishlist.wishlist.wishlist);
+  const products = useSelector((state) => state.products.products);
+  const sizeChart = useSelector((state) => state.sizes.sizes);
+  const [wishlistProducts, setWishlistProducts] = useState([]);
 
-  useEffect(()=>{
-    if(typeof window !== undefined) {
-      const userData = localStorage.getItem('data');
-      setUserId(JSON.parse(userData).userId);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const userData = localStorage.getItem("data");
+      if (userData) {
+        // Get all the product ids from wishlist table so we can get the same products from products table below
+        const wishlistProductIds = wishlist?.map((item) => item?.productId);
+        const wishlistProducts = products?.filter((product) =>
+          wishlistProductIds?.includes(product?.id)
+        );
+        setWishlistProducts(wishlistProducts);
+      }
     }
-  },[])
+  }, []);
+
+  const removeProductFromWishlist = (productId) => {
+    dispatch(removeItemToWishlists({ productId: productId }));
+    let tr = document.querySelector(`table tbody tr[data-id="${productId}"]`);
+
+    if (tr) {
+      tr.remove();
+    }
+  };
 
   return (
     <>
@@ -37,50 +56,100 @@ export default function Wishlist() {
 
           <div className="page-content">
             <div className="container">
-              <table className="table table-wishlist table-mobile">
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Stock Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
+              {wishlist?.length > 0 ? (
+                <table className="table table-wishlist table-mobile">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Stock Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {wishlistProducts?.length > 0 &&
+                      wishlistProducts?.map((wishlist) => {
+                        return (
+                          <tr key={wishlist?.id} data-id={wishlist?.id}>
+                            <td className="product-col">
+                              <div className="product">
+                                <figure className="product-media">
+                                  <a href="#">
+                                    <Image
+                                      src={`/${wishlist?.image}`}
+                                      alt="Product image"
+                                      width="60"
+                                      height="60"
+                                    />
+                                  </a>
+                                </figure>
+                                <div>
+                                  <h3 className="product-title">
+                                    <a href="#">{wishlist?.name}</a>
+                                  </h3>
+                                  <div className={`product-size mb-0`}>
+                                    {sizeChart.length > 0 &&
+                                      sizeChart?.map((size) => {
+                                        return (
+                                          <a
+                                            title=""
+                                            className={`text-uppercase ${
+                                              wishlist?.size?.includes(
+                                                size?.name
+                                              )
+                                                ? "active"
+                                                : "disabled"
+                                            }`}
+                                            key={size?.name}
+                                          >
+                                            {size?.name}
+                                          </a>
+                                        );
+                                      })}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="price-col">
+                              <div className="product-price mb-0">
+                              {
+                                wishlist?.salePrice ?
+                                <>
+                               <div className="new-price">
+                                  ${wishlist?.salePrice}
+                               </div>
+                               <div className="old-price">
+                                  ${wishlist?.price}
+                               </div>
+                                </>
+                               :
+                                  `$${wishlist?.price}`
+                              }
+                              </div>
+                            </td>
+                            <td className="stock-col">
+                              <span className="in-stock">{wishlist?.quantity>0 ? 'In stock':'Out of Stock'}</span>
+                            </td>
 
-                <tbody>
-                  <tr>
-                    <td className="product-col">
-                      <div className="product">
-                        <figure className="product-media">
-                          <a href="#">
-                            <Image
-                              src="/product-8-thumb.jpg"
-                              alt="Product image"
-                              width="60"
-                              height="60"
-                            />
-                          </a>
-                        </figure>
-
-                        <h3 className="product-title">
-                          <a href="#">Beige knitted elastic runner shoes</a>
-                        </h3>
-                      </div>
-                    </td>
-                    <td className="price-col">$84.00</td>
-                    <td className="stock-col">
-                      <span className="in-stock">In stock</span>
-                    </td>
-                 
-                    <td className="remove-col">
-                      <button className="btn-remove">
-                        <i className="icon-close"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="wishlist-share">
+                            <td className="remove-col">
+                              <button
+                                className="btn-remove"
+                                onClick={() =>
+                                  removeProductFromWishlist(wishlist?.id)
+                                }
+                              >
+                                <i className="icon-close"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              ) : (
+                <NoContent />
+              )}
+              {/* <div className="wishlist-share">
                 <div className="social-icons social-icons-sm mb-2">
                   <label className="social-label">Share on:</label>
                   <a
@@ -124,7 +193,7 @@ export default function Wishlist() {
                     <i className="icon-pinterest"></i>
                   </a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </main>

@@ -1,23 +1,26 @@
 import React from "react";
-import sizeChart from '../../../../public/sizes.json';
+// import sizeChart from '../../../../public/sizes.json';
+import { useSelector } from "react-redux";
+
 const ProductSize = ({ layout, productSize }) => {
+  const sizeChart = useSelector((state) => state.sizes.sizes);
   return (
     <div
       className={`product-size ${
         layout === "three" ? "justify-content-center" : ""
       }`}
     >
-      {sizeChart &&
+      {sizeChart.length>0 &&
         sizeChart?.map((size) => {
           return (
             <a
               title=""
               className={`text-uppercase ${
-                productSize?.includes(size) ? "active" : "disabled"
+                productSize?.includes(size?.name) ? "active" : "disabled"
               }`}
-              key={size}
+              key={size?.name}
             >
-              {size}
+              {size?.name}
             </a>
           );
         })}
