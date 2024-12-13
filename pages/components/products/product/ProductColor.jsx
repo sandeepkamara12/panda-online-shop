@@ -4,7 +4,7 @@ const ProductColor = ({ productColors, layout }) => {
   return (
     <div
       className={`filter-colors mb-1 ${
-        layout === "three" ? "justify-content-center" : "align-items-start"
+        layout === "three" ? "" : "align-items-start"
       }`}
     >
       {productColors &&

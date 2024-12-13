@@ -88,7 +88,7 @@ const Product = ({ product, layout }) => {
         <div
           className={`row ${
             layout === "three"
-              ? "flex-column align-items-center text-center"
+              ? "flex-column align-items-center"
               : ""
           }`}
         >
@@ -115,7 +115,7 @@ const Product = ({ product, layout }) => {
                 >
                   <div
                     className={`product-price ${
-                      layout === "three" ? "justify-content-center" : ""
+                      layout === "three" ? "" : ""
                     }`}
                   >
                     {!product?.salePrice ? (
@@ -129,7 +129,7 @@ const Product = ({ product, layout }) => {
                   </div>
                   <div
                     className={`ratings-container ${
-                      layout === "three" ? "justify-content-center" : ""
+                      layout === "three" ? "" : ""
                     }`}
                   >
                     <ProductReview

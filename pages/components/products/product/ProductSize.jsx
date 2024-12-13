@@ -7,7 +7,7 @@ const ProductSize = ({ layout, productSize }) => {
   return (
     <div
       className={`product-size ${
-        layout === "three" ? "justify-content-center" : ""
+        layout === "three" ? "" : ""
       }`}
     >
       {sizeChart.length>0 &&
