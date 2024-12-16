@@ -156,15 +156,15 @@ const Product = ({ product, layout }) => {
                     </a>
                   </div>
 
-                  <Link
-                    href="#"
+                  <button
+                    type="button"
                     onClick={()=>addItemToUserCart({products:product})}
                     className={`btn-product btn-cart ${layout === "three" ? '' : ''} ${
                       product?.badge === "out-stoke" ? "disabled" : ""
                     }`}
                   >
                     <span>add to cart</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
 

@@ -819,7 +819,7 @@ blockquote {
     color: #fff;
     background-color: #cc9966; }
   .cart-dropdown .dropdown-cart-products {
-    max-height: 200px;
+    max-height: 240px;
     overflow-y: auto;
     margin-top: -1rem;
     /* width: calc(100% + 15px); */
@@ -8729,6 +8729,8 @@ a:focus {
         .loader,
     .product.product-list .btn-product.btn-cart {
       color: #c96;
+      width: 100%;
+      background-color: transparent;
       border: 0.1rem solid #c96;
       flex: 1 1 100%;
       max-width: 100%;

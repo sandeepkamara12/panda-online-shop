@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import carts from "../public/cart.json";
+import { v4 as uuidv4 } from 'uuid';
+
 const cartSlice = createSlice({
   name: "carts",
   initialState: {
@@ -9,7 +11,6 @@ const cartSlice = createSlice({
     addItemToCart: (state, action) => {
       const { products } = action.payload;
       if (state.carts.cart?.length > 0) {
-        console.log(JSON.stringify(state.carts.cart), "hello");
         let isProductAlreadyExist = state.carts.cart.find(
           (cartItem) => cartItem?.productId == products.id
         );
@@ -31,6 +32,7 @@ const cartSlice = createSlice({
             : products?.price;
           const updatedProduct = {
             ...products,
+            id:uuidv4().replace(/\D/g, '').slice(0, 2),
             productId: products?.id,
             quantity: 1,
             totalPrice: price * 1,

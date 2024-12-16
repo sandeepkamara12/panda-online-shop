@@ -244,7 +244,7 @@ const removeItemFromCarts = (cartId) => {
                   {userCartProducts?.length > 0 &&
                     userCartProducts.map((cart) => {
                       return (
-                        <div className="product" key={`cart_${cart?.id}`}>
+                        <div className="product" data-id={cart?.id} key={`cart_${cart?.id}`}>
                           <div className="product-cart-details">
                             <h4 className="product-title">
                               <a href="product.html">{cart?.name}</a>
