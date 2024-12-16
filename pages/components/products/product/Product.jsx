@@ -14,6 +14,7 @@ import ProductBrand from "./ProductBrand";
 import QuickView from "./QuickView";
 // import ProductBrand from "./ProductBrand";
 import { addItemToCart, removeItemToCart } from "@/store/cartSlice";
+import Link from "next/link";
 const Product = ({ product, layout }) => {
   const dispatch = useDispatch();
 
@@ -81,8 +82,9 @@ const Product = ({ product, layout }) => {
     </div>
       <div
         className={`product product-list ${
-          layout === "three" ? "col-12 col-sm-6 col-md-4" : ""
+          layout === "three" ? "col-12 col-sm-6 col-md-4 text-center" : ""
         }`}
+        data-id={product?.id}
         key={product?.id}
       >
         <div
@@ -93,12 +95,12 @@ const Product = ({ product, layout }) => {
           }`}
         >
           <div
-            className={`${layout === "three" ? "col-12" : "col-5 col-md-3"}`}
+            className={`${layout === "three" ? "col-12" : "col-12 col-sm-5 col-md-3"}`}
           >
-            <ProductImage productId={product?.id} quantity={product?.quantity} createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
+            <ProductImage productColors={product?.color} layout={layout} productId={product?.id} quantity={product?.quantity} createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
           </div>
           <div
-            className={`${layout === "three" ? "col-12" : "col-7 col-md-9"}`}
+            className={`${layout === "three" ? "col-12" : "col-12 col-sm-7 col-md-9"}`}
           >
             <div className="row">
               <div
@@ -137,7 +139,7 @@ const Product = ({ product, layout }) => {
                       rating={product?.rating}
                     />
                   </div>
-                  <div className={`product-action`}>
+                  <div className={`product-action ${layout === "three" ? 'd-none':''}`}>
                     <a
                       href="#quick-view-modal"
                       className="btn-product btn-quickview"
@@ -154,16 +156,15 @@ const Product = ({ product, layout }) => {
                     </a>
                   </div>
 
-                  <a
+                  <Link
                     href="#"
-                    // onClick={()=>addItemToUserCart({userId:userId, products:product})}
                     onClick={()=>addItemToUserCart({products:product})}
-                    className={`btn-product btn-cart ${
+                    className={`btn-product btn-cart ${layout === "three" ? '' : ''} ${
                       product?.badge === "out-stoke" ? "disabled" : ""
                     }`}
                   >
                     <span>add to cart</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -186,8 +187,8 @@ const Product = ({ product, layout }) => {
                     <ProductDescription description={product?.description} />
                   </div>
                   {/* <ProductBrand brand={product?.brand} layout={layout} /> */}
-                  <ProductSize layout={layout} productSize={product?.size} />
-                  {/* <ProductColor productColors={product?.color} layout={layout} /> */}
+                    <ProductSize layout={layout} productSize={product?.size} />
+                    {/* <ProductColor productColors={product?.color} layout={layout} /> */}
                 </div>
               </div>
             </div>

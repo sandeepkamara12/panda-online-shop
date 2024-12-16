@@ -64,7 +64,7 @@ const productSlice = createSlice({
         }
         else if (sort === "best-seller") {
           /* Sort Highest Rating Products (Best Sellers) */
-          filtered = filtered.filter(product => product?.rating > 4); 
+          filtered = filtered.filter(product => product?.rating >= 4); 
         }
         else if (sort === "new-arrival") {
           /* Sort Newest Products by date in descending order (Newest) */

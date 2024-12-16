@@ -3,7 +3,7 @@ import React from "react";
 const ProductColor = ({ productColors, layout }) => {
   return (
     <div
-      className={`filter-colors mb-1 ${
+      className={`filter-colors ${layout !="none" ? 'position-absolute' : 'mt-1'} ${
         layout === "three" ? "" : "align-items-start"
       }`}
     >

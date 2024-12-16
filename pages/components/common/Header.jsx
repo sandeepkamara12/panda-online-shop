@@ -244,7 +244,7 @@ const removeItemFromCarts = (cartId) => {
                   {userCartProducts?.length > 0 &&
                     userCartProducts.map((cart) => {
                       return (
-                        <div className="product" key={cart?.id}>
+                        <div className="product" key={`cart_${cart?.id}`}>
                           <div className="product-cart-details">
                             <h4 className="product-title">
                               <a href="product.html">{cart?.name}</a>
@@ -288,9 +288,9 @@ const removeItemFromCarts = (cartId) => {
                 </div>
 
                 <div className="dropdown-cart-action">
-                  <a href="cart.html" className="btn btn-primary">
+                  <Link href="/cart" className="btn btn-primary">
                     View Cart
-                  </a>
+                  </Link>
                   <a href="checkout.html" className="btn btn-outline-primary-2">
                     <span>Checkout</span>
                     <i className="icon-long-arrow-right"></i>

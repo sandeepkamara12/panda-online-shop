@@ -44,11 +44,12 @@ const ProductWishlist = ({ productId }) => {
         );
   };
   return (
-    <div className="product-action-vertical">
-      <label
-        className="btn-product-icon"
-        htmlFor={`add-to-wishlist_${productId}`}
-      >
+    <label
+    className="btn-product-icon"
+    title="Add to wishlist"
+    htmlFor={`add-to-wishlist_${productId}`}
+    >
+        {/* // <div className="product-action-vertical"> */}
         <span>Add to wishlist</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -72,10 +73,10 @@ const ProductWishlist = ({ productId }) => {
           checked={isProductInWishlist}
           onChange={(e) => addItemToWishlist(e, productId)}
         />
-      </label>
       {/* <a href="#" className="btn-product-icon btn-quickview btn-expandable"><span>Quick view</span></a>
       <a href="#" className="btn-product-icon btn-compare btn-expandable"><span>Compare</span></a> */}
-    </div>
+    {/* // </div> */}
+      </label>
   );
 };
 

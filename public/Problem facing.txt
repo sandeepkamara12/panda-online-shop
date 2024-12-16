@@ -1,0 +1,2 @@
+Problem facing
+while using useSelector, I have to use dot notation many times to access the state from redux.

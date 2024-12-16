@@ -12,8 +12,10 @@ import ProductFilters from "./components/products/ProductFilters";
 import Product from "./components/products/product/Product";
 import Pagination from "./components/products/product/Pagination";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import ProductColor from "./components/products/product/ProductColor";
+import ProductReview from "./components/products/product/ProductReview";
+import { removeItemFromCart } from "@/store/cartSlice";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -26,8 +28,59 @@ const geistMono = localFont({
 });
 
 export default function Cart() {
+  const sizeChart = useSelector((state) => state.sizes.sizes);
   const products = useSelector((state) => state.products.products);
+  const cartProductsInfo = useSelector((state) => state.cart.carts);
+  const [userCartProducts, setUserCartProducts] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [quantity, setQuantity] = useState(null);
   const totalProducts = products?.length;
+  const dispatch = useDispatch();
+
+  const updateUserAndWishlistAndCart = () => {
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("data");
+      if (userData) {
+        /* Get User Information */
+        const parsedData = JSON.parse(userData);
+        setUserId(parsedData.userId);
+
+        /* Get Cart Information */
+        setUserCartProducts(cartProductsInfo?.cart);
+      } else {
+        setUserId(null);
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateUserAndWishlistAndCart();
+  }, []);
+
+  const updateItemQuantity = (e, itemId) => {
+    const newQuantity = parseInt(e.target.value, 10) || 1; // Default to 1 if input is invalid
+    const updatedCart = userCartProducts.map((item) =>
+      item.id === itemId
+        ? { ...item, quantity: newQuantity } // Update quantity for the matching item
+        : item
+    );
+    setUserCartProducts(updatedCart);
+  };
+
+  const calculateTotalPrice = () => {
+    return userCartProducts.reduce((total, item) => {
+      const itemPrice = item.salePrice || item.price;
+      return total + item.quantity * itemPrice;
+    }, 0);
+  };
+
+  useEffect(() => {
+    updateUserAndWishlistAndCart();
+  }, [userId, cartProductsInfo?.cart]);
+
+  const removeItemFromCarts = (cartId) => {
+    dispatch(removeItemFromCart({cartId:cartId}));
+  }
   
   return (
     <>
@@ -41,154 +94,285 @@ export default function Cart() {
         <Header />
 
         <main className="main">
-          <PageHeader title="Shopping Cart" subtitle="Check the items" />
+          {/* <PageHeader title="Shopping Cart" subtitle="Check the items" /> */}
           <Breadcrumbs />
 
           <div className="page-content">
-            <div class="cart">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <table class="table table-cart table-mobile">
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+            <div className="cart">
+              <div className="container">
+                <div className="row">
+                  <div className="col-lg-9">
+                    <table className="table table-cart table-mobile">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>Total</th>
+                          <th></th>
+                        </tr>
+                      </thead>
 
-                                <tbody>
-                                    <tr>
-                                        <td class="product-col">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <Image src="/product-1.jpg" width="100" height="100" alt="Product image" />
-                                                    </a>
-                                                </figure>
+                      <tbody>
+                        {userCartProducts?.length > 0 &&
+                          userCartProducts?.map((item) => {
+                            let itemPrice = !item?.salePrice
+                              ? item?.price
+                              : item?.salePrice;
+                            return (
+                              <tr key={`cart-${item?.id}`} data-id={item?.id}>
+                                <td className="product-col">
+                                  <div className="product">
+                                    <figure className="product-media">
+                                      <a href="#">
+                                        <Image
+                                          src={`/${item?.image}`}
+                                          width="100"
+                                          height="100"
+                                          alt="Product image"
+                                        />
+                                      </a>
+                                    </figure>
+                                  <div className="flex flex-column layout-three">
 
-                                                <h3 class="product-title">
-                                                    <a href="#">Beige knitted elastic runner shoes</a>
-                                                </h3>
-                                            </div>
-                                        </td>
-                                        <td class="price-col">$84.00</td>
-                                        <td class="quantity-col">
-                                            <div class="cart-product-quantity">
-                                                <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required />
-                                            </div>
-                                        </td>
-                                        <td class="total-col">$84.00</td>
-                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-col">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <Image width="100" height="100" src="/product-2.jpg" alt="Product image" />
-                                                    </a>
-                                                </figure>
+                                    <h3 className="product-title">
+                                      <a href="#">{item?.name}</a>
+                                    </h3>
+                                    <div
+                                        className={`ratings-container wishlist-product-rating`}
+                                      >
+                                        <ProductReview
+                                          reviewCount={item?.review_count}
+                                          rating={item?.rating}
+                                        />
+                                      </div>
+                                      <div className={`product-size mb-0`}>
+                                        {sizeChart.length > 0 &&
+                                          sizeChart?.map((size) => {
+                                            return (
+                                              <a
+                                              title=""
+                                              className={`text-uppercase ${
+                                                  item?.size?.includes(
+                                                    size?.name
+                                                  )
+                                                    ? "active"
+                                                    : "disabled"
+                                                }`}
+                                                key={size?.name}
+                                              >
+                                                {size?.name}
+                                              </a>
+                                            );
+                                          })}
+                                      </div>
 
-                                                <h3 class="product-title">
-                                                    <a href="#">Blue utility pinafore denim dress</a>
-                                                </h3>
-                                            </div>
-                                        </td>
-                                        <td class="price-col">$76.00</td>
-                                        <td class="quantity-col">
-                                            <div class="cart-product-quantity">
-                                                <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required />
-                                            </div>
-                                        </td>
-                                        <td class="total-col">$76.00</td>
-                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                      <ProductColor
+                                        productColors={item?.color}
+                                        layout={"none"}
+                                      />
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="price-col">
+                                  <div className={`product-price`}>
+                                    {!item?.salePrice ? (
+                                      `$${item?.price}`
+                                    ) : (
+                                      <>
+                                        <span className="new-price">
+                                          ${item?.salePrice}
+                                        </span>
+                                        <span className="old-price">
+                                          ${item?.price}
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="quantity-col">
+                                  <div className="cart-product-quantity">
+                                    <input
+                                      type="number"
+                                      className="form-control"
+                                      value={item?.quantity}
+                                      id={`item_quantity_${item?.id}`}
+                                      onChange={(e) =>
+                                        updateItemQuantity(e, item?.id)
+                                      }
+                                      min="1"
+                                      max="10"
+                                      step="1"
+                                      data-decimals="0"
+                                      required
+                                    />
+                                  </div>
+                                </td>
+                                <td className="total-col">
+                                  ${item?.quantity * itemPrice}
+                                </td>
+                                <td className="remove-col">
+                                  <button className="btn-remove"  onClick={()=>removeItemFromCarts(item?.id)}>
+                                  <svg
+                                      width="20"
+                                      height="20"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      strokeWidth={1.5}
+                                      stroke="currentColor"
+                                      className="size-6"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                      />
+                                    </svg>
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
 
-                            <div class="cart-bottom">
-                                <div class="cart-discount">
-                                    <form action="#">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" required placeholder="coupon code" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
+                    <div className="cart-bottom">
+                      <div className="cart-discount">
+                        <form action="#">
+                          <div className="input-group">
+                            <input
+                              type="text"
+                              className="form-control"
+                              required
+                              placeholder="coupon code"
+                            />
+                            <div className="input-group-append">
+                              <button
+                                className="btn btn-outline-primary-2"
+                                type="submit"
+                              >
+                                <i className="icon-long-arrow-right"></i>
+                              </button>
                             </div>
-                        </div>
-                        <aside class="col-lg-3">
-                            <div class="summary summary-cart">
-                                <h3 class="summary-title">Cart Total</h3>
+                          </div>
+                        </form>
+                      </div>
 
-                                <table class="table table-summary">
-                                    <tbody>
-                                        <tr class="summary-subtotal">
-                                            <td>Subtotal:</td>
-                                            <td>$160.00</td>
-                                        </tr>
-                                        <tr class="summary-shipping">
-                                            <td>Shipping:</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="free-shipping" name="shipping" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="free-shipping">Free Shipping</label>
-                                                </div>
-                                            </td>
-                                            <td>$0.00</td>
-                                        </tr>
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="standart-shipping">Standart:</label>
-                                                </div>
-                                            </td>
-                                            <td>$10.00</td>
-                                        </tr>
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="express-shipping" name="shipping" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="express-shipping">Express:</label>
-                                                </div>
-                                            </td>
-                                            <td>$20.00</td>
-                                        </tr>
-
-                                        <tr class="summary-shipping-estimate">
-                                            <td>Estimate for Your Country<br /> <a href="dashboard.html">Change address</a></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-
-                                        <tr class="summary-total">
-                                            <td>Total:</td>
-                                            <td>$160.00</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
-                            </div>
-
-                            <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
-                        </aside>
+                      <a href="#" className="btn btn-outline-dark-2">
+                        <span>UPDATE CART</span>
+                        <i className="icon-refresh"></i>
+                      </a>
                     </div>
+                  </div>
+                  <aside className="col-lg-3">
+                    <div className="summary summary-cart">
+                      <h3 className="summary-title">Cart Total</h3>
+
+                      <table className="table table-summary">
+                        <tbody>
+                          <tr className="summary-subtotal">
+                            <td>Subtotal:</td>
+                            <td>${calculateTotalPrice()}</td>
+                          </tr>
+                          <tr className="summary-shipping">
+                            <td>Shipping:</td>
+                            <td>&nbsp;</td>
+                          </tr>
+
+                          <tr className="summary-shipping-row">
+                            <td>
+                              <div className="custom-control custom-radio">
+                                <input
+                                  type="radio"
+                                  id="free-shipping"
+                                  name="shipping"
+                                  className="custom-control-input"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="free-shipping"
+                                >
+                                  Free Shipping
+                                </label>
+                              </div>
+                            </td>
+                            <td>$0.00</td>
+                          </tr>
+
+                          <tr className="summary-shipping-row">
+                            <td>
+                              <div className="custom-control custom-radio">
+                                <input
+                                  type="radio"
+                                  id="standart-shipping"
+                                  name="shipping"
+                                  className="custom-control-input"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="standart-shipping"
+                                >
+                                  Standart:
+                                </label>
+                              </div>
+                            </td>
+                            <td>$10.00</td>
+                          </tr>
+
+                          <tr className="summary-shipping-row">
+                            <td>
+                              <div className="custom-control custom-radio">
+                                <input
+                                  type="radio"
+                                  id="express-shipping"
+                                  name="shipping"
+                                  className="custom-control-input"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="express-shipping"
+                                >
+                                  Express:
+                                </label>
+                              </div>
+                            </td>
+                            <td>$20.00</td>
+                          </tr>
+
+                          <tr className="summary-shipping-estimate">
+                            <td>
+                              Estimate for Your Country
+                              <br /> <a href="dashboard.html">Change address</a>
+                            </td>
+                            <td>&nbsp;</td>
+                          </tr>
+
+                          <tr className="summary-total">
+                            <td>Total:</td>
+                            <td>$160.00</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <a
+                        href="checkout.html"
+                        className="btn btn-outline-primary-2 btn-order btn-block"
+                      >
+                        PROCEED TO CHECKOUT
+                      </a>
+                    </div>
+
+                    <a
+                      href="category.html"
+                      className="btn btn-outline-dark-2 btn-block mb-3"
+                    >
+                      <span>CONTINUE SHOPPING</span>
+                      <i className="icon-refresh"></i>
+                    </a>
+                  </aside>
                 </div>
+              </div>
             </div>
           </div>
         </main>
@@ -197,612 +381,11 @@ export default function Cart() {
         <i className="icon-arrow-up"></i>
       </button>
 
-      <div className="mobile-menu-overlay"></div>
-
-      <div className="mobile-menu-container">
-        <div className="mobile-menu-wrapper">
-          <span className="mobile-menu-close">
-            <i className="icon-close"></i>
-          </span>
-
-          <form action="#" method="get" className="mobile-search">
-            <label htmlFor="mobile-search" className="sr-only">
-              Search
-            </label>
-            <input
-              type="search"
-              className="form-control"
-              name="mobile-search"
-              id="mobile-search"
-              placeholder="Search in..."
-              required
-            />
-            <button className="btn btn-primary" type="submit">
-              <i className="icon-search"></i>
-            </button>
-          </form>
-
-          <nav className="mobile-nav">
-            <ul className="mobile-menu">
-              <li className="active">
-                <a href="index.html">Home</a>
-
-                <ul>
-                  <li>
-                    <a href="index-1.html">01 - furniture store</a>
-                  </li>
-                  <li>
-                    <a href="index-2.html">02 - furniture store</a>
-                  </li>
-                  <li>
-                    <a href="index-3.html">03 - electronic store</a>
-                  </li>
-                  <li>
-                    <a href="index-4.html">04 - electronic store</a>
-                  </li>
-                  <li>
-                    <a href="index-5.html">05 - fashion store</a>
-                  </li>
-                  <li>
-                    <a href="index-6.html">06 - fashion store</a>
-                  </li>
-                  <li>
-                    <a href="index-7.html">07 - fashion store</a>
-                  </li>
-                  <li>
-                    <a href="index-8.html">08 - fashion store</a>
-                  </li>
-                  <li>
-                    <a href="index-9.html">09 - fashion store</a>
-                  </li>
-                  <li>
-                    <a href="index-10.html">10 - shoes store</a>
-                  </li>
-                  <li>
-                    <a href="index-11.html">11 - furniture simple store</a>
-                  </li>
-                  <li>
-                    <a href="index-12.html">12 - fashion simple store</a>
-                  </li>
-                  <li>
-                    <a href="index-13.html">13 - market</a>
-                  </li>
-                  <li>
-                    <a href="index-14.html">14 - market fullwidth</a>
-                  </li>
-                  <li>
-                    <a href="index-15.html">15 - lookbook 1</a>
-                  </li>
-                  <li>
-                    <a href="index-16.html">16 - lookbook 2</a>
-                  </li>
-                  <li>
-                    <a href="index-17.html">17 - fashion store</a>
-                  </li>
-                  <li>
-                    <a href="index-18.html">
-                      18 - fashion store (with sidebar)
-                    </a>
-                  </li>
-                  <li>
-                    <a href="index-19.html">19 - games store</a>
-                  </li>
-                  <li>
-                    <a href="index-20.html">20 - book store</a>
-                  </li>
-                  <li>
-                    <a href="index-21.html">21 - sport store</a>
-                  </li>
-                  <li>
-                    <a href="index-22.html">22 - tools store</a>
-                  </li>
-                  <li>
-                    <a href="index-23.html">
-                      23 - fashion left navigation store
-                    </a>
-                  </li>
-                  <li>
-                    <a href="index-24.html">24 - extreme sport store</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="category.html">Shop</a>
-                <ul>
-                  <li>
-                    <a href="category-list.html">Shop List</a>
-                  </li>
-                  <li>
-                    <a href="category-2cols.html">Shop Grid 2 Columns</a>
-                  </li>
-                  <li>
-                    <a href="category.html">Shop Grid 3 Columns</a>
-                  </li>
-                  <li>
-                    <a href="category-4cols.html">Shop Grid 4 Columns</a>
-                  </li>
-                  <li>
-                    <a href="category-boxed.html">
-                      <span>
-                        Shop Boxed No Sidebar
-                        <span className="tip tip-hot">Hot</span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="category-fullwidth.html">
-                      Shop Fullwidth No Sidebar
-                    </a>
-                  </li>
-                  <li>
-                    <a href="product-category-boxed.html">
-                      Product Category Boxed
-                    </a>
-                  </li>
-                  <li>
-                    <a href="product-category-fullwidth.html">
-                      <span>
-                        Product Category Fullwidth
-                        <span className="tip tip-new">New</span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="cart.html">Cart</a>
-                  </li>
-                  <li>
-                    <a href="checkout.html">Checkout</a>
-                  </li>
-                  <li>
-                    <a href="wishlist.html">Wishlist</a>
-                  </li>
-                  <li>
-                    <a href="#">Lookbook</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="product.html" className="sf-with-ul">
-                  Product
-                </a>
-                <ul>
-                  <li>
-                    <a href="product.html">Default</a>
-                  </li>
-                  <li>
-                    <a href="product-centered.html">Centered</a>
-                  </li>
-                  <li>
-                    <a href="product-extended.html">
-                      <span>
-                        Extended Info<span className="tip tip-new">New</span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="product-gallery.html">Gallery</a>
-                  </li>
-                  <li>
-                    <a href="product-sticky.html">Sticky Info</a>
-                  </li>
-                  <li>
-                    <a href="product-sidebar.html">Boxed With Sidebar</a>
-                  </li>
-                  <li>
-                    <a href="product-fullwidth.html">Full Width</a>
-                  </li>
-                  <li>
-                    <a href="product-masonry.html">Masonry Sticky Info</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Pages</a>
-                <ul>
-                  <li>
-                    <a href="about.html">About</a>
-
-                    <ul>
-                      <li>
-                        <a href="about.html">About 01</a>
-                      </li>
-                      <li>
-                        <a href="about-2.html">About 02</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="contact.html">Contact</a>
-
-                    <ul>
-                      <li>
-                        <a href="contact.html">Contact 01</a>
-                      </li>
-                      <li>
-                        <a href="contact-2.html">Contact 02</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="login.html">Login</a>
-                  </li>
-                  <li>
-                    <a href="faq.html">FAQs</a>
-                  </li>
-                  <li>
-                    <a href="404.html">Error 404</a>
-                  </li>
-                  <li>
-                    <a href="coming-soon.html">Coming Soon</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="blog.html">Blog</a>
-
-                <ul>
-                  <li>
-                    <a href="blog.html">Classic</a>
-                  </li>
-                  <li>
-                    <a href="blog-listing.html">Listing</a>
-                  </li>
-                  <li>
-                    <a href="#">Grid</a>
-                    <ul>
-                      <li>
-                        <a href="blog-grid-2cols.html">Grid 2 columns</a>
-                      </li>
-                      <li>
-                        <a href="blog-grid-3cols.html">Grid 3 columns</a>
-                      </li>
-                      <li>
-                        <a href="blog-grid-4cols.html">Grid 4 columns</a>
-                      </li>
-                      <li>
-                        <a href="blog-grid-sidebar.html">Grid sidebar</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Masonry</a>
-                    <ul>
-                      <li>
-                        <a href="blog-masonry-2cols.html">Masonry 2 columns</a>
-                      </li>
-                      <li>
-                        <a href="blog-masonry-3cols.html">Masonry 3 columns</a>
-                      </li>
-                      <li>
-                        <a href="blog-masonry-4cols.html">Masonry 4 columns</a>
-                      </li>
-                      <li>
-                        <a href="blog-masonry-sidebar.html">Masonry sidebar</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Mask</a>
-                    <ul>
-                      <li>
-                        <a href="blog-mask-grid.html">Blog mask grid</a>
-                      </li>
-                      <li>
-                        <a href="blog-mask-masonry.html">Blog mask masonry</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Single Post</a>
-                    <ul>
-                      <li>
-                        <a href="single.html">Default with sidebar</a>
-                      </li>
-                      <li>
-                        <a href="single-fullwidth.html">Fullwidth no sidebar</a>
-                      </li>
-                      <li>
-                        <a href="single-fullwidth-sidebar.html">
-                          Fullwidth with sidebar
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="elements-list.html">Elements</a>
-                <ul>
-                  <li>
-                    <a href="elements-products.html">Products</a>
-                  </li>
-                  <li>
-                    <a href="elements-typography.html">Typography</a>
-                  </li>
-                  <li>
-                    <a href="elements-titles.html">Titles</a>
-                  </li>
-                  <li>
-                    <a href="elements-banners.html">Banners</a>
-                  </li>
-                  <li>
-                    <a href="elements-product-category.html">
-                      Product Category
-                    </a>
-                  </li>
-                  <li>
-                    <a href="elements-video-banners.html">Video Banners</a>
-                  </li>
-                  <li>
-                    <a href="elements-buttons.html">Buttons</a>
-                  </li>
-                  <li>
-                    <a href="elements-accordions.html">Accordions</a>
-                  </li>
-                  <li>
-                    <a href="elements-tabs.html">Tabs</a>
-                  </li>
-                  <li>
-                    <a href="elements-testimonials.html">Testimonials</a>
-                  </li>
-                  <li>
-                    <a href="elements-blog-posts.html">Blog Posts</a>
-                  </li>
-                  <li>
-                    <a href="elements-portfolio.html">Portfolio</a>
-                  </li>
-                  <li>
-                    <a href="elements-cta.html">Call to Action</a>
-                  </li>
-                  <li>
-                    <a href="elements-icon-boxes.html">Icon Boxes</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
-
-          <div className="social-icons">
-            <a
-              href="#"
-              className="social-icon"
-              target="_blank"
-              title="Facebook"
-            >
-              <i className="icon-facebook-f"></i>
-            </a>
-            <a href="#" className="social-icon" target="_blank" title="Twitter">
-              <i className="icon-twitter"></i>
-            </a>
-            <a
-              href="#"
-              className="social-icon"
-              target="_blank"
-              title="Instagram"
-            >
-              <i className="icon-instagram"></i>
-            </a>
-            <a href="#" className="social-icon" target="_blank" title="Youtube">
-              <i className="icon-youtube"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
       <Footer />
-      {/* <div
-        className="modal fade"
-        id="signin-modal"
-        tabIndex="-1"
-        role="dialog"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">
-                  <i className="icon-close"></i>
-                </span>
-              </button>
 
-              <div className="form-box">
-                <div className="form-tab">
-                  <ul className="nav nav-pills nav-fill" role="tablist">
-                    <li className="nav-item">
-                      <a
-                        className="nav-link active"
-                        id="signin-tab"
-                        data-toggle="tab"
-                        href="#signin"
-                        role="tab"
-                        aria-controls="signin"
-                        aria-selected="true"
-                      >
-                        Sign In
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        className="nav-link"
-                        id="register-tab"
-                        data-toggle="tab"
-                        href="#register"
-                        role="tab"
-                        aria-controls="register"
-                        aria-selected="false"
-                      >
-                        Register
-                      </a>
-                    </li>
-                  </ul>
-                  <div className="tab-content" id="tab-content-5">
-                    <div
-                      className="tab-pane fade show active"
-                      id="signin"
-                      role="tabpanel"
-                      aria-labelledby="signin-tab"
-                    >
-                      <form action="#">
-                        <div className="form-group">
-                          <label htmlFor="singin-email">
-                            Username or email address *
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="singin-email"
-                            name="singin-email"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="singin-password">Password *</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="singin-password"
-                            name="singin-password"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-footer">
-                          <button
-                            type="submit"
-                            className="btn btn-outline-primary-2"
-                          >
-                            <span>LOG IN</span>
-                            <i className="icon-long-arrow-right"></i>
-                          </button>
-
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="signin-remember"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="signin-remember"
-                            >
-                              Remember Me
-                            </label>
-                          </div>
-
-                          <a href="#" className="forgot-link">
-                            Forgot Your Password?
-                          </a>
-                        </div>
-                      </form>
-                      <div className="form-choice">
-                        <p className="text-center">or sign in with</p>
-                        <div className="row">
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login btn-g">
-                              <i className="icon-google"></i>
-                              Login With Google
-                            </a>
-                          </div>
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login btn-f">
-                              <i className="icon-facebook-f"></i>
-                              Login With Facebook
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="tab-pane fade"
-                      id="register"
-                      role="tabpanel"
-                      aria-labelledby="register-tab"
-                    >
-                      <form action="#">
-                        <div className="form-group">
-                          <label htmlFor="register-email">
-                            Your email address *
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="register-email"
-                            name="register-email"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-group">
-                          <label htmlFor="register-password">Password *</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="register-password"
-                            name="register-password"
-                            required
-                          />
-                        </div>
-
-                        <div className="form-footer">
-                          <button
-                            type="submit"
-                            className="btn btn-outline-primary-2"
-                          >
-                            <span>SIGN UP</span>
-                            <i className="icon-long-arrow-right"></i>
-                          </button>
-
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="register-policy"
-                              required
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="register-policy"
-                            >
-                              I agree to the <a href="#">privacy policy</a> *
-                            </label>
-                          </div>
-                        </div>
-                      </form>
-                      <div className="form-choice">
-                        <p className="text-center">or sign in with</p>
-                        <div className="row">
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login btn-g">
-                              <i className="icon-google"></i>
-                              Login With Google
-                            </a>
-                          </div>
-                          <div className="col-sm-6">
-                            <a href="#" className="btn btn-login  btn-f">
-                              <i className="icon-facebook-f"></i>
-                              Login With Facebook
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
       {/* </Provider> */}
-      <Script src="./scripts/jquery.min.js"></Script>
-      <Script src="./scripts/bootstrap.bundle.min.js"></Script>
+      {/* <Script src="./scripts/jquery.min.js"></Script> */}
+      {/* <Script src="./scripts/bootstrap.bundle.min.js"></Script>
       <Script src="./scripts/jquery.hoverIntent.min.js"></Script>
       <Script src="./scripts/jquery.waypoints.min.js"></Script>
       <Script src="./scripts/superfish.min.js"></Script>
@@ -810,7 +393,7 @@ export default function Cart() {
       <Script src="./scripts/wNumb.js"></Script>
       <Script src="./scripts/bootstrap-input-spinner.js"></Script>
       <Script src="./scripts/jquery.magnific-popup.min.js"></Script>
-      <Script src="./scripts/nouislider.min.js"></Script>
+      <Script src="./scripts/nouislider.min.js"></Script> */}
       <Script src="./scripts/main.js"></Script>
     </>
   );
