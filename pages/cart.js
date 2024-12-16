@@ -1,31 +1,15 @@
 import Head from "next/head";
 import Image from "next/image";
 import localFont from "next/font/local";
-import styles from "@/styles/Home.module.css";
 import Script from "next/script";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import PageHeader from "./components/common/PageHeader";
 import Breadcrumbs from "./components/common/Breadcrumbs";
-import ShopSidebar from "./components/products/ShopSidebar";
-import ProductFilters from "./components/products/ProductFilters";
-import Product from "./components/products/product/Product";
-import Pagination from "./components/products/product/Pagination";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductColor from "./components/products/product/ProductColor";
 import ProductReview from "./components/products/product/ProductReview";
 import { removeItemFromCart } from "@/store/cartSlice";
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export default function Cart() {
   const sizeChart = useSelector((state) => state.sizes.sizes);
@@ -34,6 +18,7 @@ export default function Cart() {
   const [userCartProducts, setUserCartProducts] = useState([]);
   const [userId, setUserId] = useState(null);
   const [quantity, setQuantity] = useState(null);
+  const [payableAmount, setPayableAmount] = useState({subTotal:null, shippingCharges:null, total:null});
   const totalProducts = products?.length;
   const dispatch = useDispatch();
 
@@ -67,21 +52,30 @@ export default function Cart() {
     setUserCartProducts(updatedCart);
   };
 
-  const calculateTotalPrice = () => {
-    return userCartProducts.reduce((total, item) => {
+  const updateAmount = () => {
+    let subTotal = userCartProducts.reduce((total, item) => {
       const itemPrice = item.salePrice || item.price;
       return total + item.quantity * itemPrice;
     }, 0);
-  };
+    const shippingCharges = subTotal < 500 ? 10 : 0;
+    const totalPayableAmount = subTotal + shippingCharges;
+    setPayableAmount(prev=>({...prev, subTotal:subTotal, shippingCharges:shippingCharges, total:totalPayableAmount }));
+  }
 
   useEffect(() => {
     updateUserAndWishlistAndCart();
   }, [userId, cartProductsInfo?.cart]);
 
+  useEffect(() => {
+    updateAmount();
+  }, [userId, cartProductsInfo?.cart, userCartProducts]);
+
   const removeItemFromCarts = (cartId) => {
-    dispatch(removeItemFromCart({cartId:cartId}));
-  }
-  
+    dispatch(removeItemFromCart({ cartId: cartId }));
+  };
+// let totalAmount = calculateSubTotalPrice();
+// const shippingCharges = totalAmount < 500 ? 10 : 0;
+// const totalPayableAmount = totalAmount + shippingCharges;
   return (
     <>
       <Head>
@@ -133,12 +127,11 @@ export default function Cart() {
                                         />
                                       </a>
                                     </figure>
-                                  <div className="flex flex-column layout-three">
-
-                                    <h3 className="product-title">
-                                      <a href="#">{item?.name}</a>
-                                    </h3>
-                                    <div
+                                    <div className="flex flex-column layout-three">
+                                      <h3 className="product-title">
+                                        <a href="#">{item?.name}</a>
+                                      </h3>
+                                      <div
                                         className={`ratings-container wishlist-product-rating`}
                                       >
                                         <ProductReview
@@ -151,8 +144,8 @@ export default function Cart() {
                                           sizeChart?.map((size) => {
                                             return (
                                               <a
-                                              title=""
-                                              className={`text-uppercase ${
+                                                title=""
+                                                className={`text-uppercase ${
                                                   item?.size?.includes(
                                                     size?.name
                                                   )
@@ -212,8 +205,13 @@ export default function Cart() {
                                   ${item?.quantity * itemPrice}
                                 </td>
                                 <td className="remove-col">
-                                  <button className="btn-remove"  onClick={()=>removeItemFromCarts(item?.id)}>
-                                  <svg
+                                  <button
+                                    className="btn-remove"
+                                    onClick={() =>
+                                      removeItemFromCarts(item?.id)
+                                    }
+                                  >
+                                    <svg
                                       width="20"
                                       height="20"
                                       xmlns="http://www.w3.org/2000/svg"
@@ -259,10 +257,10 @@ export default function Cart() {
                         </form>
                       </div>
 
-                      <a href="#" className="btn btn-outline-dark-2">
+                      {/* <a href="#" className="btn btn-outline-dark-2">
                         <span>UPDATE CART</span>
                         <i className="icon-refresh"></i>
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                   <aside className="col-lg-3">
@@ -273,14 +271,60 @@ export default function Cart() {
                         <tbody>
                           <tr className="summary-subtotal">
                             <td>Subtotal:</td>
-                            <td>${calculateTotalPrice()}</td>
+                            <td>${payableAmount?.subTotal}</td>
                           </tr>
                           <tr className="summary-shipping">
                             <td>Shipping:</td>
-                            <td>&nbsp;</td>
+                            <td></td>
                           </tr>
-
+                          <tr className="">
+                            <td colSpan={2} className="text-left h-auto pb-1">To get free shipping, update your cart amount to $500.</td>
+                          </tr>
+                          {
+                            payableAmount?.subTotal < 500 ?
+                            <tr className="summary-shipping-row">
+                            <td>
+                              <div className="custom-control custom-radio pl-0">
+                              <input
+                                  type="radio"
+                                  id="flat-shipping"
+                                  name="shipping"
+                                  // checked="checked"
+                                  className="custom-control-input"
+                                />
+                                <label
+                                  // className="custom-control-label"
+                                  htmlFor="flat-shipping"
+                                >
+                                  Flat Shipping
+                                </label>
+                              </div>
+                            </td>
+                            <td>${payableAmount?.shippingCharges}</td>
+                          </tr>
+                          :
                           <tr className="summary-shipping-row">
+                            <td>
+                              <div className="custom-control custom-radio pl-0">
+                              <input
+                                  type="radio"
+                                  id="free-shipping"
+                                  name="shipping"
+                                  // checked="checked"
+                                  className="custom-control-input"
+                                />
+                                <label
+                                  // className="custom-control-label"
+                                  htmlFor="free-shipping"
+                                  >
+                                  Free Shipping
+                                </label>
+                              </div>
+                            </td>
+                            <td>${payableAmount?.shippingCharges}</td>
+                          </tr>
+                                }
+                          {/* <tr className="summary-shipping-row">
                             <td>
                               <div className="custom-control custom-radio">
                                 <input
@@ -298,9 +342,9 @@ export default function Cart() {
                               </div>
                             </td>
                             <td>$0.00</td>
-                          </tr>
+                          </tr> */}
 
-                          <tr className="summary-shipping-row">
+                          {/* <tr className="summary-shipping-row">
                             <td>
                               <div className="custom-control custom-radio">
                                 <input
@@ -338,19 +382,19 @@ export default function Cart() {
                               </div>
                             </td>
                             <td>$20.00</td>
-                          </tr>
+                          </tr> */}
 
-                          <tr className="summary-shipping-estimate">
+                          {/* <tr className="summary-shipping-estimate">
                             <td>
                               Estimate for Your Country
                               <br /> <a href="dashboard.html">Change address</a>
                             </td>
                             <td>&nbsp;</td>
-                          </tr>
+                          </tr> */}
 
                           <tr className="summary-total">
                             <td>Total:</td>
-                            <td>$160.00</td>
+                            <td>${payableAmount?.total}</td>
                           </tr>
                         </tbody>
                       </table>
