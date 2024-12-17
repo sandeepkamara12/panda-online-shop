@@ -1,2 +1,6 @@
 Problem facing
 while using useSelector, I have to use dot notation many times to access the state from redux.
+Shipping with flat rates and price based.
+
+Username:sandeepd4d
+Password:Sandeep@@321##

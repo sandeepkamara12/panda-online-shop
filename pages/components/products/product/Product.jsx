@@ -15,14 +15,15 @@ import QuickView from "./QuickView";
 // import ProductBrand from "./ProductBrand";
 import { addItemToCart, removeItemToCart } from "@/store/cartSlice";
 import Link from "next/link";
-const Product = ({ product, layout }) => {
+
+const Product = ({ product, layout, setIsItemAddedToCart }) => {
+  // const cartProducts = useSelector((state) => state.cart.carts?.cart);
   const dispatch = useDispatch();
 
   const [userId, setUserId] = useState(null);
   // const getAllCarts = useSelector(state=>state.cart.carts.carts)
 
   useEffect(() => {
-
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("data");
       if (userData) {
@@ -33,13 +34,13 @@ const Product = ({ product, layout }) => {
     }
 
     // Initialize Magnific Popup with Vanilla JavaScript
-    const quickViewButton = document.querySelector('.btn-quickview');
-    const modalContent = document.getElementById('quick-view-modal');
+    const quickViewButton = document.querySelector(".btn-quickview");
+    const modalContent = document.getElementById("quick-view-modal");
 
     if (quickViewButton) {
-      quickViewButton.addEventListener('click', (e) => {
+      quickViewButton.addEventListener("click", (e) => {
         e.preventDefault();
-        modalContent.style.display = 'block';
+        modalContent.style.display = "block";
         // Open Magnific Popup
         openQuickViewModal(modalContent);
       });
@@ -52,17 +53,17 @@ const Product = ({ product, layout }) => {
     magnificPopup.open({
       items: {
         src: modalContent,
-        type: 'inline',
+        type: "inline",
       },
-      mainClass: 'mfp-ajax-product',
+      mainClass: "mfp-ajax-product",
       preloader: false,
       removalDelay: 350,
       callbacks: {
         open: function () {
-          document.body.style.overflowX = 'visible';
+          document.body.style.overflowX = "visible";
         },
         close: function () {
-          document.body.style.overflowX = 'hidden';
+          document.body.style.overflowX = "hidden";
         },
       },
     });
@@ -70,16 +71,20 @@ const Product = ({ product, layout }) => {
 
   const addItemToUserCart = (userCartData) => {
     if (!userId) return;
-    if(userCartData) {
-      dispatch(addItemToCart(userCartData))
+    if (userCartData) {
+      dispatch(addItemToCart(userCartData));
+      setIsItemAddedToCart({ isAdded: true, content: userCartData });
     }
-  }
+  };
+
+
 
   return (
     <>
-     <div id="quick-view-modal" style={{ display: 'none' }}>
+      <div id="quick-view-modal" style={{ display: "none" }}>
         <QuickView />
-    </div>
+      </div>
+    
       <div
         className={`product product-list ${
           layout === "three" ? "col-12 col-sm-6 col-md-4 text-center" : ""
@@ -89,18 +94,28 @@ const Product = ({ product, layout }) => {
       >
         <div
           className={`row ${
-            layout === "three"
-              ? "flex-column align-items-center"
-              : ""
+            layout === "three" ? "flex-column align-items-center" : ""
           }`}
         >
           <div
-            className={`${layout === "three" ? "col-12" : "col-12 col-sm-5 col-md-3"}`}
+            className={`${
+              layout === "three" ? "col-12" : "col-12 col-sm-5 col-md-3"
+            }`}
           >
-            <ProductImage productColors={product?.color} layout={layout} productId={product?.id} quantity={product?.quantity} createdAt={product?.createdAt} image={product?.image} badge={product?.badge} />
+            <ProductImage
+              productColors={product?.color}
+              layout={layout}
+              productId={product?.id}
+              quantity={product?.quantity}
+              createdAt={product?.createdAt}
+              image={product?.image}
+              badge={product?.badge}
+            />
           </div>
           <div
-            className={`${layout === "three" ? "col-12" : "col-12 col-sm-7 col-md-9"}`}
+            className={`${
+              layout === "three" ? "col-12" : "col-12 col-sm-7 col-md-9"
+            }`}
           >
             <div className="row">
               <div
@@ -116,9 +131,7 @@ const Product = ({ product, layout }) => {
                   }`}
                 >
                   <div
-                    className={`product-price ${
-                      layout === "three" ? "" : ""
-                    }`}
+                    className={`product-price ${layout === "three" ? "" : ""}`}
                   >
                     {!product?.salePrice ? (
                       `$${product?.price}`
@@ -139,7 +152,11 @@ const Product = ({ product, layout }) => {
                       rating={product?.rating}
                     />
                   </div>
-                  <div className={`product-action ${layout === "three" ? 'd-none':''}`}>
+                  <div
+                    className={`product-action ${
+                      layout === "three" ? "d-none" : ""
+                    }`}
+                  >
                     <a
                       href="#quick-view-modal"
                       className="btn-product btn-quickview"
@@ -158,10 +175,10 @@ const Product = ({ product, layout }) => {
 
                   <button
                     type="button"
-                    onClick={()=>addItemToUserCart({products:product})}
-                    className={`btn-product btn-cart ${layout === "three" ? '' : ''} ${
-                      product?.badge === "out-stoke" ? "disabled" : ""
-                    }`}
+                    onClick={() => addItemToUserCart({ products: product })}
+                    className={`btn-product btn-cart ${
+                      layout === "three" ? "" : ""
+                    } ${product?.badge === "out-stoke" ? "disabled" : ""}`}
                   >
                     <span>add to cart</span>
                   </button>
@@ -187,8 +204,8 @@ const Product = ({ product, layout }) => {
                     <ProductDescription description={product?.description} />
                   </div>
                   {/* <ProductBrand brand={product?.brand} layout={layout} /> */}
-                    <ProductSize layout={layout} productSize={product?.size} />
-                    {/* <ProductColor productColors={product?.color} layout={layout} /> */}
+                  <ProductSize layout={layout} productSize={product?.size} />
+                  {/* <ProductColor productColors={product?.color} layout={layout} /> */}
                 </div>
               </div>
             </div>

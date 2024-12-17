@@ -14,7 +14,7 @@ const ShopSidebar = ({ setFilters, filters, setClearFilter, clearFilter }) => {
       filters?.color?.length > 0 ||
       filters?.brand?.length > 0 ||
       filters?.price?.min > 0 ||
-      filters?.price?.max < 100 ||
+      filters?.price?.max < 5000 ||
       filters?.sort !== ""
     ) {
       setFilters({
@@ -22,7 +22,7 @@ const ShopSidebar = ({ setFilters, filters, setClearFilter, clearFilter }) => {
         size: [],
         color: [],
         brand: [],
-        price: { min: 0, max: 100 },
+        price: { min: 0, max: 5000 },
         sort: "",
       });
       setClearFilter(false);

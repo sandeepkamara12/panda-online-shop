@@ -15,9 +15,12 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import Login from "./components/common/Login";
 import Register from "./components/common/Register";
 import Modal from "./components/common/Modal";
+import { ToastContainer, toast } from "react-toastify";
+
 
 export default function Home() {
   const products = useSelector((state) => state.products.filteredProducts);
+  const cartProducts = useSelector((state) => state.cart.carts?.cart);
   const dispatch = useDispatch();
 
   let totalProducts = products?.length;
@@ -31,8 +34,12 @@ export default function Home() {
     size: [],
     color: [],
     brand: [],
-    price: { min: 0, max: 100 },
+    price: { min: 0, max: 5000 },
     sort: "",
+  });
+  const [isItemAddedToCart, setIsItemAddedToCart] = useState({
+    isAdded: false,
+    content: null,
   });
   const loaderRef = useRef(null);
 
@@ -66,7 +73,7 @@ export default function Home() {
       filters?.color?.length === 0 &&
       filters?.sort === "" &&
       filters?.price?.min == 0 &&
-      filters?.price?.max == 100
+      filters?.price?.max == 5000
     ) {
       setVisibleCount(6);
       setClearFilter(false);
@@ -111,6 +118,47 @@ export default function Home() {
     setOpenModal(true);
   };
 
+  useEffect(() => {
+    if (isItemAddedToCart?.content) {
+      let userCartData = isItemAddedToCart?.content;
+      let updatedQuantity =
+        cartProducts?.length > 0 &&
+        cartProducts?.filter(
+          (item) =>
+            item?.productId == userCartData?.products?.id ? item?.quantity :''
+        );
+      if(updatedQuantity!==null) {
+        if(updatedQuantity[0]?.quantity < 10) {
+          toast.success(
+            <span>
+            <strong>{userCartData?.products?.name}</strong>
+            <strong>Quantity: {updatedQuantity[0]?.quantity}</strong> has been added to the cart!
+          </span>,
+            {
+              position: "top-right",
+              autoClose: 1000,
+              className: "toast-content",
+            }
+          );
+        }
+        else {
+          toast.error(
+            <span>
+            <strong>{userCartData?.products?.name}</strong>
+            You cannot add more than <strong className="d-inline-block">{updatedQuantity[0]?.quantity}</strong> items to the cart!
+          </span>,
+            {
+              position: "top-right",
+              autoClose: 1000,
+              className: "toast-content",
+            }
+          );
+        }
+      }
+    }
+    setIsItemAddedToCart(false);
+  }, [isItemAddedToCart]);
+
   return (
     <>
       <Head>
@@ -120,11 +168,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="page-wrapper">
+       
         <Header openModalFn={openModalFn} />
 
         <main className="main">
           <Breadcrumbs />
-
+          <ToastContainer />
           <div className="page-content">
             <div className="container">
               <div className="row">
@@ -156,6 +205,7 @@ export default function Home() {
                             product={product}
                             key={index}
                             layout={layout}
+                            setIsItemAddedToCart={setIsItemAddedToCart}
                           />
                         ))
                     ) : (

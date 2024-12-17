@@ -10,10 +10,10 @@ const ProductPriceSlider = ({setFilters, filters}) => {
         start: [filters?.price?.min, filters?.price?.max],
         connect: true,
         step: 1,
-        margin: 20,
+        margin: 100,
         range: {
           min: 0,
-          max: 100,
+          max: 5000,
         },
         tooltips: true,
         format: wNumb({

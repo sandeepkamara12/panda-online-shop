@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductColor from "./components/products/product/ProductColor";
 import ProductReview from "./components/products/product/ProductReview";
-import { removeItemFromCart } from "@/store/cartSlice";
+import { removeItemFromCart, updateItemInCart } from "@/store/cartSlice";
 
 export default function Cart() {
   const sizeChart = useSelector((state) => state.sizes.sizes);
@@ -43,20 +43,30 @@ export default function Cart() {
   }, []);
 
   const updateItemQuantity = (e, itemId) => {
-    const newQuantity = parseInt(e.target.value, 10) || 1; // Default to 1 if input is invalid
+    const inputValue = e.target.value;
+    const newQuantity = parseInt(e.target.value, 10);
+    if (isNaN(newQuantity) || newQuantity <= 0) return;
+    
     const updatedCart = userCartProducts.map((item) =>
-      item.id === itemId
-        ? { ...item, quantity: newQuantity } // Update quantity for the matching item
-        : item
-    );
-    setUserCartProducts(updatedCart);
+    {
+        if(item.id === itemId) {
+          // const maxAllowed = item.salePrice > 5000 || item.price > 5000 ? 1 : 10;
+          const maxAllowed = 10;
+          const quantity = newQuantity > maxAllowed ? maxAllowed : newQuantity;
+          return { ...item, quantity };
+        }
+        return item;
+      });
+      dispatch(updateItemInCart({productId:itemId, quantity:newQuantity}))
+      setUserCartProducts(updatedCart);
   };
-
+  
   const updateAmount = () => {
     let subTotal = userCartProducts.reduce((total, item) => {
       const itemPrice = item.salePrice || item.price;
       return total + item.quantity * itemPrice;
     }, 0);
+    subTotal = parseFloat(subTotal.toFixed(2));
     const shippingCharges = subTotal < 500 ? 10 : 0;
     const totalPayableAmount = subTotal + shippingCharges;
     setPayableAmount(prev=>({...prev, subTotal:subTotal, shippingCharges:shippingCharges, total:totalPayableAmount }));
@@ -189,9 +199,9 @@ export default function Cart() {
                                       type="number"
                                       className="form-control"
                                       value={item?.quantity}
-                                      id={`item_quantity_${item?.id}`}
+                                      id={`item_quantity_${item?.productId}`}
                                       onChange={(e) =>
-                                        updateItemQuantity(e, item?.id)
+                                        updateItemQuantity(e, item?.productId)
                                       }
                                       min="1"
                                       max="10"
@@ -202,7 +212,7 @@ export default function Cart() {
                                   </div>
                                 </td>
                                 <td className="total-col">
-                                  ${item?.quantity * itemPrice}
+                                  ${parseFloat((item?.quantity * itemPrice).toFixed(2))}
                                 </td>
                                 <td className="remove-col">
                                   <button
@@ -314,14 +324,14 @@ export default function Cart() {
                                   className="custom-control-input"
                                 />
                                 <label
-                                  // className="custom-control-label"
+                                  className="free-shipping"
                                   htmlFor="free-shipping"
                                   >
                                   Free Shipping
                                 </label>
                               </div>
                             </td>
-                            <td>${payableAmount?.shippingCharges}</td>
+                            <td className="free-shipping">${payableAmount?.shippingCharges}</td>
                           </tr>
                                 }
                           {/* <tr className="summary-shipping-row">

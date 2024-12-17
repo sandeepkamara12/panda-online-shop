@@ -5,6 +5,7 @@ import "@/styles/owl.carousel.css";
 import "@/styles/nouislider.css";
 import "@/styles/countdown.css";
 import "@/styles/style.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 

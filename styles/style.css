@@ -13856,6 +13856,8 @@ button:focus {
   color: #333333; }
   .table.table-summary .summary-shipping-row label {
     color: inherit; }
+  .table.table-summary .summary-shipping-row .free-shipping {
+    color:#28a745; }
   .table.table-summary .summary-shipping-row td {
     height: auto;
     padding-top: .5rem;
