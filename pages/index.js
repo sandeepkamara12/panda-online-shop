@@ -132,7 +132,7 @@ export default function Home() {
           toast.success(
             <span>
             <strong>{userCartData?.products?.name}</strong>
-            <strong>Quantity: {updatedQuantity[0]?.quantity}</strong> has been added to the cart!
+            <strong className="toast-quantity">Quantity: {updatedQuantity[0]?.quantity}</strong> has been added to the cart!
           </span>,
             {
               position: "top-right",

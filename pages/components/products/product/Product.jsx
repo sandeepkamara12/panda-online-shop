@@ -139,6 +139,7 @@ const Product = ({ product, layout, setIsItemAddedToCart }) => {
                       <>
                         <span className="new-price">${product?.salePrice}</span>
                         <span className="old-price">${product?.price}</span>
+                        <span className="ml-3 d-inline-block price-percentage">{parseFloat(((product?.price - product?.salePrice)/product?.price) * 100).toFixed(0) + '% OFF'}</span>
                       </>
                     )}
                   </div>

@@ -124,7 +124,7 @@ const cartSlice = createSlice({
       const productIndex = state.carts.cart.findIndex(
         (cartItem) => cartItem?.productId === productId
       );
-      console.log(productId, quantity, productIndex, 'hola');
+      // console.log(productId, quantity, productIndex, 'hola');
       
       if (productIndex !== -1) {
         const updatedProduct = { ...state.carts.cart[productIndex] };

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Image from "next/image";
-import localFont from "next/font/local";
 import Script from "next/script";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
@@ -10,16 +9,19 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductColor from "./components/products/product/ProductColor";
 import ProductReview from "./components/products/product/ProductReview";
 import { removeItemFromCart, updateItemInCart } from "@/store/cartSlice";
+import Link from "next/link";
+import Modal from "./components/common/Modal";
+import Login from "./components/common/Login";
+import Register from "./components/common/Register";
 
 export default function Cart() {
   const sizeChart = useSelector((state) => state.sizes.sizes);
-  const products = useSelector((state) => state.products.products);
   const cartProductsInfo = useSelector((state) => state.cart.carts);
+  console.log(cartProductsInfo)
+  const [openModal, setOpenModal] = useState(false);
   const [userCartProducts, setUserCartProducts] = useState([]);
   const [userId, setUserId] = useState(null);
-  const [quantity, setQuantity] = useState(null);
   const [payableAmount, setPayableAmount] = useState({subTotal:null, shippingCharges:null, total:null});
-  const totalProducts = products?.length;
   const dispatch = useDispatch();
 
   const updateUserAndWishlistAndCart = () => {
@@ -43,22 +45,10 @@ export default function Cart() {
   }, []);
 
   const updateItemQuantity = (e, itemId) => {
-    const inputValue = e.target.value;
+    // const inputValue = e.target.value;
     const newQuantity = parseInt(e.target.value, 10);
     if (isNaN(newQuantity) || newQuantity <= 0) return;
-    
-    const updatedCart = userCartProducts.map((item) =>
-    {
-        if(item.id === itemId) {
-          // const maxAllowed = item.salePrice > 5000 || item.price > 5000 ? 1 : 10;
-          const maxAllowed = 10;
-          const quantity = newQuantity > maxAllowed ? maxAllowed : newQuantity;
-          return { ...item, quantity };
-        }
-        return item;
-      });
       dispatch(updateItemInCart({productId:itemId, quantity:newQuantity}))
-      setUserCartProducts(updatedCart);
   };
   
   const updateAmount = () => {
@@ -83,6 +73,19 @@ export default function Cart() {
   const removeItemFromCarts = (cartId) => {
     dispatch(removeItemFromCart({ cartId: cartId }));
   };
+
+  const closeModalFn = () => {
+    document.body.classList.remove('modal-open');
+    document.body.classList.remove('adjust-padding');
+    setOpenModal(false);
+  };
+
+  const openModalFn = () => {
+    document.body.classList.add('modal-open');
+    document.body.classList.add('adjust-padding');
+    setOpenModal(true);
+  };
+
 // let totalAmount = calculateSubTotalPrice();
 // const shippingCharges = totalAmount < 500 ? 10 : 0;
 // const totalPayableAmount = totalAmount + shippingCharges;
@@ -95,7 +98,7 @@ export default function Cart() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="page-wrapper">
-        <Header />
+        <Header openModalFn={openModalFn} />
 
         <main className="main">
           {/* <PageHeader title="Shopping Cart" subtitle="Check the items" /> */}
@@ -189,6 +192,7 @@ export default function Cart() {
                                         <span className="old-price">
                                           ${item?.price}
                                         </span>
+                                        <div className="d-block price-percentage col-12 p-0">{parseFloat(((item?.price - item?.salePrice)/item?.price) * 100).toFixed(0) + '% OFF'}</div>
                                       </>
                                     )}
                                   </div>
@@ -274,6 +278,7 @@ export default function Cart() {
                     </div>
                   </div>
                   <aside className="col-lg-3">
+                    <div className="position-sticky" style={{"top":"120px"}}>
                     <div className="summary summary-cart">
                       <h3 className="summary-title">Cart Total</h3>
 
@@ -287,9 +292,13 @@ export default function Cart() {
                             <td>Shipping:</td>
                             <td></td>
                           </tr>
-                          <tr className="">
+                          {
+                            payableAmount?.subTotal < 500 ?
+                            <tr className="">
                             <td colSpan={2} className="text-left h-auto pb-1">To get free shipping, update your cart amount to $500.</td>
                           </tr>
+                          :''
+                          }
                           {
                             payableAmount?.subTotal < 500 ?
                             <tr className="summary-shipping-row">
@@ -409,21 +418,22 @@ export default function Cart() {
                         </tbody>
                       </table>
 
-                      <a
-                        href="checkout.html"
+                      <Link
+                        href="/checkout"
                         className="btn btn-outline-primary-2 btn-order btn-block"
                       >
                         PROCEED TO CHECKOUT
-                      </a>
+                      </Link>
                     </div>
 
-                    <a
-                      href="category.html"
+                    <Link
+                      href="/"
                       className="btn btn-outline-dark-2 btn-block mb-3"
                     >
                       <span>CONTINUE SHOPPING</span>
                       <i className="icon-refresh"></i>
-                    </a>
+                    </Link>
+                    </div>
                   </aside>
                 </div>
               </div>
@@ -436,18 +446,70 @@ export default function Cart() {
       </button>
 
       <Footer />
+       <Modal openModal={openModal} closeModalFn={closeModalFn}>
+        <div className="form-box">
+          <div className="form-tab">
+            <ul className="nav nav-pills nav-fill" role="tablist">
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  id="signin-tab"
+                  data-toggle="tab"
+                  href="#signin"
+                  role="tab"
+                  aria-controls="signin"
+                  aria-selected="true"
+                >
+                  Sign In
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  id="register-tab"
+                  data-toggle="tab"
+                  href="#register"
+                  role="tab"
+                  aria-controls="register"
+                  aria-selected="false"
+                >
+                  Register
+                </a>
+              </li>
+            </ul>
+            <div className="tab-content" id="tab-content-5">
+              <div
+                className="tab-pane fade show active"
+                id="signin"
+                role="tabpanel"
+                aria-labelledby="signin-tab"
+              >
+                <Login closeModalFn={closeModalFn} />
+              </div>
+              <div
+                className="tab-pane fade"
+                id="register"
+                role="tabpanel"
+                aria-labelledby="register-tab"
+              >
+                <Register />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
 
       {/* </Provider> */}
-      {/* <Script src="./scripts/jquery.min.js"></Script> */}
-      {/* <Script src="./scripts/bootstrap.bundle.min.js"></Script>
+      <Script src="./scripts/jquery.min.js"></Script>
+      <Script src="./scripts/bootstrap.bundle.min.js"></Script>
       <Script src="./scripts/jquery.hoverIntent.min.js"></Script>
       <Script src="./scripts/jquery.waypoints.min.js"></Script>
       <Script src="./scripts/superfish.min.js"></Script>
       <Script src="./scripts/owl.carousel.min.js"></Script>
-      <Script src="./scripts/wNumb.js"></Script>
+      {/* <Script src="./scripts/wNumb.js"></Script> */}
       <Script src="./scripts/bootstrap-input-spinner.js"></Script>
       <Script src="./scripts/jquery.magnific-popup.min.js"></Script>
-      <Script src="./scripts/nouislider.min.js"></Script> */}
+      {/* <Script src="./scripts/nouislider.min.js"></Script> */}
       <Script src="./scripts/main.js"></Script>
     </>
   );

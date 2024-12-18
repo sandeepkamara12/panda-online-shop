@@ -171,6 +171,7 @@ export default function Wishlist() {
                                         <div className="old-price">
                                           ${wishlist?.price}
                                         </div>
+                                        <div className="d-block price-percentage col-12 p-0">{parseFloat(((wishlist?.price - wishlist?.salePrice)/wishlist?.price) * 100).toFixed(0) + '% OFF'}</div>
                                       </>
                                     ) : (
                                       `$${wishlist?.price}`

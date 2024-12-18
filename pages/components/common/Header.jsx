@@ -126,10 +126,13 @@ const removeItemFromCarts = (cartId) => {
                   <Link href="/">Shop</Link>
                 </li>
                 <li>
-                  <a href="category.html">About</a>
+                  <Link href="/about">About</Link>
                 </li>
                 <li>
-                  <a href="category.html">Contact</a>
+                  <Link href="/contact">Contact</Link>
+                </li>
+                <li>
+                  <Link href="/cart">Cart</Link>
                 </li>
               </ul>
             </nav>

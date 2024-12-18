@@ -13849,7 +13849,7 @@ button:focus {
   font-size: 1.6rem; }
   .table.table-summary .summary-shipping td {
     padding-top: 2rem;
-    padding-bottom: 1.3rem;
+    padding-bottom: 0;
     height: auto;
     border-bottom: none; }
 .table.table-summary .summary-shipping-row {

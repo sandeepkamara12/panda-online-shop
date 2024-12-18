@@ -130,6 +130,12 @@ a {
   line-height: 14px;
   color:#cc9966;
 }
+.price-percentage {
+  color:#28a745;
+}
+/* .toast-content .toast-quantity {
+  color:#28a745;
+} */
 .Toastify__toast--success .Toastify__progress-bar--wrp .Toastify__progress-bar--success {
   background-color: #cc9966 !important; /* Custom success background */
   color: #fff !important;

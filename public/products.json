@@ -29,7 +29,7 @@
         "description": "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.",
         "image": "product-10.jpg",
         "thumbnails": ["product-4-thumb.jpg", "product-4-2-thumb.jpg", "product-4-3-thumb.jpg"],
-        "badge": "new-arrival",
+        "badge": "sale",
         "quantity":"10",
         "createdAt":"2024-12-02T10:15:00Z",
         "rating": 4,
