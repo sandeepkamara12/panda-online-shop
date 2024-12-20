@@ -24,25 +24,25 @@ export default function Cart() {
   const [payableAmount, setPayableAmount] = useState({subTotal:null, shippingCharges:null, total:null});
   const dispatch = useDispatch();
 
-  const updateUserAndWishlistAndCart = useCallback(() => {
+  const updateUserAndWishlistAndCart = () => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("data");
       if (userData) {
         /* Get User Information */
         const parsedData = JSON.parse(userData);
         setUserId(parsedData.userId);
-  
+
         /* Get Cart Information */
         setUserCartProducts(cartProductsInfo?.cart);
       } else {
         setUserId(null);
       }
     }
-  }, [cartProductsInfo?.cart]);
-  
+  };
+
   useEffect(() => {
     updateUserAndWishlistAndCart();
-  }, [updateUserAndWishlistAndCart]);
+  }, []);
 
   const updateItemQuantity = (e, itemId) => {
     // const inputValue = e.target.value;

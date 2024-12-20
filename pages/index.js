@@ -44,7 +44,6 @@ export default function Home() {
   const loaderRef = useRef(null);
 
   useEffect(() => {
-    const currentLoader = loaderRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -60,9 +59,9 @@ export default function Home() {
       { threshold: 1.0 }
     );
 
-    if (currentLoader) observer.observe(currentLoader);
+    if (loaderRef.current) observer.observe(loaderRef.current);
     return () => {
-      if (currentLoader) observer.unobserve(currentLoader);
+      if (loaderRef.current) observer.unobserve(loaderRef.current);
     };
   }, [totalProducts, visibleCount, isLoading]);
 
