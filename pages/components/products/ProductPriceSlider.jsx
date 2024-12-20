@@ -45,7 +45,7 @@ const ProductPriceSlider = ({setFilters, filters}) => {
         priceSliderLoader.noUiSlider.destroy();
       }
     };
-  }, [filters?.price?.min, filters?.price?.max]);
+  }, [filters?.price?.min, filters?.price?.max, setFilters]);
 
   return (
     <div className="widget widget-collapsible">

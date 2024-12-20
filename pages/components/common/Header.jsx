@@ -15,16 +15,17 @@ const Header = ({ openModalFn }) => {
   const [cartCount, setCartCount] = useState(0);
   const [userId, setUserId] = useState(null);
 
-  const updateUserAndWishlistAndCart = () => {
+  const updateUserAndWishlistAndCart = useCallback(() => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("data");
       if (userData) {
         /* Get User Information */
         const parsedData = JSON.parse(userData);
         setUserId(parsedData.userId);
-
+  
+        /* Get Wishlist Information */
         setWishlistCount(wishlistProducts?.length);
-
+  
         /* Get Cart Information */
         setUserCartProducts(cartProductsInfo?.cart);
         setCartCount(cartProductsInfo?.cartSummary?.totalItems);
@@ -34,8 +35,8 @@ const Header = ({ openModalFn }) => {
         setCartCount(0);
       }
     }
-  };
-
+  }, [wishlistProducts, cartProductsInfo]);
+  
   useEffect(() => {
     updateUserAndWishlistAndCart();
   }, [updateUserAndWishlistAndCart]);

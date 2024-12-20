@@ -13,36 +13,65 @@ const ProductWishlist = ({ productId }) => {
   const [userId, setUserId] = useState(null);
   const [isProductInWishlist, setIsProductInWishlist] = useState(false);
 
+  const checkWishlistProduct = useCallback(() => {
+    const isProductInWishlists = wishlist.some(
+      (item) => item.productId === productId
+    );
+    setIsProductInWishlist(isProductInWishlists);
+  }, [wishlist, productId]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let userData = localStorage.getItem("data");
+      const userData = localStorage.getItem("data");
       if (userData) {
         setUserId(JSON.parse(userData).userId);
         checkWishlistProduct();
       }
     }
-  }, []);
-
-  useEffect(()=>{
-    if(!userId) return;
+  }, [checkWishlistProduct]);
+  
+  useEffect(() => {
+    if (!userId) return;
     checkWishlistProduct();
-  },[wishlist, checkWishlistProduct])
-
-  const checkWishlistProduct = () => {
-    const isProductInWishlists = wishlist.some(
-      (item) => item.productId == productId
-    );
-    setIsProductInWishlist(isProductInWishlists);
-  }
+  }, [wishlist, userId, checkWishlistProduct]);
   
   const addItemToWishlist = (e, productId) => {
     if (!userId) return;
     e.target.checked
-      ? dispatch(addItemToWishlists({ productId: productId}))
-      : dispatch(
-          removeItemToWishlists({ productId: productId})
-        );
+      ? dispatch(addItemToWishlists({ productId }))
+      : dispatch(removeItemToWishlists({ productId }));
   };
+  
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     let userData = localStorage.getItem("data");
+  //     if (userData) {
+  //       setUserId(JSON.parse(userData).userId);
+  //       checkWishlistProduct();
+  //     }
+  //   }
+  // }, [checkWishlistProduct]);
+
+  // useEffect(()=>{
+  //   if(!userId) return;
+  //   checkWishlistProduct();
+  // },[wishlist, checkWishlistProduct])
+
+  // const checkWishlistProduct = () => {
+  //   const isProductInWishlists = wishlist.some(
+  //     (item) => item.productId == productId
+  //   );
+  //   setIsProductInWishlist(isProductInWishlists);
+  // }
+  
+  // const addItemToWishlist = (e, productId) => {
+  //   if (!userId) return;
+  //   e.target.checked
+  //     ? dispatch(addItemToWishlists({ productId: productId}))
+  //     : dispatch(
+  //         removeItemToWishlists({ productId: productId})
+  //       );
+  // };
   return (
     <label
     className="btn-product-icon"
