@@ -42,7 +42,7 @@ export default function Cart() {
 
   useEffect(() => {
     updateUserAndWishlistAndCart();
-  }, []);
+  }, [updateUserAndWishlistAndCart]);
 
   const updateItemQuantity = (e, itemId) => {
     // const inputValue = e.target.value;
