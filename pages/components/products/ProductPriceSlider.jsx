@@ -4,9 +4,10 @@ import wNumb from "wnumb";
 const ProductPriceSlider = ({setFilters, filters}) => {
   const priceSliderRef = useRef(null); 
   useEffect(() => {
-    if (priceSliderRef.current) {
+    const priceSliderLoader = priceSliderRef.current;
+    if (priceSliderLoader) {
       // Initialize noUiSlider only if the ref is available
-      noUiSlider.create(priceSliderRef.current, {
+      noUiSlider.create(priceSliderLoader, {
         start: [filters?.price?.min, filters?.price?.max],
         connect: true,
         step: 1,
@@ -22,7 +23,7 @@ const ProductPriceSlider = ({setFilters, filters}) => {
         }),
       });
 
-      const slider = priceSliderRef.current.noUiSlider;
+      const slider = priceSliderLoader.noUiSlider;
 
       slider.on("update", function (values) {
         document.getElementById("filter-price-range").textContent = values.join(" - ");
@@ -40,8 +41,8 @@ const ProductPriceSlider = ({setFilters, filters}) => {
     }
 
     return () => {
-      if (priceSliderRef.current) {
-        priceSliderRef.current.noUiSlider.destroy();
+      if (priceSliderLoader) {
+        priceSliderLoader.noUiSlider.destroy();
       }
     };
   }, [filters?.price?.min, filters?.price?.max]);

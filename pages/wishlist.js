@@ -25,6 +25,7 @@ export default function Wishlist() {
   let totalProducts = wishlistProducts?.length;
 
   useEffect(() => {
+    const currentLoader = loaderRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -40,9 +41,9 @@ export default function Wishlist() {
       { threshold: 1.0 }
     );
 
-    if (loaderRef.current) observer.observe(loaderRef.current);
+    if (currentLoader) observer.observe(currentLoader);
     return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
+      if (currentLoader) observer.unobserve(currentLoader);
     };
   }, [totalProducts, visibleCount, isLoading]);
 

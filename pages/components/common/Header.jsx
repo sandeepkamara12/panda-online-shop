@@ -38,7 +38,7 @@ const Header = ({ openModalFn }) => {
 
   useEffect(() => {
     updateUserAndWishlistAndCart();
-  }, []);
+  }, [updateUserAndWishlistAndCart]);
 
   useEffect(() => {
     updateUserAndWishlistAndCart();

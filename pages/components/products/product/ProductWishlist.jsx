@@ -26,7 +26,7 @@ const ProductWishlist = ({ productId }) => {
   useEffect(()=>{
     if(!userId) return;
     checkWishlistProduct();
-  },[wishlist])
+  },[wishlist, checkWishlistProduct])
 
   const checkWishlistProduct = () => {
     const isProductInWishlists = wishlist.some(
