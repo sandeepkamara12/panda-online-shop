@@ -117,7 +117,7 @@ const removeItemFromCarts = (cartId) => {
             </button>
 
             <a href="index.html" className="logo">
-              <Image src="/logo.png" alt="Panda Logo" width="105" height="25" />
+              <Image src="/logo.jpg" alt="Panda Logo" width="105" height="25" />
             </a>
 
             <nav className="main-nav">

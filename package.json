@@ -11,6 +11,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.7.9",
+    "crypto": "^1.0.1",
     "formik": "^2.4.6",
     "magnific-popup": "^1.2.0",
     "next": "^14.2.18",

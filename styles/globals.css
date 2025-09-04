@@ -10,6 +10,21 @@
   }
 }
 
+/* @font-face {
+  font-family: 'alorab';
+  src: url('../public/fonts/AlroBold.woff2') format('woff2'),
+       url('../public/fonts/AlroBold.woff') format('woff'), 
+       url('../public/fonts/AlroBold.ttf')  format('truetype'),
+       url('../public/fonts/AlroBold.svg') format('svg'); 
+}
+@font-face {
+  font-family: 'alorar';
+  src: url('../public/fonts/AlroRegular.woff2') format('woff2'), 
+       url('../public/fonts/AlroRegular.woff') format('woff'),
+       url('../public/fonts/AlroRegular.ttf')  format('truetype'),
+       url('../public/fonts/AlroRegular.svg') format('svg'); 
+} */
+
 html,
 body {
   max-width: 100vw;
