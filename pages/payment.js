@@ -1,4 +1,3 @@
-"use client";
 import React from 'react'
 import Phonepe from './components/payment/Phonepe'
 
@@ -10,4 +9,4 @@ const payment = () => {
   )
 }
 
-export default payment
+export default payment;

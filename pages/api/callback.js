@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         // ✅ Mark order paid in DB
         return res.status(200).json({ status: "success", data: response.data });
       } else {
-        // ❌ Failed or pending
+        // Failed or pending
         return res.status(200).json({ status: "failure", data: response.data });
       }
     } catch (error) {

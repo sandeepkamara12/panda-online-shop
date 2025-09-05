@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         amount: Number(amount), // convert to paise
         redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success`,
         redirectMode: "POST",
-        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`,
+        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/callback`,
         mobileNumber: phone,
         paymentInstrument: {
           type: "PAY_PAGE",
