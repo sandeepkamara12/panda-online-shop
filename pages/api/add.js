@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         merchantTransactionId: "TXN_" + Date.now(), // unique txn id
         merchantUserId: 'user_' + Date.now(),
         name:name,
-        amount: Number(amount), // convert to paise
+        amount: Number(amount) * 100, // convert to paise
         redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success`,
         redirectMode: "POST",
         callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/callback`,
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
       // Step 3: Call PhonePe API
       const response = await axios.post(
-        "https://api.phonepe.com/apis/pg-sandbox/pg/v1/pay", // sandbox endpoint
+        "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay", // sandbox endpoint
         {
           request: base64Payload,
         },
